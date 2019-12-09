@@ -15,14 +15,14 @@ router.post('/', (req, res) => {
   res.send('Add new issue');
 });
 
-// @route   PUT api/issues/
+// @route   PUT api/issues/:id
 // @desc    Update issue
 // @access  Public
 router.put('/:id', (req, res) => {
   res.send('Update issue');
 });
 
-// @route   DELETE api/issues/
+// @route   DELETE api/issues/:id
 // @desc    Delete issue
 // @access  Public
 router.delete('/:id', (req, res) => {

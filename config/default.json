@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://ravenlalonde:ravenlalonde@bugtracker-7puoa.mongodb.net/test?retryWrites=true&w=majority",
+  "mongoURILoc": "mongodb://localhost:27017/BugTracker"
+}
