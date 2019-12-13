@@ -21,21 +21,24 @@ const IssueState = props => {
         description: "Failed to save",
         severity: "medium",
         status: "open",
-        assignedTo: "Jack"
+        assignedTo: "Jack",
+        date: '12-12-12'
       },
       {
         id: 2,
         description: "Failed to load",
         severity: "low",
-        status: "open",
-        assignedTo: "Jill"
+        status: "close",
+        assignedTo: "Jill",
+        date: '12-12-12'
       },
       {
         id: 3,
         description: "Failed to initiate",
         severity: "high",
         status: "open",
-        assignedTo: "Jake"
+        assignedTo: "Jake",
+        date: '12-12-12'
       }
     ]
   };
@@ -67,4 +70,4 @@ const IssueState = props => {
   );
 };
 
-export default IssueState
+export default IssueState;

@@ -9,6 +9,9 @@ connectDB();
 // Init middleware
 app.use(express.json({extented: false}));
 
+// Static files
+app.use(express.static('./client/src'));
+
 // Define routes
 
 app.use('/api/users', require('./routes/users'))
