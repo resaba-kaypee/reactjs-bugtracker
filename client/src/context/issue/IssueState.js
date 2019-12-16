@@ -11,6 +11,7 @@ import {
   FILTER_ISSUES,
   CLEAR_FILTER
 } from "../types";
+import issueContext from "./issueContext";
 
 const IssueState = props => {
   const initialState = {
@@ -22,7 +23,7 @@ const IssueState = props => {
         severity: "medium",
         status: "open",
         assignedTo: "Jack",
-        date: '12-12-12'
+        date: "12-12-12"
       },
       {
         id: 2,
@@ -30,7 +31,7 @@ const IssueState = props => {
         severity: "low",
         status: "close",
         assignedTo: "Jill",
-        date: '12-12-12'
+        date: "12-12-12"
       },
       {
         id: 3,
@@ -38,7 +39,7 @@ const IssueState = props => {
         severity: "high",
         status: "open",
         assignedTo: "Jake",
-        date: '12-12-12'
+        date: "12-12-12"
       }
     ]
   };
@@ -46,6 +47,10 @@ const IssueState = props => {
   const [state, dispatch] = useReducer(issueReducer, initialState);
 
   // Add issue
+  const addIssue = issue => {
+    issue.id = uuid.v4();
+    dispatch({ type: ADD_ISSUE, payload: issue });
+  };
 
   // Delete issue
 
@@ -62,7 +67,8 @@ const IssueState = props => {
   return (
     <IssueContext.Provider
       value={{
-        issues: state.issues
+        issues: state.issues,
+        addIssue
       }}
     >
       {props.children}
