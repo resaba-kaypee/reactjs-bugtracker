@@ -41,7 +41,8 @@ const IssueState = props => {
         assignedTo: "Jake",
         date: "12-12-12"
       }
-    ]
+    ],
+    current: null
   };
 
   const [state, dispatch] = useReducer(issueReducer, initialState);
@@ -56,10 +57,16 @@ const IssueState = props => {
   const deleteIssue = id => {
     dispatch({ type: DELETE_ISSUE, payload: id });
   };
-  
+
   // Set current issue
+  const setCurrent = issue => {
+    dispatch({ type: SET_CURRENT, payload: issue });
+  };
 
   // Clear current issue
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
 
   // Update issue
 
@@ -71,8 +78,11 @@ const IssueState = props => {
     <IssueContext.Provider
       value={{
         issues: state.issues,
+        current: state.current,
         addIssue,
-        deleteIssue
+        deleteIssue,
+        setCurrent,
+        clearCurrent
       }}
     >
       {props.children}

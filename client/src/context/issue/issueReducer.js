@@ -22,6 +22,18 @@ export default (state, action) => {
         issues: state.issues.filter(issue => issue.id !== action.payload)
       };
       break;
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: action.payload
+      };
+      break;
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null
+      };
+      break;
     default:
       return state;
   }
