@@ -53,7 +53,10 @@ const IssueState = props => {
   };
 
   // Delete issue
-
+  const deleteIssue = id => {
+    dispatch({ type: DELETE_ISSUE, payload: id });
+  };
+  
   // Set current issue
 
   // Clear current issue
@@ -68,7 +71,8 @@ const IssueState = props => {
     <IssueContext.Provider
       value={{
         issues: state.issues,
-        addIssue
+        addIssue,
+        deleteIssue
       }}
     >
       {props.children}

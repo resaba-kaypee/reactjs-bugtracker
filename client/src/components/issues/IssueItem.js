@@ -1,15 +1,26 @@
 /*
 add a handler if the status is close remove buttons
 */
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import IssueContext from "../../context/issue/issueContext";
 
 const IssueItem = ({ issue }) => {
+  const issueContext = useContext(IssueContext);
+  const { deleteIssue } = issueContext;
+
   const { id, description, status, severity, assignedTo, date } = issue;
+
+  const onDelete = e => {
+    issueContext.deleteIssue(id);
+  };
 
   return (
     <div className="card bg-light grid-2">
-      <p style={{ fontSize: 12 }}> <strong>Issue Id:</strong> {id}</p>
+      <p style={{ fontSize: 12 }}>
+        {" "}
+        <strong>Issue Id:</strong> {id}
+      </p>
       <p>
         <span
           className={
@@ -30,12 +41,18 @@ const IssueItem = ({ issue }) => {
       </p>
       <div>
         {status === "close" ? (
-          " "
+          <span>
+            <button className="btn btn-danger btn-sm" onClick={onDelete}>
+              Delete
+            </button>
+          </span>
         ) : (
           <span>
             <button className="btn btn-primary btn-sm">Close</button>
             <button className="btn btn-success btn-sm">Edit</button>
-            <button className="btn btn-danger btn-sm">Delete</button>
+            <button className="btn btn-danger btn-sm" onClick={onDelete}>
+              Delete
+            </button>
           </span>
         )}
       </div>

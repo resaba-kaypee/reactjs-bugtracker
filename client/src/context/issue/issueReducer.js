@@ -16,6 +16,12 @@ export default (state, action) => {
         issues: [...state.issues, action.payload]
       };
       break;
+    case DELETE_ISSUE:
+      return {
+        ...state,
+        issues: state.issues.filter(issue => issue.id !== action.payload)
+      };
+      break;
     default:
       return state;
   }
