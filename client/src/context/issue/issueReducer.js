@@ -3,7 +3,7 @@ import {
   DELETE_ISSUE,
   SET_CURRENT,
   CLEAR_CURRENT,
-  UPDATE_ISSUES,
+  UPDATE_ISSUE,
   FILTER_ISSUES,
   CLEAR_FILTER
 } from "../types";
@@ -15,25 +15,28 @@ export default (state, action) => {
         ...state,
         issues: [...state.issues, action.payload]
       };
-      break;
+    case UPDATE_ISSUE:
+      return {
+        ...state,
+        issues: state.issues.map(issue =>
+          issue.id === action.payload.id ? action.payload : issue
+        )
+      };
     case DELETE_ISSUE:
       return {
         ...state,
         issues: state.issues.filter(issue => issue.id !== action.payload)
       };
-      break;
     case SET_CURRENT:
       return {
         ...state,
         current: action.payload
       };
-      break;
     case CLEAR_CURRENT:
       return {
         ...state,
         current: null
       };
-      break;
     default:
       return state;
   }

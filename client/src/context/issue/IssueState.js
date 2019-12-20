@@ -7,7 +7,7 @@ import {
   DELETE_ISSUE,
   SET_CURRENT,
   CLEAR_CURRENT,
-  UPDATE_ISSUES,
+  UPDATE_ISSUE,
   FILTER_ISSUES,
   CLEAR_FILTER
 } from "../types";
@@ -69,6 +69,9 @@ const IssueState = props => {
   };
 
   // Update issue
+  const updateIssue = issue => {
+    dispatch({ type: UPDATE_ISSUE, payload: issue });
+  };
 
   // Filter issues
 
@@ -82,7 +85,8 @@ const IssueState = props => {
         addIssue,
         deleteIssue,
         setCurrent,
-        clearCurrent
+        clearCurrent,
+        updateIssue
       }}
     >
       {props.children}

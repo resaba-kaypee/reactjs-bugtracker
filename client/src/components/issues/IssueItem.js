@@ -1,7 +1,8 @@
 /*
-*add a handler if the status is close remove buttons
-*only the user who created the issue will be allowed to edit
-*/
+ *add a handler if the status is close remove buttons
+ *only the user who created the issue will be allowed to edit
+ *only admins can closed the issue
+ */
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import IssueContext from "../../context/issue/issueContext";
@@ -15,6 +16,10 @@ const IssueItem = ({ issue }) => {
   const onDelete = e => {
     deleteIssue(id);
     clearCurrent();
+  };
+
+  const onEdit = () => {
+    setCurrent(issue);
   };
 
   return (
@@ -51,7 +56,9 @@ const IssueItem = ({ issue }) => {
         ) : (
           <span>
             <button className="btn btn-primary btn-sm">Close</button>
-            <button className="btn btn-success btn-sm" onClick={()=> setCurrent(issue)} >Edit</button>
+            <button className="btn btn-success btn-sm" onClick={onEdit}>
+              Edit
+            </button>
             <button className="btn btn-danger btn-sm" onClick={onDelete}>
               Delete
             </button>
