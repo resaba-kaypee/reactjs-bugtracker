@@ -37,6 +37,19 @@ export default (state, action) => {
         ...state,
         current: null
       };
+    case FILTER_ISSUES:
+      return {
+        ...state,
+        filtered: state.issues.filter(issue => {
+          const regex = new RegExp(`${action.payload}`, "gi");
+          return issue.description.match(regex) || issue.date.match(regex);
+        })
+      };
+      case CLEAR_FILTER:
+        return {
+          ...state,
+          filtered: null
+        };
     default:
       return state;
   }

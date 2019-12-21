@@ -42,7 +42,8 @@ const IssueState = props => {
         date: "12-12-12"
       }
     ],
-    current: null
+    current: null,
+    filtered: null
   };
 
   const [state, dispatch] = useReducer(issueReducer, initialState);
@@ -74,19 +75,27 @@ const IssueState = props => {
   };
 
   // Filter issues
+  const filterIssues = text => {
+    dispatch({ type: FILTER_ISSUES, payload: text });
+  };
 
   // Clear filter
-
+  const clearFilter = issue => {
+    dispatch({ type: CLEAR_FILTER});
+  };
   return (
     <IssueContext.Provider
       value={{
         issues: state.issues,
         current: state.current,
+        filtered: state.filtered,
         addIssue,
         deleteIssue,
         setCurrent,
         clearCurrent,
-        updateIssue
+        updateIssue,
+        filterIssues,
+        clearFilter
       }}
     >
       {props.children}

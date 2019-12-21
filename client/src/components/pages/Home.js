@@ -1,6 +1,7 @@
 import React from "react";
 import Issues from "../issues/Issues";
 import IssueForm from "../issues/IssueForm";
+import IssueFilter from "../issues/IssueFilter";
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
         <IssueForm />
       </div>
       <div>
+        <IssueFilter/>
         <Issues />
       </div>
     </div>
