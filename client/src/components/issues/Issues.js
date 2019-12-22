@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import IssueItem from "./IssueItem";
 import IssueContext from "../../context/issue/issueContext";
 
@@ -11,13 +12,19 @@ const Issues = () => {
 
   return (
     <Fragment>
-      {filtered !== null
-        ? filtered.map(issue => (
-            <IssueItem key={issue.id} issue={issue}></IssueItem>
-          ))
-        : issues.map(issue => (
-            <IssueItem key={issue.id} issue={issue}></IssueItem>
-          ))}
+      <TransitionGroup>
+        {filtered !== null
+          ? filtered.map(issue => (
+              <CSSTransition classNames="item" key={issue.id} timeout={500}>
+                <IssueItem issue={issue}></IssueItem>
+              </CSSTransition>
+            ))
+          : issues.map(issue => (
+              <CSSTransition classNames="item" key={issue.id} timeout={500}>
+                <IssueItem issue={issue}></IssueItem>
+              </CSSTransition>
+            ))}
+      </TransitionGroup>
     </Fragment>
   );
 };
