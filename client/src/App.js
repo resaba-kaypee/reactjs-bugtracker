@@ -4,23 +4,26 @@ import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import About from "./components/pages/About";
 import IssueState from "./context/issue/IssueState";
+import AuthState from "./context/auth/AuthState";
 import "./App.css";
 
 function App() {
   return (
-    <IssueState>
-      <Router>
-        <Fragment>
-          <Navbar />
-          <div className="container">
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/about" component={About} />
-            </Switch>
-          </div>
-        </Fragment>
-      </Router>
-    </IssueState>
+    <AuthState>
+      <IssueState>
+        <Router>
+          <Fragment>
+            <Navbar />
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/about" component={About} />
+              </Switch>
+            </div>
+          </Fragment>
+        </Router>
+      </IssueState>
+    </AuthState>
   );
 }
 
