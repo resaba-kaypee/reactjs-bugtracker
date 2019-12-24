@@ -11,7 +11,6 @@ import {
   FILTER_ISSUES,
   CLEAR_FILTER
 } from "../types";
-import issueContext from "./issueContext";
 
 const IssueState = props => {
   const initialState = {
