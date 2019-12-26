@@ -18,8 +18,8 @@ const AuthState = props => {
   const initialState = {
     token: localStorage.getItem("token"),
     isAuthenticated: null,
-    loading: true,
     user: null,
+    loading: true,
     error: null
   };
 
@@ -42,7 +42,7 @@ const AuthState = props => {
       });
     } catch (err) {
       // invalid credentials
-      dispatch({ AUTH_ERROR });
+      dispatch({ type: AUTH_ERROR });
     }
   };
 

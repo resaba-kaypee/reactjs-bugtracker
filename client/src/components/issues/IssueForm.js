@@ -9,28 +9,9 @@ import AuthContext from "../../context/auth/authContext";
 const IssueForm = () => {
   const issueContext = useContext(IssueContext);
   const { addIssue, current, clearCurrent, updateIssue } = issueContext;
-
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, user } = authContext;
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      if (current !== null) {
-        setIssue(current);
-      } else {
-        // set it back to default state
-        setIssue({
-          description: "",
-          severity: "",
-          status: "open",
-          // name needs to come from db
-          assignedTo: user.name,
-          date: addDate()
-        });
-      }
-    }
-  }, [issueContext, current, authContext, user, isAuthenticated]);
-
+  const { user} = authContext;
+  
   const [issue, setIssue] = useState({
     description: "",
     severity: "",
@@ -40,6 +21,25 @@ const IssueForm = () => {
   });
 
   const { description, severity, assignedTo, date } = issue;
+
+  
+  useEffect(() => {
+    if (current !== null) {
+      setIssue(current);
+    } else {
+      // set it back to default state
+      if(user && user.name){
+        setIssue({
+          description: "",
+          severity: "",
+          assignedTo: user.name,
+          status: "open",
+          date: addDate()
+        });  
+      }
+    }
+  }, [issueContext, current, authContext, user]);
+
 
   const onChange = e => setIssue({ ...issue, [e.target.name]: e.target.value });
 
