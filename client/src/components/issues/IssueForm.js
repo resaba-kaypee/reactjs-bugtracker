@@ -4,33 +4,38 @@ get the assigned to: from the user that is log in
 
 import React, { useState, useContext, useEffect } from "react";
 import IssueContext from "../../context/issue/issueContext";
+import AuthContext from "../../context/auth/authContext";
 
 const IssueForm = () => {
   const issueContext = useContext(IssueContext);
   const { addIssue, current, clearCurrent, updateIssue } = issueContext;
 
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated, user } = authContext;
+
   useEffect(() => {
-    if (current !== null) {
-      setIssue(current);
-    } else {
-      // set it back to default state
-      setIssue({
-        description: "",
-        severity: "",
-        status: "open",
-        // name needs to come from db
-        assignedTo: "Person from db",
-        date: addDate()
-      });
+    if (isAuthenticated) {
+      if (current !== null) {
+        setIssue(current);
+      } else {
+        // set it back to default state
+        setIssue({
+          description: "",
+          severity: "",
+          status: "open",
+          // name needs to come from db
+          assignedTo: user.name,
+          date: addDate()
+        });
+      }
     }
-  }, [issueContext, current]);
+  }, [issueContext, current, authContext, user, isAuthenticated]);
 
   const [issue, setIssue] = useState({
     description: "",
     severity: "",
     status: "open",
-    // name needs to come from db
-    assignedTo: "Person from db",
+    assignedTo: "",
     date: addDate()
   });
 
@@ -40,7 +45,7 @@ const IssueForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    if(current === null){
+    if (current === null) {
       addIssue(issue);
     } else {
       updateIssue(issue);
