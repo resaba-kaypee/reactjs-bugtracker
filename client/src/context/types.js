@@ -1,9 +1,11 @@
+export const GET_ISSUES = "GET_ISSUES";
 export const ADD_ISSUE = "ADD_ISSUE";
 export const DELETE_ISSUE = "DELETE_ISSUE";
 export const SET_CURRENT = "SET_CURRENT";
 export const CLEAR_CURRENT = "CLEAR_CURRENT";
 export const UPDATE_ISSUE = "UPDATE_ISSUE";
 export const FILTER_ISSUES = "FILTER_ISSUES";
+export const CLEAR_ISSUES = "CLEAR_ISSUES";
 export const CLEAR_FILTER = "CLEAR_FILTER";
 export const ISSUE_ERROR = "ISSUE_ERROR";
 export const SET_ALERT = "SET_ALERT";

@@ -3,6 +3,7 @@ import axios from "axios";
 import IssueContext from "./issueContext";
 import issueReducer from "./issueReducer";
 import {
+  GET_ISSUES,
   ADD_ISSUE,
   DELETE_ISSUE,
   SET_CURRENT,
@@ -10,18 +11,29 @@ import {
   UPDATE_ISSUE,
   FILTER_ISSUES,
   CLEAR_FILTER,
+  CLEAR_ISSUES,
   ISSUE_ERROR
 } from "../types";
 
 const IssueState = props => {
   const initialState = {
-    issues: [],
+    issues: null,
     current: null,
     filtered: null,
     error: null
   };
 
   const [state, dispatch] = useReducer(issueReducer, initialState);
+
+  // Get issue
+  const getIssues = async () => {
+    try {
+      const res = await axios.get("/api/issues");
+      dispatch({ type: GET_ISSUES, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+    }
+  };
 
   // Add issue
   const addIssue = async issue => {
@@ -36,6 +48,11 @@ const IssueState = props => {
     } catch (err) {
       dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
     }
+  };
+
+  // Clear issue
+  const clearIssues = () => {
+    dispatch({ type: CLEAR_ISSUES });
   };
 
   // Delete issue
@@ -74,7 +91,9 @@ const IssueState = props => {
         current: state.current,
         filtered: state.filtered,
         error: state.error,
+        getIssues,
         addIssue,
+        clearIssues,
         deleteIssue,
         setCurrent,
         clearCurrent,

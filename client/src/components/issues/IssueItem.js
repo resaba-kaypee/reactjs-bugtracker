@@ -11,10 +11,10 @@ const IssueItem = ({ issue }) => {
   const issueContext = useContext(IssueContext);
   const { deleteIssue, setCurrent, clearCurrent } = issueContext;
 
-  const { id, description, status, severity, assignedTo, date } = issue;
+  const { _id, description, status, severity, assignedTo, date, user } = issue;
 
   const onDelete = e => {
-    deleteIssue(id);
+    deleteIssue(_id);
     clearCurrent();
   };
 
@@ -26,7 +26,7 @@ const IssueItem = ({ issue }) => {
     <div className="card bg-light grid-2">
       <p style={{ fontSize: 12 }}>
         {" "}
-        <strong>Issue Id:</strong> {id}
+        <strong>Issue Id:</strong> {_id}
       </p>
       <p>
         <span
