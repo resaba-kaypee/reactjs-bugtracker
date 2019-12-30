@@ -15,12 +15,12 @@ const Issues = () => {
       <TransitionGroup>
         {filtered !== null
           ? filtered.map(issue => (
-              <CSSTransition classNames="item" key={issue.id} timeout={500}>
+              <CSSTransition classNames="item" key={issue._id} timeout={500}>
                 <IssueItem issue={issue}></IssueItem>
               </CSSTransition>
             ))
           : issues.map(issue => (
-              <CSSTransition classNames="item" key={issue.id} timeout={500}>
+              <CSSTransition classNames="item" key={issue._id} timeout={500}>
                 <IssueItem issue={issue}></IssueItem>
               </CSSTransition>
             ))}

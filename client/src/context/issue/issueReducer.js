@@ -5,7 +5,8 @@ import {
   CLEAR_CURRENT,
   UPDATE_ISSUE,
   FILTER_ISSUES,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  ISSUE_ERROR
 } from "../types";
 
 export default (state, action) => {
@@ -19,13 +20,13 @@ export default (state, action) => {
       return {
         ...state,
         issues: state.issues.map(issue =>
-          issue.id === action.payload.id ? action.payload : issue
+          issue._id === action.payload._id ? action.payload : issue
         )
       };
     case DELETE_ISSUE:
       return {
         ...state,
-        issues: state.issues.filter(issue => issue.id !== action.payload)
+        issues: state.issues.filter(issue => issue._id !== action.payload)
       };
     case SET_CURRENT:
       return {
@@ -50,6 +51,11 @@ export default (state, action) => {
           ...state,
           filtered: null
         };
+      case ISSUE_ERROR:
+        return {
+          ...state,
+          error: action.payload
+        }
     default:
       return state;
   }

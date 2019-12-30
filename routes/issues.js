@@ -41,7 +41,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { description, severity, status, assignedTo } = req.body;
+    const { description, severity, status, assignedTo, date } = req.body;
 
     try {
       const newIssue = new Issue({
@@ -49,8 +49,8 @@ router.post(
         severity,
         status,
         assignedTo,
-        user: req.user.id
-        
+        user: req.user.id,
+        date
       });
 
       const issue = await newIssue.save();

@@ -10,7 +10,7 @@ connectDB();
 app.use(express.json({extented: false}));
 
 // Static files
-app.use(express.static('./client/src/assets'));
+app.use(express.static('./client/src'));
 
 // Define routes
 

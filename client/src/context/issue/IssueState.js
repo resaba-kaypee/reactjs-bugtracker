@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import uuid from "uuid";
+import axios from "axios";
 import IssueContext from "./issueContext";
 import issueReducer from "./issueReducer";
 import {
@@ -9,48 +9,33 @@ import {
   CLEAR_CURRENT,
   UPDATE_ISSUE,
   FILTER_ISSUES,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  ISSUE_ERROR
 } from "../types";
 
 const IssueState = props => {
   const initialState = {
-    issues: [
-      // hard coded sample issues
-      {
-        id: 1,
-        description: "Failed to save",
-        severity: "medium",
-        status: "open",
-        assignedTo: "Jack",
-        date: "12-12-12"
-      },
-      {
-        id: 2,
-        description: "Failed to load",
-        severity: "low",
-        status: "close",
-        assignedTo: "Jill",
-        date: "12-12-12"
-      },
-      {
-        id: 3,
-        description: "Failed to initiate",
-        severity: "high",
-        status: "open",
-        assignedTo: "Jake",
-        date: "12-12-12"
-      }
-    ],
+    issues: [],
     current: null,
-    filtered: null
+    filtered: null,
+    error: null
   };
 
   const [state, dispatch] = useReducer(issueReducer, initialState);
 
   // Add issue
-  const addIssue = issue => {
-    issue.id = uuid.v4();
-    dispatch({ type: ADD_ISSUE, payload: issue });
+  const addIssue = async issue => {
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    };
+    try {
+      const res = await axios.post("/api/issues", issue, config);
+      dispatch({ type: ADD_ISSUE, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+    }
   };
 
   // Delete issue
@@ -80,7 +65,7 @@ const IssueState = props => {
 
   // Clear filter
   const clearFilter = issue => {
-    dispatch({ type: CLEAR_FILTER});
+    dispatch({ type: CLEAR_FILTER });
   };
   return (
     <IssueContext.Provider
@@ -88,6 +73,7 @@ const IssueState = props => {
         issues: state.issues,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
         addIssue,
         deleteIssue,
         setCurrent,

@@ -18,7 +18,7 @@ const IssueForm = () => {
     status: "open",
     assignedTo: "",
     date: addDate()
-  });
+  }); 
 
   const { description, severity, assignedTo, date } = issue;
 
