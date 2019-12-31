@@ -56,8 +56,13 @@ const IssueState = props => {
   };
 
   // Delete issue
-  const deleteIssue = id => {
-    dispatch({ type: DELETE_ISSUE, payload: id });
+  const deleteIssue = async id => {
+    try {
+      await axios.delete(`/api/issues/${id}`);
+      dispatch({ type: DELETE_ISSUE, payload: id });
+    } catch (err) {
+      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+    }
   };
 
   // Set current issue

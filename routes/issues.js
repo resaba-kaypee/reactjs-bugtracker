@@ -72,8 +72,24 @@ router.put("/:id", (req, res) => {
 // @route   DELETE api/issues/:id
 // @desc    Delete issue
 // @access  Public
-router.delete("/:id", (req, res) => {
-  res.send("Delete issue");
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    let issue = await Issue.findById(req.params.id);
+
+    if (!issue) return res.status(404).json({ msg: 'Contact not found' });
+
+    // Make sure user owns issue
+    // if (issue.user.toString() !== req.user.id) {
+    //   return res.status(401).json({ msg: 'Not authorized' });
+    // }
+
+    await Issue.findByIdAndRemove(req.params.id);
+
+    res.json({ msg: 'Issue removed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 module.exports = router;

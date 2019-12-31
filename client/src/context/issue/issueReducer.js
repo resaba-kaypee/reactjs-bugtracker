@@ -22,7 +22,7 @@ export default (state, action) => {
     case ADD_ISSUE:
       return {
         ...state,
-        issues: [...state.issues, action.payload],
+        issues: [action.payload, ...state.issues],
         loading: false
       };
     case UPDATE_ISSUE:
@@ -46,7 +46,7 @@ export default (state, action) => {
         filtered: null,
         error: null,
         current: null
-      }
+      };
     case SET_CURRENT:
       return {
         ...state,
