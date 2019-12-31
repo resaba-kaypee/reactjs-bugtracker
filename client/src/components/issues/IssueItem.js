@@ -47,7 +47,7 @@ const IssueItem = ({ issue }) => {
         </span>
       </p>
       <div>
-        {user.name !== assignedTo ? (
+        {user && user.name !== assignedTo ? (
           ""
         ) : (
           <span>
