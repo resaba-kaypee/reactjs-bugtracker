@@ -10,36 +10,34 @@ const IssueForm = () => {
   const issueContext = useContext(IssueContext);
   const { addIssue, current, clearCurrent, updateIssue } = issueContext;
   const authContext = useContext(AuthContext);
-  const { user} = authContext;
-  
+  const { user } = authContext;
+
   const [issue, setIssue] = useState({
     description: "",
-    severity: "",
+    severity: "low",
     status: "open",
     assignedTo: "",
     date: addDate()
-  }); 
+  });
 
-  const { description, severity, assignedTo, date } = issue;
+  const { description, severity, status, assignedTo, date } = issue;
 
-  
   useEffect(() => {
     if (current !== null) {
       setIssue(current);
     } else {
       // set it back to default state
-      if(user && user.name){
+      if (user && user.name) {
         setIssue({
           description: "",
-          severity: "",
-          assignedTo: user.name,
+          severity: "low",
           status: "open",
+          assignedTo: user.name,
           date: addDate()
-        });  
+        });
       }
     }
   }, [issueContext, current, authContext, user]);
-
 
   const onChange = e => setIssue({ ...issue, [e.target.name]: e.target.value });
 
@@ -69,6 +67,23 @@ const IssueForm = () => {
         value={description}
         onChange={onChange}
       />
+      <h4>Status</h4>
+      <input
+        type="radio"
+        name="status"
+        value="open"
+        checked={status === "open"}
+        onChange={onChange}
+      />{" "}
+      Open{" "}
+      <input
+        type="radio"
+        name="status"
+        value="close"
+        checked={status === "close"}
+        onChange={onChange}
+      />{" "}
+      Close <hr />
       <h4>Severity</h4>
       <input
         type="radio"
@@ -94,6 +109,7 @@ const IssueForm = () => {
         onChange={onChange}
       />
       High <br />
+      <hr />
       <span>
         <strong>Assigned to:</strong> <i className="fas fa-user"></i>
         {assignedTo}
@@ -136,7 +152,8 @@ const addDate = () => {
     h -= 12;
     am_pm = "PM";
   }
-
+  
+  mm = mm+=1;
   h = h < 10 ? "0" + h : h;
   m = m < 10 ? "0" + m : m;
 

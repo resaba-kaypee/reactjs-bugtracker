@@ -39,7 +39,7 @@ const IssueState = props => {
   const addIssue = async issue => {
     const config = {
       headers: {
-        "Content-type": "application/json"
+        "Content-Type": "application/json"
       }
     };
     try {
@@ -48,11 +48,6 @@ const IssueState = props => {
     } catch (err) {
       dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
     }
-  };
-
-  // Clear issue
-  const clearIssues = () => {
-    dispatch({ type: CLEAR_ISSUES });
   };
 
   // Delete issue
@@ -65,6 +60,26 @@ const IssueState = props => {
     }
   };
 
+  // Update issue
+  const updateIssue = async issue => {
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    };
+    try {
+      const res = await axios.put(`/api/issues/${issue._id}`, issue, config);
+      dispatch({ type: UPDATE_ISSUE, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+    }
+  };
+
+  // Clear issue
+  const clearIssues = () => {
+    dispatch({ type: CLEAR_ISSUES });
+  };
+
   // Set current issue
   const setCurrent = issue => {
     dispatch({ type: SET_CURRENT, payload: issue });
@@ -73,11 +88,6 @@ const IssueState = props => {
   // Clear current issue
   const clearCurrent = () => {
     dispatch({ type: CLEAR_CURRENT });
-  };
-
-  // Update issue
-  const updateIssue = issue => {
-    dispatch({ type: UPDATE_ISSUE, payload: issue });
   };
 
   // Filter issues

@@ -65,8 +65,37 @@ router.post(
 // @route   PUT api/issues/:id
 // @desc    Update issue
 // @access  Public
-router.put("/:id", (req, res) => {
-  res.send("Update issue");
+router.put('/:id', auth, async (req, res) => {
+  // @todo make status editable
+  const { description, severity, status } = req.body;
+
+  // Build issue object
+  const issueFields = {};
+  if (description) issueFields.description = description;
+  if (severity) issueFields.severity = severity;
+  if (status) issueFields.status = status;
+
+  try {
+    let issue = await Issue.findById(req.params.id);
+
+    if (!issue) return res.status(404).json({ msg: 'Issue not found' });
+
+    // Make sure user owns issue
+    // if (issue.user.toString() !== req.user.id) {
+    //   return res.status(401).json({ msg: 'Not authorized' });
+    // }
+
+    issue = await Issue.findByIdAndUpdate(
+      req.params.id,
+      { $set: issueFields },
+      { new: true }
+    );
+
+    res.json(issue);
+  } catch (err) {
+    console.error(er.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 // @route   DELETE api/issues/:id
@@ -76,7 +105,7 @@ router.delete('/:id', auth, async (req, res) => {
   try {
     let issue = await Issue.findById(req.params.id);
 
-    if (!issue) return res.status(404).json({ msg: 'Contact not found' });
+    if (!issue) return res.status(404).json({ msg: 'Issue not found' });
 
     // Make sure user owns issue
     // if (issue.user.toString() !== req.user.id) {
