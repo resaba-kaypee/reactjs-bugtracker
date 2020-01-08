@@ -11,6 +11,7 @@ import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import setAuthToken from "./utils/setAuthToken";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import "./assets/css/all.css"
 import "./App.css";
 
 if (localStorage.token) {

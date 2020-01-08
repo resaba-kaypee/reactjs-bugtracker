@@ -19,7 +19,8 @@
     "express": "^4.17.1",
     "express-validator": "^6.3.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.14"
+    "mongoose": "^5.7.14",
+    "react-hook-form": "^4.4.3"
   },
   "devDependencies": {
     "concurrently": "^5.0.1"

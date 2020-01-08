@@ -1,16 +1,15 @@
-/*
-get the assigned to: from the user that is log in
-*/
-
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, Fragment } from "react";
 import IssueContext from "../../context/issue/issueContext";
 import AuthContext from "../../context/auth/authContext";
+import AlertContext from "../../context/alert/alertContext";
 
 const IssueForm = () => {
   const issueContext = useContext(IssueContext);
   const { addIssue, current, clearCurrent, updateIssue } = issueContext;
   const authContext = useContext(AuthContext);
   const { user } = authContext;
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
 
   const [issue, setIssue] = useState({
     description: "",
@@ -44,7 +43,11 @@ const IssueForm = () => {
   const onSubmit = e => {
     e.preventDefault();
     if (current === null) {
-      addIssue(issue);
+      if(!/^[a-zA-Z0-9][\w.\s]+$/i.test(description)){
+        setAlert("Please add valid description", "danger")
+      } else {
+        addIssue(issue);
+      }
     } else {
       updateIssue(issue);
     }
@@ -67,23 +70,29 @@ const IssueForm = () => {
         value={description}
         onChange={onChange}
       />
-      <h4>Status</h4>
-      <input
-        type="radio"
-        name="status"
-        value="open"
-        checked={status === "open"}
-        onChange={onChange}
-      />{" "}
-      Open{" "}
-      <input
-        type="radio"
-        name="status"
-        value="close"
-        checked={status === "close"}
-        onChange={onChange}
-      />{" "}
-      Close <hr />
+      {current ? (
+        <Fragment>
+          <h4>Status</h4>
+          <input
+            type="radio"
+            name="status"
+            value="open"
+            checked={status === "open"}
+            onChange={onChange}
+          />{" "}
+          Open{" "}
+          <input
+            type="radio"
+            name="status"
+            value="closed"
+            checked={status === "closed"}
+            onChange={onChange}
+          />{" "}
+          Close <hr />
+        </Fragment>
+      ) : (
+        ""
+      )}
       <h4>Severity</h4>
       <input
         type="radio"
@@ -152,8 +161,8 @@ const addDate = () => {
     h -= 12;
     am_pm = "PM";
   }
-  
-  mm = mm+=1;
+
+  mm = mm += 1;
   h = h < 10 ? "0" + h : h;
   m = m < 10 ? "0" + m : m;
 

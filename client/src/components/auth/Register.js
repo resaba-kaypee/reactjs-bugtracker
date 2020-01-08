@@ -1,4 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import useForm from "../validate/useForm";
+import validate from "../validate/validate";
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
 
@@ -6,66 +8,56 @@ const Register = props => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
-  const { register, error, clearErrors, isAuthenticated } = authContext;
+  const { error, clearErrors, isAuthenticated, register } = authContext;
+
+  const { handleChange, handleSubmit, user, errors } = useForm(
+    registerUser,
+    validate
+  );
+  const { name, email, password, password2 } = user;
 
   useEffect(() => {
     if (isAuthenticated) {
       props.history.push("/");
     }
-
     if (error === "User already exists") {
       setAlert(error, "danger");
       clearErrors();
     }
 
-    // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
-
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: ""
-  });
-
-  const { name, email, password, password2 } = user;
-
-  const onChange = e =>
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value
-    });
-
-  const onSubmit = e => {
-    e.preventDefault();
-    if (name === "" || email === "" || password === "") {
-      setAlert("Please enter all fields", "danger");
-    } else if (password !== password2) {
-      setAlert("Password did not match", "danger");
-    } else {
-      register({
-        name,
-        email,
-        password
-      });
+    if (errors && errors.name) {
+      setAlert(errors.name, "danger");
     }
-  };
+    // if (errors && errors.email) {
+    //   setAlert(errors.email, "danger");
+    // }
+    if (errors && errors.password) {
+      setAlert(errors.password, "danger");
+    }
+    if (errors && errors.password2) {
+      setAlert(errors.password2, "danger");
+    }
+
+    // eslint-disable-next-line
+  }, [error, errors, isAuthenticated, props.history]);
+
+  function registerUser() {
+      register({
+      name,
+      email,
+      password
+    });
+  }
 
   return (
     <div className="form-container">
       <h1>
         Account <span className="text-primary">Register</span>
       </h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={onChange}
-            required
-          />
+          <input type="text" name="name" value={name} onChange={handleChange} />
         </div>
         <div className="form-group">
           <label htmlFor="email">Email</label>
@@ -73,7 +65,7 @@ const Register = props => {
             type="email"
             name="email"
             value={email}
-            onChange={onChange}
+            onChange={handleChange}
             required
           />
         </div>
@@ -83,9 +75,7 @@ const Register = props => {
             type="password"
             name="password"
             value={password}
-            onChange={onChange}
-            minLength="6"
-            required
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -94,8 +84,7 @@ const Register = props => {
             type="password"
             name="password2"
             value={password2}
-            onChange={onChange}
-            required
+            onChange={handleChange}
           />
         </div>
         <input

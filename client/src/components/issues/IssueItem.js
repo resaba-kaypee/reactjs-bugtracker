@@ -33,7 +33,11 @@ const IssueItem = ({ issue }) => {
         <strong>Issue Id:</strong> {_id}
       </p>
       <p>
-        <span className={"badge " + (status === "open" ? "badge-primary" : "badge-success")}>
+        <span
+          className={
+            "badge " + (status === "open" ? "badge-primary" : "badge-success")
+          }
+        >
           {" "}
           <i className="fas fa-clock"></i>{" "}
           {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -48,6 +52,8 @@ const IssueItem = ({ issue }) => {
       </p>
       <div>
         {user && user.name !== assignedTo ? (
+          ""
+        ) : status === "closed" ? (
           ""
         ) : (
           <span>
@@ -64,7 +70,7 @@ const IssueItem = ({ issue }) => {
       </div>
       <span style={{ float: "right", fontSize: 12 }}>
         <p>Date issue: {date}</p>
-        {status === "close" ? <p>Date closed: {date}</p> : ""}
+        {status === "closed" ? <p>Date closed: {date}</p> : ""}
       </span>
     </div>
   );
