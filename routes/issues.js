@@ -65,20 +65,22 @@ router.post(
 // @route   PUT api/issues/:id
 // @desc    Update issue
 // @access  Public
-router.put('/:id', auth, async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   // @todo make status editable
-  const { description, severity, status } = req.body;
+  const { description, severity, status, assignedTo, date } = req.body;
 
   // Build issue object
   const issueFields = {};
   if (description) issueFields.description = description;
-  if (severity) issueFields.severity = severity;
   if (status) issueFields.status = status;
+  if (severity) issueFields.severity = severity;
+  if (assignedTo) issueFields.assignedTo = assignedTo;
+  if (date) issueFields.date = date;
 
   try {
     let issue = await Issue.findById(req.params.id);
 
-    if (!issue) return res.status(404).json({ msg: 'Issue not found' });
+    if (!issue) return res.status(404).json({ msg: "Issue not found" });
 
     // Make sure user owns issue
     // if (issue.user.toString() !== req.user.id) {
@@ -93,19 +95,19 @@ router.put('/:id', auth, async (req, res) => {
 
     res.json(issue);
   } catch (err) {
-    console.error(er.message);
-    res.status(500).send('Server Error');
+    console.error(err.message);
+    res.status(500).send("Server Error");
   }
 });
 
 // @route   DELETE api/issues/:id
 // @desc    Delete issue
 // @access  Public
-router.delete('/:id', auth, async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     let issue = await Issue.findById(req.params.id);
 
-    if (!issue) return res.status(404).json({ msg: 'Issue not found' });
+    if (!issue) return res.status(404).json({ msg: "Issue not found" });
 
     // Make sure user owns issue
     // if (issue.user.toString() !== req.user.id) {
@@ -114,10 +116,10 @@ router.delete('/:id', auth, async (req, res) => {
 
     await Issue.findByIdAndRemove(req.params.id);
 
-    res.json({ msg: 'Issue removed' });
+    res.json({ msg: "Issue removed" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 
