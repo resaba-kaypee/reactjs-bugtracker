@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect, Fragment } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import IssueContext from "../../context/issue/issueContext";
 import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
 
-const IssueForm = () => {
+const EditIssueForm = () => {
   const issueContext = useContext(IssueContext);
-  const { addIssue, current, clearCurrent, updateIssue } = issueContext;
+  const { current, clearCurrent, updateIssue } = issueContext;
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const alertContext = useContext(AlertContext);
@@ -45,9 +45,8 @@ const IssueForm = () => {
     if (current === null) {
       if(!/^[a-zA-Z0-9][\w.\s]+$/i.test(description)){
         setAlert("Please add valid description", "danger")
-      } else {
-        addIssue(issue);
-      }
+        return;
+      } 
     } else {
       updateIssue(issue);
     }
@@ -61,7 +60,7 @@ const IssueForm = () => {
   return (
     <form onSubmit={onSubmit}>
       <h2 className="text-primary text-center">
-        {current ? "Edit Issue" : "Add Issue"}
+        Edit Issue
       </h2>
       <input
         type="text"
@@ -70,29 +69,23 @@ const IssueForm = () => {
         value={description}
         onChange={onChange}
       />
-      {current ? (
-        <Fragment>
-          <h4>Status</h4>
-          <input
-            type="radio"
-            name="status"
-            value="open"
-            checked={status === "open"}
-            onChange={onChange}
-          />{" "}
-          Open{" "}
-          <input
-            type="radio"
-            name="status"
-            value="closed"
-            checked={status === "closed"}
-            onChange={onChange}
-          />{" "}
-          Close <hr />
-        </Fragment>
-      ) : (
-        ""
-      )}
+        <h4>Status</h4>
+        <input
+          type="radio"
+          name="status"
+          value="open"
+          checked={status === "open"}
+          onChange={onChange}
+        />{" "}
+        Open{" "}
+        <input
+          type="radio"
+          name="status"
+          value="closed"
+          checked={status === "closed"}
+          onChange={onChange}
+        />{" "}
+        Close <hr />
       <h4>Severity</h4>
       <input
         type="radio"
@@ -127,7 +120,7 @@ const IssueForm = () => {
       <div>
         <input
           type="submit"
-          value={current ? "Update Issue" : "Add Issue"}
+          value="Save changes"
           className="btn btn-primary btn-block"
         />
       </div>
@@ -169,4 +162,4 @@ const addDate = () => {
   return `${d}-${h}:${m}${am_pm} : ${dd}/${mm}/${yy}`;
 };
 
-export default IssueForm;
+export default EditIssueForm;

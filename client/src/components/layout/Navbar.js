@@ -1,58 +1,19 @@
-import React, { Fragment, useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import AuthContext from "../../context/auth/authContext";
-import IssueContext from "../../context/issue/issueContext";
 
-const Navbar = ({ title, icon }) => {
-  const authContext = useContext(AuthContext);
-  const { isAuthenticated, logout, user } = authContext;
-  const issueContext = useContext(IssueContext)
-  const {clearIssues} = issueContext
-  const onLogout = () => {
-    logout();
-    clearIssues();
-  };
-
-  const authLinks = (
-    <Fragment>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/about">About</Link>
-      </li>
-      <li>
-        <a onClick={onLogout} href="#!">
-          <i className="fas fa-sign-out-alt"></i>
-          <span className="hide-sm"> Logout</span>
-        </a>
-      </li>
-    </Fragment>
-  );
-
-  const guestLinks = (
-    <Fragment>
-      <li>
-        <Link to="/about">About</Link>
-      </li>
-      <li>
-        <Link to="/register">Register</Link>
-      </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-    </Fragment>
-  );
-
+const Navbar = ({ title, icon, onHideNav }) => {
   return (
-    <div className="navbar bg-primary">
-      <h1>
-        <i className={icon}></i> {title}
-      </h1>
-        <span>Hello {user ? <strong> {user.name} </strong>: 'Guest'}</span>
-      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
-    </div>
+    <header className="header bg-primary text-light">
+      <div>
+          <button className="btn btn-primary" onClick={onHideNav}>
+            <i className="fas fa-bars"></i>
+          </button>
+          {" "}
+          <span>
+            <i className={icon}></i> {title}
+          </span>
+      </div>
+    </header>
   );
 };
 

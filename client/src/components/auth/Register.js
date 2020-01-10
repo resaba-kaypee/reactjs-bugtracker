@@ -3,6 +3,7 @@ import useForm from "../validate/useForm";
 import validate from "../validate/validate";
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
+import Alerts from "../layout/Alerts"
 
 const Register = props => {
   const alertContext = useContext(AlertContext);
@@ -28,9 +29,9 @@ const Register = props => {
     if (errors && errors.name) {
       setAlert(errors.name, "danger");
     }
-    // if (errors && errors.email) {
-    //   setAlert(errors.email, "danger");
-    // }
+    if (errors && errors.email) {
+      setAlert(errors.email, "danger");
+    }
     if (errors && errors.password) {
       setAlert(errors.password, "danger");
     }
@@ -51,10 +52,11 @@ const Register = props => {
 
   return (
     <div className="form-container">
+      <Alerts/>
       <h1>
         Account <span className="text-primary">Register</span>
       </h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input type="text" name="name" value={name} onChange={handleChange} />
@@ -66,7 +68,6 @@ const Register = props => {
             name="email"
             value={email}
             onChange={handleChange}
-            required
           />
         </div>
         <div className="form-group">

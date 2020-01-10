@@ -24,12 +24,20 @@ const Issues = () => {
           {filtered !== null
             ? filtered.map(issue => (
                 <CSSTransition classNames="item" key={issue._id} timeout={500}>
-                  <IssueItem issue={issue}></IssueItem>
+                  <ul className="list-group">
+                    <li className="list-group-item">
+                      <IssueItem issue={issue}></IssueItem>
+                    </li>
+                  </ul>
                 </CSSTransition>
               ))
             : issues.map(issue => (
                 <CSSTransition classNames="item" key={issue._id} timeout={500}>
-                  <IssueItem issue={issue}></IssueItem>
+                  <ul className="list-group">
+                    <li className="list-group-item">
+                      <IssueItem issue={issue}></IssueItem>
+                    </li>
+                  </ul>
                 </CSSTransition>
               ))}
         </TransitionGroup>
