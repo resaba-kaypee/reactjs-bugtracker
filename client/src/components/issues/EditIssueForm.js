@@ -11,44 +11,38 @@ const EditIssueForm = () => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
-  const [issue, setIssue] = useState({
-    description: "",
-    severity: "low",
-    status: "open",
-    assignedTo: "",
-    date: addDate()
-  });
-
-  const { description, severity, status, assignedTo, date } = issue;
+  const [description, setDescription] = useState("");
+  const [severity, setSeverity] = useState("low");
+  const [status, setStatus] = useState("open");
+  const [assignedTo, setAssignedTo] = useState();
 
   useEffect(() => {
     if (current !== null) {
-      setIssue(current);
-    } else {
-      // set it back to default state
-      if (user && user.name) {
-        setIssue({
-          description: "",
-          severity: "low",
-          status: "open",
-          assignedTo: user.name,
-          date: addDate()
-        });
-      }
+      setDescription(current.description);
+      setSeverity(current.severity);
+      setStatus(current.status);
+    }
+
+    if(user && user.name){
+      setAssignedTo(user.name);
     }
   }, [issueContext, current, authContext, user]);
 
-  const onChange = e => setIssue({ ...issue, [e.target.name]: e.target.value });
-
   const onSubmit = e => {
     e.preventDefault();
-    if (current === null) {
-      if(!/^[a-zA-Z0-9][\w.\s]+$/i.test(description)){
-        setAlert("Please add valid description", "danger")
-        return;
-      } 
+
+    if (!/^[a-zA-Z0-9][\w.\s]+$/i.test(description)) {
+      setAlert("Please add valid description", "danger");
     } else {
-      updateIssue(issue);
+      const updated = {
+        id: current._id,
+        description,
+        severity,
+        status,
+        assignedTo,
+        date: new Date()
+      };
+      updateIssue(updated);
     }
     clearAll();
   };
@@ -59,40 +53,38 @@ const EditIssueForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className="text-primary text-center">
-        Edit Issue
-      </h2>
+      <h2 className="text-primary text-center">Edit Issue</h2>
       <input
         type="text"
         placeholder="Issue"
         name="description"
         value={description}
-        onChange={onChange}
+        onChange={e => setDescription(e.target.value)}
       />
-        <h4>Status</h4>
-        <input
-          type="radio"
-          name="status"
-          value="open"
-          checked={status === "open"}
-          onChange={onChange}
-        />{" "}
-        Open{" "}
-        <input
-          type="radio"
-          name="status"
-          value="closed"
-          checked={status === "closed"}
-          onChange={onChange}
-        />{" "}
-        Close <hr />
+      <h4>Status</h4>
+      <input
+        type="radio"
+        name="status"
+        value="open"
+        checked={status === "open"}
+        onChange={e => setStatus(e.target.value)}
+      />{" "}
+      Open{" "}
+      <input
+        type="radio"
+        name="status"
+        value="closed"
+        checked={status === "closed"}
+        onChange={e => setStatus(e.target.value)}
+      />{" "}
+      Close <hr />
       <h4>Severity</h4>
       <input
         type="radio"
         name="severity"
         value="low"
         checked={severity === "low"}
-        onChange={onChange}
+        onChange={e => setSeverity(e.target.value)}
       />
       Low{" "}
       <input
@@ -100,7 +92,7 @@ const EditIssueForm = () => {
         name="severity"
         value="medium"
         checked={severity === "medium"}
-        onChange={onChange}
+        onChange={e => setSeverity(e.target.value)}
       />
       Medium{" "}
       <input
@@ -108,15 +100,10 @@ const EditIssueForm = () => {
         name="severity"
         value="high"
         checked={severity === "high"}
-        onChange={onChange}
+        onChange={e => setSeverity(e.target.value)}
       />
       High <br />
       <hr />
-      <span>
-        <strong>Assigned to:</strong> <i className="fas fa-user"></i>
-        {assignedTo}
-      </span>
-      <p>Date Issue: {date}</p>
       <div>
         <input
           type="submit"
@@ -124,42 +111,8 @@ const EditIssueForm = () => {
           className="btn btn-primary btn-block"
         />
       </div>
-      {current && (
-        <div>
-          <button className="btn btn-light btn-block" onClick={clearAll}>
-            Clear
-          </button>
-        </div>
-      )}
     </form>
   );
-};
-
-const addDate = () => {
-  let date = new Date();
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  let dd = date.getDate();
-  let mm = date.getMonth();
-  let yy = date.getFullYear();
-  let d = days[date.getDay()];
-  let h = date.getHours();
-  let m = date.getMinutes();
-  let am_pm = "AM";
-
-  if (h === 0) {
-    h = 12;
-  }
-
-  if (h > 12) {
-    h -= 12;
-    am_pm = "PM";
-  }
-
-  mm = mm += 1;
-  h = h < 10 ? "0" + h : h;
-  m = m < 10 ? "0" + m : m;
-
-  return `${d}-${h}:${m}${am_pm} : ${dd}/${mm}/${yy}`;
 };
 
 export default EditIssueForm;

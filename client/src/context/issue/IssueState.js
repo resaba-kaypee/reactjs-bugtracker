@@ -68,7 +68,7 @@ const IssueState = props => {
       }
     };
     try {
-      const res = await axios.put(`/api/issues/${issue._id}`, issue, config);
+      const res = await axios.put(`/api/issues/${issue.id}`, issue, config);
       dispatch({ type: UPDATE_ISSUE, payload: res.data });
     } catch (err) {
       dispatch({ type: ISSUE_ERROR, payload: err.response.msg });

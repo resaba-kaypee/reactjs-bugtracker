@@ -6,6 +6,7 @@
 
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import Moment from "react-moment";
 import IssueContext from "../../context/issue/issueContext";
 
 const IssueItem = ({ issue }) => {
@@ -54,7 +55,8 @@ const IssueItem = ({ issue }) => {
           </span>
           <p>
             <span className="text-dark">ID#: {_id}</span> last updated by{" "}
-            <span className="text-dark">{assignedTo}</span> on {date}
+            <span className="text-dark">{assignedTo}</span> on{" "}
+            <Moment format="MMMM Do YYYY, h:mm:ss a">{date}</Moment>
             <button className="btn btn-light float-right" onClick={onDelete}>
               <i className="fas fa-trash-alt"></i>
             </button>
