@@ -3,6 +3,7 @@ import useForm from "../validate/useForm";
 import validate from "../validate/validate";
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
+import AuthAdminContext from "../../context/auth/authAdminContext";
 import Alerts from "../layout/Alerts"
 
 const Register = props => {
@@ -10,18 +11,26 @@ const Register = props => {
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
   const { error, clearErrors, isAuthenticated, register } = authContext;
+  const authAdminContext = useContext(AuthAdminContext)
 
   const { handleChange, handleSubmit, user, errors } = useForm(
     registerUser,
+    registerAdmin,
     validate
   );
   const { name, email, password, password2 } = user;
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (authContext.isAuthenticated) {
       props.history.push("/");
     }
-    if (error === "User already exists") {
+
+    if (authContext.error === "User already exists") {
+      setAlert(authContext.error, "danger");
+      clearErrors();
+    }
+
+    if (error === "Admin already exists") {
       setAlert(error, "danger");
       clearErrors();
     }
@@ -49,6 +58,14 @@ const Register = props => {
       password
     });
   }
+
+  function registerAdmin() {
+    register({
+    name,
+    email,
+    password
+  });
+}
 
   return (
     <div className="form-container">

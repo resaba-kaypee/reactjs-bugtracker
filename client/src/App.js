@@ -7,6 +7,7 @@ import About from "./components/pages/About";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import IssueState from "./context/issue/IssueState";
+import AuthAdminState from "./context/auth/AuthAdminState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import setAuthToken from "./utils/setAuthToken";
@@ -28,6 +29,7 @@ const App = () => {
   };
 
   return (
+    <AuthAdminState>
     <AuthState>
       <IssueState>
         <AlertState>
@@ -50,6 +52,7 @@ const App = () => {
         </AlertState>
       </IssueState>
     </AuthState>
+    </AuthAdminState>
   );
 };
 
