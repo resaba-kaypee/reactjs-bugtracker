@@ -1,38 +1,50 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useForm from "../validate/useForm";
 import validate from "../validate/validate";
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
-import AuthAdminContext from "../../context/auth/authAdminContext";
-import Alerts from "../layout/Alerts"
+import AuthAdminContext from "../../context/authAdmin/authAdminContext";
+import Alerts from "../layout/Alerts";
 
 const Register = props => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
-  const { error, clearErrors, isAuthenticated, register } = authContext;
-  const authAdminContext = useContext(AuthAdminContext)
+  const authAdminContext = useContext(AuthAdminContext);
 
-  const { handleChange, handleSubmit, user, errors } = useForm(
-    registerUser,
-    registerAdmin,
+  const { handleChange, handleSubmit, values, errors } = useForm(
+    register,
+    {
+      name: "",
+      email: "",
+      password: "",
+      password2: ""
+    },
     validate
   );
-  const { name, email, password, password2 } = user;
+
+  const { name, email, password, password2 } = values;
+
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    // if admin is authenticated redirect to admin home
+    if (authAdminContext.isAuthenticated) {
+      props.history.push("/admin");
+    }
+
+    if (authAdminContext.error === "Admin already exists") {
+      setAlert(authAdminContext.error, "danger");
+      authAdminContext.clearErrors();
+    }
+
+    // if user is authenticated redirect to home
     if (authContext.isAuthenticated) {
       props.history.push("/");
     }
-
     if (authContext.error === "User already exists") {
       setAlert(authContext.error, "danger");
-      clearErrors();
-    }
-
-    if (error === "Admin already exists") {
-      setAlert(error, "danger");
-      clearErrors();
+      authContext.clearErrors();
     }
 
     if (errors && errors.name) {
@@ -49,29 +61,32 @@ const Register = props => {
     }
 
     // eslint-disable-next-line
-  }, [error, errors, isAuthenticated, props.history]);
+  }, [authContext.error, errors, authContext.isAuthenticated, props.history, authAdminContext.isAuthenticated, authAdminContext.error]);
 
-  function registerUser() {
-      register({
-      name,
-      email,
-      password
-    });
+  function register() {
+    if (isAdmin) {
+      console.log("Admin Register");
+      authAdminContext.register({
+        name,
+        email,
+        password,
+      });
+    } else {
+      console.log("User Register");
+      authContext.register({
+        name,
+        email,
+        password,
+      });
+    }
   }
-
-  function registerAdmin() {
-    register({
-    name,
-    email,
-    password
-  });
-}
 
   return (
     <div className="form-container">
-      <Alerts/>
+      <Alerts />
       <h1>
-        Account <span className="text-primary">Register</span>
+        {isAdmin ? "Admin " : "User "}{" "}
+        <span className="text-primary">Register</span>
       </h1>
       <form onSubmit={handleSubmit} noValidate>
         <div className="form-group">
@@ -105,11 +120,16 @@ const Register = props => {
             onChange={handleChange}
           />
         </div>
-        <input
-          type="submit"
-          value="Register"
+        <button type="submit" className="btn btn-primary btn-block">
+          Register
+        </button>
+        <button
+          type="button"
           className="btn btn-primary btn-block"
-        />
+          onClick={() => setIsAdmin(!isAdmin)}
+        >
+          Register as {!isAdmin ? "Admin " : "User "}
+        </button>
       </form>
     </div>
   );

@@ -35,7 +35,7 @@ const AuthAdminState = props => {
 
     try {
       // check if valid user is logging in
-      const res = await axios.get("/api/admin/authAdmin");
+      const res = await axios.get("/api/authAdmin");
 
       dispatch({
         type: ADMIN_LOADED,
@@ -81,7 +81,7 @@ const AuthAdminState = props => {
     };
 
     try {
-      const res = await axios.post("/api/admin/authAdmin", formData, config);
+      const res = await axios.post("/api/authAdmin", formData, config);
 
       dispatch({
         type: LOGIN_SUCCESS,

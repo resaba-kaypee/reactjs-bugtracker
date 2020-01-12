@@ -2,12 +2,13 @@ import React, { Fragment, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Nav from "./components/layout/SideNav";
+import Admin from "./components/admin/Admin";
 import DashBoard from "./components/pages/DashBoard";
 import About from "./components/pages/About";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import IssueState from "./context/issue/IssueState";
-import AuthAdminState from "./context/auth/AuthAdminState";
+import AuthAdminState from "./context/authAdmin/AuthAdminState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import setAuthToken from "./utils/setAuthToken";
@@ -42,6 +43,7 @@ const App = () => {
                 <EditIssueModal />
                 <Switch>
                   <PrivateRoute exact path="/" component={DashBoard} />
+                  <PrivateRoute exact path="/admin" component={Admin} />
                   <Route exact path="/about" component={About} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />

@@ -21,7 +21,7 @@ router.get("/", authAdmin, async (req, res) => {
   }
 });
 
-// @route   POST api/auth
+// @route   POST api/authAdmin
 // @desc    Auth user and get token
 // @access  Public
 router.post(

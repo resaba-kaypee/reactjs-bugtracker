@@ -1,12 +1,7 @@
 import { useState, useEffect } from "react";
 
-const useForm = (callback, validate) => {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: ""
-  });
+const useForm = (callback, initialState = {}, validate) => {
+  const [values, setValues] = useState(initialState);
 
   const [errors, setErrors] = useState({});
   const [isValidating, setIsValidating] = useState(false);
@@ -20,22 +15,22 @@ const useForm = (callback, validate) => {
 
   const handleChange = event => {
     const { name, value } = event.target;
-    setUser({
-      ...user,
+    setValues({
+      ...values,
       [name]: value
     });
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    setErrors(validate(user));
+    setErrors(validate(values));
     setIsValidating(true)
   };
 
   return {
     handleChange,
     handleSubmit,
-    user,
+    values,
     errors
   };
 };

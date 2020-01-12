@@ -1,36 +1,52 @@
 import React, { useState, useContext, useEffect } from "react";
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
+import AuthAdminContext from "../../context/authAdmin/authAdminContext";
 import Alerts from "../layout/Alerts";
 
 const Login = props => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
+  const authAdminContext = useContext(AuthAdminContext);
   const { login, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
-    if (isAuthenticated) {
+    // authenticate admin
+    if (authAdminContext.isAuthenticated) {
+      props.history.push("/admin");
+    }
+
+    if (authAdminContext.error === "Invalid Credentials") {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+
+     // authenticate user
+    if (authContext.isAuthenticated) {
       props.history.push("/");
     }
 
-    if (error === "Invalid Credentials") {
+    if (authContext.error === "Invalid Credentials") {
       setAlert(error, "danger");
       clearErrors();
     }
 
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [authContext.error, authContext.isAuthenticated, authAdminContext.error, authAdminContext.isAuthenticated, props.history]);
 
-  const [user, setUser] = useState({
+  const [values, setValues] = useState({
     email: "",
     password: ""
   });
-  const { email, password } = user;
+
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  const { email, password } = values;
 
   const onChange = e =>
-    setUser({
-      ...user,
+    setValues({
+      ...values,
       [e.target.name]: e.target.value
     });
 
@@ -38,8 +54,14 @@ const Login = props => {
     e.preventDefault();
     if (email === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
+    }
+    if(authAdminContext.isAuthenticated) {
+      authAdminContext.login({
+        email,
+        password
+      });
     } else {
-      login({
+      authContext.login({
         email,
         password
       });
@@ -49,7 +71,7 @@ const Login = props => {
     <div className="form-container">
       <Alerts />
       <h1>
-        Account <span className="text-primary">Login</span>
+        {!isAdmin ? "User " : "Administrator "} <span className="text-primary">Login</span>
       </h1>
       <form onSubmit={onSubmit} noValidate>
         <div className="form-group">
@@ -70,6 +92,13 @@ const Login = props => {
           value="Login"
           className="btn btn-primary btn-block"
         />
+        <button
+          type="button"
+          className="btn btn-primary btn-block"
+          onClick={() => setIsAdmin(!isAdmin)}
+          >
+          Login as {!isAdmin ? "Admin " : "User "}
+        </button>
       </form>
     </div>
   );
