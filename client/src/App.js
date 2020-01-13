@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Nav from "./components/layout/SideNav";
-import Admin from "./components/admin/Admin";
+import AdminHome from "./components/admin/AdminHome";
 import DashBoard from "./components/pages/DashBoard";
 import About from "./components/pages/About";
 import Register from "./components/auth/Register";
@@ -12,6 +12,7 @@ import AuthAdminState from "./context/authAdmin/AuthAdminState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import setAuthToken from "./utils/setAuthToken";
+import PrivateAdminRoute from "./components/routing/PrivateAdminRoute";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import "./assets/css/all.css";
 import "./assets/css/bootstrap.min.css";
@@ -42,11 +43,11 @@ const App = () => {
                 <AddIssueModal />
                 <EditIssueModal />
                 <Switch>
+                  <PrivateAdminRoute exact path="/admin" component={AdminHome} />
+                  <PrivateAdminRoute exact path="/admin/register" component={Register} />
                   <PrivateRoute exact path="/" component={DashBoard} />
-                  <PrivateRoute exact path="/admin" component={Admin} />
-                  <Route exact path="/about" component={About} />
-                  <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
+                  <Route exact path="/about" component={About} />
                 </Switch>
               </div>
             </Fragment>

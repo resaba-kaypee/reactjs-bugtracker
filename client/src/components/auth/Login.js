@@ -9,7 +9,6 @@ const Login = props => {
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
   const authAdminContext = useContext(AuthAdminContext);
-  const { login, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
     // authenticate admin
@@ -18,29 +17,35 @@ const Login = props => {
     }
 
     if (authAdminContext.error === "Invalid Credentials") {
-      setAlert(error, "danger");
-      clearErrors();
+      setAlert(authAdminContext.error, "danger");
+      authAdminContext.clearErrors();
     }
 
-     // authenticate user
+    // authenticate user
     if (authContext.isAuthenticated) {
       props.history.push("/");
     }
 
     if (authContext.error === "Invalid Credentials") {
-      setAlert(error, "danger");
-      clearErrors();
+      setAlert(authContext.error, "danger");
+      authContext.clearErrors();
     }
 
     // eslint-disable-next-line
-  }, [authContext.error, authContext.isAuthenticated, authAdminContext.error, authAdminContext.isAuthenticated, props.history]);
+  }, [
+    authContext.error,
+    authContext.isAuthenticated,
+    authAdminContext.error,
+    authAdminContext.isAuthenticated,
+    props.history
+  ]);
 
   const [values, setValues] = useState({
     email: "",
     password: ""
   });
 
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const { email, password } = values;
 
@@ -52,10 +57,12 @@ const Login = props => {
 
   const onSubmit = e => {
     e.preventDefault();
+
     if (email === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
     }
-    if(authAdminContext.isAuthenticated) {
+
+    if (isAdmin) {
       authAdminContext.login({
         email,
         password
@@ -71,7 +78,8 @@ const Login = props => {
     <div className="form-container">
       <Alerts />
       <h1>
-        {!isAdmin ? "User " : "Administrator "} <span className="text-primary">Login</span>
+        {!isAdmin ? "User " : "Administrator "}{" "}
+        <span className="text-primary">Login</span>
       </h1>
       <form onSubmit={onSubmit} noValidate>
         <div className="form-group">
@@ -95,9 +103,11 @@ const Login = props => {
         <button
           type="button"
           className="btn btn-primary btn-block"
-          onClick={() => setIsAdmin(!isAdmin)}
-          >
-          Login as {!isAdmin ? "Admin " : "User "}
+          onClick={() => {
+            setIsAdmin(!isAdmin);
+          }}
+        >
+          Login as {isAdmin ? "User" : "Admin"}
         </button>
       </form>
     </div>

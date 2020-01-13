@@ -55,14 +55,14 @@ const AuthState = props => {
     };
 
     try {
-      const res = await axios.post("/api/users", formData, config);
+      const res = await axios.post("/api/admin/users", formData, config);
 
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
       });
 
-      loadUser();
+      // loadUser();
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,

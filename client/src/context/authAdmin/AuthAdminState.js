@@ -34,7 +34,7 @@ const AuthAdminState = props => {
     }
 
     try {
-      // check if valid user is logging in
+      // check if valid admin is logging in
       const res = await axios.get("/api/authAdmin");
 
       dispatch({
@@ -48,7 +48,7 @@ const AuthAdminState = props => {
   };
 
   // Register Admin
-  const register = async formData => {
+  const registerAdmin = async formData => {
     const config = {
       headers: {
         "Content-Type": "application/json"
@@ -56,14 +56,39 @@ const AuthAdminState = props => {
     };
 
     try {
-      const res = await axios.post("/api/admin/register", formData, config);
+      const res = await axios.post("/api/admin/registerAdmin", formData, config);
 
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
       });
 
-      loadAdmin();
+      // loadAdmin();
+    } catch (err) {
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: err.response.data.msg
+      });
+    }
+  };
+
+  // Register User
+  const registerUser = async formData => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    try {
+      const res = await axios.post("/api/admin/registerUser", formData, config);
+
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data
+      });
+
+      // loadAdmin();
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
@@ -112,7 +137,8 @@ const AuthAdminState = props => {
         admin: state.admin,
         error: state.error,
         loadAdmin,
-        register,
+        registerAdmin,
+        registerUser,
         login,
         logout,
         clearErrors

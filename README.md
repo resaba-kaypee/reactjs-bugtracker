@@ -1,5 +1,5 @@
 # reactjs-BugTracker
-Track issues with bug tracker
+Track issues with Bug Tracker
 
 # Build
 * Created an express api \(Mongodb for database, Node, Express\)
@@ -16,22 +16,35 @@ Track issues with bug tracker
 
 # Update history
 ## Version 1.0.1
-* fixed name validation when registering name as "space"
-* fixed email validation when registering email as "space"
-* corrected the email format
-* fixed add issue form using "space or starting with space and special characters are not allowed
-* status can only be updated using edit
-* edit and delete button is disabled if the status is close
+* Fixed when admin is adding a user it redirects to user dashboard
+* Fixed when logging in as admin it redirects to user dashboard
+* Fixed name validation when registering name as "space"
+* Fixed email validation when registering email as "space"
+* Corrected the email format
+* Fixed add issue form using "space or starting with space and special characters are not allowed
+* Status can only be updated using edit
+* Edit and delete button is disabled if the status is close
 
 # Changelog
+* Only admins can add a user
+* You can log in as user or admin
 * Added side navbar
 * Remodeled issue item list
 * Added bootstrap modals for adding and updating issues
 
-# Bugs History
-1. No error prompt when input is "name@gmail" in email field
-1. No error prompt when adding issue without input in issue field
-1. accepting "space" in issue field
-1. edit and delete button field should be disabled once issue is closed
-1. when adding issue, close option in status should be status*
-1. fixed when updating issue with the current user is not updating the db
+# Bugs to fix
+[ ] When adding a user/ admin that already in db It shows the error alert and success alert
+[x] When adding new admin/user context not making a proper check if a admin/user already exist
+[x] When adding a user as admin it redirects to user dashboard
+[x] When logging in as admin it redirects to user dashboard
+[x] No error prompt when input is "name@gmail" in email field
+[x] No error prompt when adding issue without input in issue field
+[x] accepting "space" in issue field
+[x] edit and delete button field should be disabled once issue is closed
+[x] when adding issue, close option in status should be status*
+[x] fixed when updating issue with the current user is not updating the db
+
+# Todos
+[x] Only admin can register user or add another admin
+[ ] Make users logs
+

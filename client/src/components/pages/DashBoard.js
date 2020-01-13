@@ -14,6 +14,7 @@ const DashBoard = () => {
     <div>
       <div>
         <IssueFilter />
+        <h1>This is user</h1>
         <button type="button" className="btn btn-secondary btn-block" data-toggle="modal" data-target="#addIssue">
           Add Issue
         </button>
