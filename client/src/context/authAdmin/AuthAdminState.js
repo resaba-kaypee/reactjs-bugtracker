@@ -12,7 +12,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  CLEAR_SUCCESS
 } from "../types";
 
 const AuthAdminState = props => {
@@ -21,7 +22,8 @@ const AuthAdminState = props => {
     isAuthenticated: null,
     admin: null,
     loading: true,
-    error: null
+    error: null,
+    success: null
   };
 
   const [state, dispatch] = useReducer(authAdminReducer, initialState);
@@ -60,7 +62,7 @@ const AuthAdminState = props => {
 
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: res.data
+        payload: res.data.msg
       });
 
       // loadAdmin();
@@ -85,7 +87,7 @@ const AuthAdminState = props => {
 
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: res.data
+        payload: res.data.msg
       });
 
       // loadAdmin();
@@ -127,6 +129,9 @@ const AuthAdminState = props => {
 
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+  
+  // Clear Success
+  const clearSuccess = () => dispatch({ type: CLEAR_SUCCESS });
 
   return (
     <AuthAdminContext.Provider
@@ -136,12 +141,14 @@ const AuthAdminState = props => {
         loading: state.loading,
         admin: state.admin,
         error: state.error,
+        success: state.success,
         loadAdmin,
         registerAdmin,
         registerUser,
         login,
         logout,
-        clearErrors
+        clearErrors,
+        clearSuccess
       }}
     >
       {props.children}

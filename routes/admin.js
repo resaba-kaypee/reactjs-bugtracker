@@ -35,36 +35,39 @@ router.post(
       let admin = await Admin.findOne({ email });
       if (admin) {
         return res.status(400).json({ msg: "Admin already exists" });
+      } else {
+        admin = new Admin({
+          name,
+          email,
+          password
+        });
+  
+        const salt = await bcrypt.genSalt(10);
+        admin.password = await bcrypt.hash(password, salt);
+  
+        await admin.save();
+
+        return res.status(200).json({msg: "Admin registered"})
       }
 
-      admin = new Admin({
-        name,
-        email,
-        password
-      });
-
-      const salt = await bcrypt.genSalt(10);
-      admin.password = await bcrypt.hash(password, salt);
-
-      await admin.save();
       
-      const payload = {
-        admin: {
-          id: admin.id
-        }
-      };
+      // const payload = {
+      //   admin: {
+      //     id: admin.id
+      //   }
+      // };
 
-      jwt.sign(
-        payload,
-        config.get("jwtSecret"),
-        {
-          expiresIn: 360000
-        },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
+      // jwt.sign(
+      //   payload,
+      //   config.get("jwtSecret"),
+      //   {
+      //     expiresIn: 360000
+      //   },
+      //   (err, token) => {
+      //     if (err) throw err;
+      //     res.json({ token });
+      //   }
+      // );
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
@@ -99,36 +102,39 @@ router.post(
       let user = await User.findOne({ email });
       if (user) {
         return res.status(400).json({ msg: "User already exists" });
+      } else {
+        user = new User({
+          name,
+          email,
+          password
+        });
+  
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+  
+        await user.save();
+
+        return res.status(200).json({msg: "User registered"})
       }
 
-      user = new User({
-        name,
-        email,
-        password
-      });
 
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+      // const payload = {
+      //   user: {
+      //     id: user.id
+      //   }
+      // };
 
-      await user.save();
-
-      const payload = {
-        user: {
-          id: user.id
-        }
-      };
-
-      jwt.sign(
-        payload,
-        config.get("jwtSecret"),
-        {
-          expiresIn: 360000
-        },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
+      // jwt.sign(
+      //   payload,
+      //   config.get("jwtSecret"),
+      //   {
+      //     expiresIn: 360000
+      //   },
+      //   (err, token) => {
+      //     if (err) throw err;
+      //     res.json({ token });
+      //   }
+      // );
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");

@@ -5,12 +5,12 @@ import AlertContext from "../../context/alert/alertContext";
 import AuthAdminContext from "../../context/authAdmin/authAdminContext";
 import Alerts from "../layout/Alerts";
 
-const Register = props => {
+const Register = () => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authAdminContext = useContext(AuthAdminContext);
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
+  const { handleChange, handleSubmit, values, errors, setErrors } = useForm(
     register,
     {
       name: "",
@@ -26,23 +26,37 @@ const Register = props => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    authAdminContext.loadAdmin();
 
+    // check if admin or user is already exist in db
+    if (authAdminContext.error) {
+      setAlert(authAdminContext.error, "danger");
+      authAdminContext.clearErrors();
+    }
+
+    if (authAdminContext.success) {
+      setAlert(authAdminContext.success, "success");
+      authAdminContext.clearSuccess();
+    }
+    
+    // check if there is an error in validating forms
     if (errors && errors.name) {
       setAlert(errors.name, "danger");
+      setErrors({});
     }
     if (errors && errors.email) {
       setAlert(errors.email, "danger");
+      setErrors({});
     }
     if (errors && errors.password) {
       setAlert(errors.password, "danger");
+      setErrors({});
     }
     if (errors && errors.password2) {
       setAlert(errors.password2, "danger");
+      setErrors({});
     }
-
     // eslint-disable-next-line
-  }, [errors, authAdminContext]);
+  }, [errors, authAdminContext.error, authAdminContext.success]);
 
   function register() {
     if (isAdmin) {
@@ -58,6 +72,7 @@ const Register = props => {
         password
       });
     }
+    // setAlert("Register", "success")
   }
 
   return (
