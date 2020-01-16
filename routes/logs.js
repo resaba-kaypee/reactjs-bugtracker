@@ -1,3 +1,5 @@
+// protect get logs
+
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
@@ -5,6 +7,21 @@ const auth = require("../middleware/auth");
 const { check, validationResult } = require("express-validator");
 
 const Log = require("../models/Log");
+
+// @route   GET api/issues
+// @desc    Get all users issue
+// @access  Private
+router.get("/", async (req, res) => {
+  try {
+    const logs = await Log.find({}).sort({
+      date: -1
+    });
+    res.json(logs);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
 
 // @route   POST api/issues
 // @desc    Add new issue

@@ -3,36 +3,18 @@ import axios from "axios";
 import LogContext from "./logContext";
 import logReducer from "./logReducer";
 
-
-import {
-  LOG_FAIL,
-  LOG_SUCCESS
-} from "../types";
+import { LOG_FAIL, LOG_SUCCESS, GET_LOGS, LOG_ERROR } from "../types";
 
 const LogState = props => {
   const initialState = {
-    actions: [
-      {
-        id: 1,
-        action: "Sam Smith just logged in",
-        date: "2020-01-10T19:01:48.999Z"
-      },
-      {
-        id: 2,
-        action: "Sam Smith just logged out",
-        date: "2020-01-10T19:01:48.999Z"
-      },
-      {
-        id: 3,
-        action: "Kevin Ng just logged in",
-        date: "2020-01-10T19:01:48.999Z"
-      }
-    ]
+    logs: null,
+    error: null,
+    loading: true
   };
 
   const [state, dispatch] = useReducer(logReducer, initialState);
 
-  // Register Admin
+  // Add log
   const sendLog = async data => {
     const config = {
       headers: {
@@ -41,13 +23,11 @@ const LogState = props => {
     };
 
     try {
-      const res = await axios.post("/api/log", data, config);
-
+      const res = await axios.post("/api/logs", data, config);
       dispatch({
         type: LOG_SUCCESS,
         payload: res.data
       });
-
     } catch (err) {
       dispatch({
         type: LOG_FAIL,
@@ -56,11 +36,22 @@ const LogState = props => {
     }
   };
 
+  // Get logs
+  const getLogs = async () => {
+    try {
+      const res = await axios.get("/api/logs");
+      dispatch({ type: GET_LOGS, payload: res.data });
+    } catch (err) {
+      dispatch({ type: LOG_ERROR, payload: err.response.msg });
+    }
+  };
+
   return (
     <LogContext.Provider
       value={{
-        actions: state.actions,
-        sendLog
+        logs: state.logs,
+        sendLog,
+        getLogs
       }}
     >
       {props.children}
