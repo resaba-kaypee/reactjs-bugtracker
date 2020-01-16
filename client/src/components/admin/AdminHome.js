@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import Issues from "../issues/Issues";
 import IssueFilter from "../issues/IssueFilter";
+import Logs from "../logs/Logs";
 import AuthAdminContext from "../../context/authAdmin/authAdminContext";
 
 const AdminHome = () => {
@@ -11,7 +12,7 @@ const AdminHome = () => {
     // eslint-disable-next-line
   }, []);
   return (
-    <div>
+    <div className="grid-2">
       <div>
         <IssueFilter />
         <h1>This is admin</h1>
@@ -20,6 +21,10 @@ const AdminHome = () => {
         </button>
         <hr/>
         <Issues />
+      </div>
+      <div>
+        <h1>User Logs</h1>
+        <Logs/>
       </div>
     </div>
   );

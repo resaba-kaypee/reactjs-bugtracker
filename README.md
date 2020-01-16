@@ -33,7 +33,7 @@ Track issues with Bug Tracker
 * Added bootstrap modals for adding and updating issues
 
 # Bugs to fix
-[ ] When adding a user/ admin that already in db It shows the error alert and success alert
+[x] When adding a user/ admin that already in db It shows the error alert and success alert
 [x] When adding new admin/user context not making a proper check if a admin/user already exist
 [x] When adding a user as admin it redirects to user dashboard
 [x] When logging in as admin it redirects to user dashboard
@@ -47,4 +47,5 @@ Track issues with Bug Tracker
 # Todos
 [x] Only admin can register user or add another admin
 [ ] Make users logs
+[ ] Only admin can close the issue
 
