@@ -3,7 +3,7 @@ import axios from "axios";
 import LogContext from "./logContext";
 import logReducer from "./logReducer";
 
-import { LOG_FAIL, LOG_SUCCESS, GET_LOGS, LOG_ERROR } from "../types";
+import { LOG_FAIL, SEND_LOG, GET_LOGS, LOG_ERROR } from "../types";
 
 const LogState = props => {
   const initialState = {
@@ -25,7 +25,7 @@ const LogState = props => {
     try {
       const res = await axios.post("/api/logs", data, config);
       dispatch({
-        type: LOG_SUCCESS,
+        type: SEND_LOG,
         payload: res.data
       });
     } catch (err) {

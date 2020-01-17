@@ -1,13 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const LogSchema = mongoose.Schema({
-  action: {
-    type: String,
-    required: true
-  },
-  date: {
+  username: {
     type: String
+  },
+  action: {
+    type: String
+  },
+  date: { 
+    type: Date, 
+    default: Date.now 
   }
-})
+});
 
-module.exports = mongoose.model('log', LogSchema);
+module.exports = mongoose.model("log", LogSchema);

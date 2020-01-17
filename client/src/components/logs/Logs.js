@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import LogItem from "./LogItem";
 import LogContext from "../../context/log/logContext";
 import Spinner from "../layout/Spinner";

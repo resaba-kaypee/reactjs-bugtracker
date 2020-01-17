@@ -8,8 +8,8 @@ const { check, validationResult } = require("express-validator");
 
 const Log = require("../models/Log");
 
-// @route   GET api/issues
-// @desc    Get all users issue
+// @route   GET api/logs
+// @desc    Get all users logs
 // @access  Private
 router.get("/", async (req, res) => {
   try {
@@ -23,8 +23,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-// @route   POST api/issues
-// @desc    Add new issue
+// @route   POST api/logs
+// @desc    Send user log
 // @access  Private
 router.post(
   "/",
@@ -42,13 +42,14 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { action, date } = req.body;
+    // const { action, date } = req.body;
 
     try {
-      const newLog = new Log({
-        action,
-        date
-      });
+      req.user = await accounts.findById(decoded.id);
+    //   const newLog = new Log({
+    //     action,
+    //     date
+    //   });
 
       await newLog.save();
       res.json(newLog);

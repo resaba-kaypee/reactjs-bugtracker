@@ -7,6 +7,7 @@ import Alerts from "../layout/Alerts";
 const Login = props => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
+
   const authContext = useContext(AuthContext);
   const authAdminContext = useContext(AuthAdminContext);
 

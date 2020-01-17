@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../middleware/auth");
+const Log = require("../models/Log")
 
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
@@ -50,7 +51,8 @@ router.post(
 
       const payload = {
         user: {
-          id: user.id
+          id: user.id,
+          name: user.name
         }
       };
 
@@ -65,6 +67,13 @@ router.post(
           res.json({ token });
         }
       );
+
+      const newLog = new Log({
+        username: payload.user.name,
+        action: "logged in",
+      })
+  
+      await newLog.save();
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Server error");
