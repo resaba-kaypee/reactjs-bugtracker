@@ -26,6 +26,7 @@ Track issues with Bug Tracker
 * Edit and delete button is disabled if the status is close
 
 # Changelog
+* Added users logger
 * Only admins can add a user
 * You can log in as user or admin
 * Added side navbar
@@ -46,6 +47,6 @@ Track issues with Bug Tracker
 
 # Todos
 [x] Only admin can register user or add another admin
-[ ] Make users logs
+[x] Make users logs
 [ ] Only admin can close the issue
 
