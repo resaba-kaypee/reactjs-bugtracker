@@ -6,7 +6,7 @@ import AdminHome from "./components/admin/AdminHome";
 import DashBoard from "./components/pages/DashBoard";
 import About from "./components/pages/About";
 import Register from "./components/auth/Register";
-import Log from "./components/logs/Logs"
+import Log from "./components/logs/Logs";
 import Login from "./components/auth/Login";
 import IssueState from "./context/issue/IssueState";
 import LogState from "./context/log/LogState";
@@ -33,46 +33,48 @@ const App = () => {
   };
 
   return (
-    <AuthAdminState>
-      <AuthState>
-        <LogState>
-          <IssueState>
-            <AlertState>
-              <Router>
-                <Fragment>
-                  <Navbar onHideNav={onHideNav} />
-                  <Nav showNav={showNav} onHideNav={onHideNav} />
-                  <div className="container">
-                    <AddIssueModal />
-                    <EditIssueModal />
-                    <Switch>
-                      <PrivateAdminRoute
-                        exact
-                        path="/admin"
-                        component={AdminHome}
-                      />
-                      <PrivateAdminRoute
-                        exact
-                        path="/admin/register"
-                        component={Register}
-                      />
-                      <PrivateAdminRoute
-                        exact
-                        path="/admin/logs"
-                        component={Log}
-                      />
-                      <PrivateRoute exact path="/" component={DashBoard} />
-                      <Route exact path="/login" component={Login} />
-                      <Route exact path="/about" component={About} />
-                    </Switch>
-                  </div>
-                </Fragment>
-              </Router>
-            </AlertState>
-          </IssueState>
-        </LogState>
-      </AuthState>
-    </AuthAdminState>
+    <React.StrictMode>
+      <AuthAdminState>
+        <AuthState>
+          <LogState>
+            <IssueState>
+              <AlertState>
+                <Router>
+                  <Fragment>
+                    <Navbar onHideNav={onHideNav} />
+                    <Nav showNav={showNav} onHideNav={onHideNav} />
+                    <div className="container">
+                      <AddIssueModal />
+                      <EditIssueModal />
+                      <Switch>
+                        <PrivateAdminRoute
+                          exact
+                          path="/admin"
+                          component={AdminHome}
+                        />
+                        <PrivateAdminRoute
+                          exact
+                          path="/admin/register"
+                          component={Register}
+                        />
+                        <PrivateAdminRoute
+                          exact
+                          path="/admin/logs"
+                          component={Log}
+                        />
+                        <PrivateRoute exact path="/" component={DashBoard} />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/about" component={About} />
+                      </Switch>
+                    </div>
+                  </Fragment>
+                </Router>
+              </AlertState>
+            </IssueState>
+          </LogState>
+        </AuthState>
+      </AuthAdminState>
+    </React.StrictMode>
   );
 };
 

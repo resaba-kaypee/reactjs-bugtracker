@@ -97,7 +97,20 @@ const AuthState = props => {
   };
 
   // Logout
-  const logout = () => dispatch({ type: LOGOUT });
+  const logout = () => {
+    try {
+      const res = axios.get("api/auth/logout");
+      dispatch({
+        type: LOGOUT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: err.response.data.msg
+      })
+    }
+  };
 
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });

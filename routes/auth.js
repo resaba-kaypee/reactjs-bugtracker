@@ -72,13 +72,31 @@ router.post(
         username: payload.user.name,
         action: "logged in",
       })
-  
       await newLog.save();
+
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Server error");
     }
   }
 );
+
+
+// @route   POST api/auth
+// @desc    Logout user
+// @access  Public
+router.get("/logout", auth, async (req,res) => {
+  try {
+    const newLog = new Log({
+      username: req.user.name,
+      action: "logged out",
+    })
+
+    await newLog.save();
+  } catch (err) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+})
 
 module.exports = router;

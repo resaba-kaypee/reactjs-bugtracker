@@ -6,6 +6,7 @@ const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 const Issue = require("../models/Issue");
+const Log = require("../models/Log")
 
 // @route   GET api/issues
 // @desc    Get all users issue
@@ -54,6 +55,14 @@ router.post(
       });
 
       const issue = await newIssue.save();
+
+      const newLog = new Log({
+        username: req.user.name,
+        action: "added new issue",
+      })
+  
+      await newLog.save();
+
       res.json(issue);
     } catch (error) {
       console.error(error.message);
@@ -66,7 +75,6 @@ router.post(
 // @desc    Update issue
 // @access  Public
 router.put("/:id", auth, async (req, res) => {
-  // @todo make status editable
   const { description, severity, status, assignedTo, date } = req.body;
 
   // Build issue object
@@ -93,6 +101,13 @@ router.put("/:id", auth, async (req, res) => {
       { new: true }
     );
 
+    const newLog = new Log({
+      username: req.user.name,
+      action: "updated issue",
+    })
+
+    await newLog.save();
+
     res.json(issue);
   } catch (err) {
     console.error(err.message);
@@ -115,6 +130,13 @@ router.delete("/:id", auth, async (req, res) => {
     // }
 
     await Issue.findByIdAndRemove(req.params.id);
+
+    const newLog = new Log({
+      username: req.user.name,
+      action: "deleted issue",
+    })
+
+    await newLog.save();
 
     res.json({ msg: "Issue removed" });
   } catch (err) {

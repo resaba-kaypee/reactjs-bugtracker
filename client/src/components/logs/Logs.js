@@ -21,9 +21,9 @@ const Logs = () => {
       <div>
         {logs !== null && !loading ? (
           logs.map(log => (
-            <ul className="list-group">
+            <ul className="list-group" key={log._id}>
               <li className="list-group-item">
-                <LogItem key={log._id} log={log}></LogItem>
+                <LogItem log={log}></LogItem>
               </li>
             </ul>
           ))

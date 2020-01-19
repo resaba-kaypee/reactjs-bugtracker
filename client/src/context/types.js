@@ -20,9 +20,6 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const CLEAR_SUCCESS = "CLEAR_SUCCESS";
-export const LOG_SUCCESS = "LOG_SUCCESS";
-export const LOG_FAIL = "LOG_FAIL";
 export const GET_LOGS = "GET_LOGS";
-export const SEND_LOG = "SEND_LOG";
 export const LOG_ERROR = "LOG_ERROR";
 

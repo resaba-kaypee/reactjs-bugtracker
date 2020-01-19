@@ -9,7 +9,7 @@ const DashBoard = () => {
   useEffect(() => {
     authContext.loadUser();
     // eslint-disable-next-line
-  }, [authContext, authContext.user]);
+  }, []);
 
   return (
     <div>
