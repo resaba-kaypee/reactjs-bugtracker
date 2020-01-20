@@ -17,7 +17,7 @@ router.get("/", auth, async (req, res) => {
     const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (error) {
-    console.error(error.message);
+    console.error("fr: get logged in user", error.message);
     res.status(500).send("Server error");
   }
 });
@@ -75,7 +75,7 @@ router.post(
       await newLog.save();
 
     } catch (error) {
-      console.error(error.message);
+      console.error("fr: auth user", error.message);
       res.status(500).send("Server error");
     }
   }
@@ -94,8 +94,7 @@ router.get("/logout", auth, async (req,res) => {
 
     await newLog.save();
   } catch (err) {
-    console.error(error.message);
-    res.status(500).send("Server error");
+    console.error("fr: logout", error.message);
   }
 })
 

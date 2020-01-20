@@ -21,6 +21,8 @@ import "./assets/css/bootstrap.min.css";
 import "./App.css";
 import AddIssueModal from "./components/issues/AddIssueModal";
 import EditIssueModal from "./components/issues/EditIssueModal";
+import AdminIssueModal from "./components/admin/issues/AdminIssueModal";
+import AdminEditIssueModal from "./components/admin/issues/AdminEditIssueModal";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -46,6 +48,8 @@ const App = () => {
                     <div className="container">
                       <AddIssueModal />
                       <EditIssueModal />
+                      <AdminIssueModal />
+                      <AdminEditIssueModal />
                       <Switch>
                         <PrivateAdminRoute
                           exact

@@ -1,15 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
-import IssueContext from "../../context/issue/issueContext";
-import AuthContext from "../../context/auth/authContext";
-import AlertContext from "../../context/alert/alertContext";
+import React, { useState, useContext, useEffect, Fragment } from "react";
+import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
+import AlertContext from "../../../context/alert/alertContext";
 
 const EditIssueForm = () => {
-  const issueContext = useContext(IssueContext);
-  const { current, clearCurrent, updateIssue } = issueContext;
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
   const alertContext = useContext(AlertContext);
+  const authAdminContext = useContext(AuthAdminContext);
   const { setAlert } = alertContext;
+  const { current, updateIssue, clearCurrent, admin } = authAdminContext;
 
   const [description, setDescription] = useState("");
   const [severity, setSeverity] = useState("low");
@@ -23,10 +20,10 @@ const EditIssueForm = () => {
       setStatus(current.status);
     }
 
-    if (user && user.name) {
-      setAssignedTo(user.name);
+    if (admin && admin.name) {
+      setAssignedTo(admin.name);
     }
-  }, [issueContext, current, authContext, user]);
+  }, [admin, current]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -42,6 +39,7 @@ const EditIssueForm = () => {
         assignedTo,
         date: new Date()
       };
+      console.log(updated);
       updateIssue(updated);
     }
     clearAll();
@@ -61,6 +59,29 @@ const EditIssueForm = () => {
         value={description}
         onChange={e => setDescription(e.target.value)}
       />
+      {authAdminContext.isAuthenticated && !authAdminContext.loading ? (
+        <Fragment>
+          <h4>Status</h4>
+          <input
+            type="radio"
+            name="status"
+            value="open"
+            checked={status === "open"}
+            onChange={e => setStatus(e.target.value)}
+          />{" "}
+          Open{" "}
+          <input
+            type="radio"
+            name="status"
+            value="closed"
+            checked={status === "closed"}
+            onChange={e => setStatus(e.target.value)}
+          />{" "}
+          Close
+        </Fragment>
+      ) : (
+        ""
+      )}
       <hr />
       <h4>Severity</h4>
       <input

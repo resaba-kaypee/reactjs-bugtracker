@@ -34,6 +34,7 @@ Track issues with Bug Tracker
 * Added bootstrap modals for adding and updating issues
 
 # Bugs to fix
+[x] Issue can be edited by user even if status is close
 [x] When adding a user/ admin that already in db It shows the error alert and success alert
 [x] When adding new admin/user context not making a proper check if a admin/user already exist
 [x] When adding a user as admin it redirects to user dashboard
@@ -48,5 +49,5 @@ Track issues with Bug Tracker
 # Todos
 [x] Only admin can register user or add another admin
 [x] Make users logs
-[ ] Only admin can close the issue
+[x] Only admin can close the issue
 

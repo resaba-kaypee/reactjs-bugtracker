@@ -1,9 +1,13 @@
+/*
+*might add sort by date/severity/asc/desc
+*/
+
 import React, { useContext, useRef, useEffect } from "react";
-import IssueContext from "../../context/issue/issueContext";
+import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
 
 const IssueFilter = () => {
-  const issueContext = useContext(IssueContext);
-  const { filterIssues, clearFilter, filtered } = issueContext;
+  const authAdminContext = useContext(AuthAdminContext);
+  const { filterIssues, clearFilter, filtered } = authAdminContext;
   const text = useRef("");
   useEffect(() => {
     if (filtered === null) {

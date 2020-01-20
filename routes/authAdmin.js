@@ -16,7 +16,7 @@ router.get("/", authAdmin, async (req, res) => {
     const admin = await Admin.findById(req.admin.id).select("-password");
     res.json(admin);
   } catch (error) {
-    console.error(error.message);
+    console.error("fr: get logged in admin", error.message);
     res.status(500).send("Server error");
   }
 });
@@ -66,7 +66,7 @@ router.post(
         }
       );
     } catch (error) {
-      console.error(error.message);
+      console.error("fr: auth admin", error.message);
       res.status(500).send("Server error");
     }
   }

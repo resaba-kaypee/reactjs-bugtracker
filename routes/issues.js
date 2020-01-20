@@ -18,7 +18,7 @@ router.get("/", auth, async (req, res) => {
     });
     res.json(issues);
   } catch (error) {
-    console.error(error.message);
+    console.error("fr: get all issue", error.message);
     res.status(500).send("Server error");
   }
 });
@@ -65,7 +65,7 @@ router.post(
 
       res.json(issue);
     } catch (error) {
-      console.error(error.message);
+      console.error("fr: add new issue", error.message);
       res.status(500).send("Server error");
     }
   }
@@ -110,7 +110,7 @@ router.put("/:id", auth, async (req, res) => {
 
     res.json(issue);
   } catch (err) {
-    console.error(err.message);
+    console.error("fr: update issue", err.message);
     res.status(500).send("Server Error");
   }
 });
@@ -140,7 +140,7 @@ router.delete("/:id", auth, async (req, res) => {
 
     res.json({ msg: "Issue removed" });
   } catch (err) {
-    console.error(err.message);
+    console.error("fr: delete issue", err.message);
     res.status(500).send("Server Error");
   }
 });

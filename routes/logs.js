@@ -2,7 +2,6 @@
 
 const express = require("express");
 const router = express.Router();
-const auth = require("../middleware/auth");
 
 const Log = require("../models/Log");
 
@@ -16,7 +15,7 @@ router.get("/", async (req, res) => {
     });
     res.json(logs);
   } catch (error) {
-    console.error(error.message);
+    console.error("fr: get all user logs", error.message);
     res.status(500).send("Server error");
   }
 });
