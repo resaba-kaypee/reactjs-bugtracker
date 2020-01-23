@@ -21,25 +21,13 @@ const Navbar = ({ title, icon, onHideNav }) => {
   }, [admin, user, authContext, authAdminContext]);
 
   return (
-    <div className="bg-primary text-light d-flex justify-content-between align-items-center">
-      <div>
-        <button className="btn btn-primary" onClick={onHideNav}>
-          <i className="fas fa-bars"></i>
-        </button>
+    <nav className="navbar navbar-dark bg-dark">
+      <div className="navbar-brand">
+        <h3>
+          <i className={icon} /> {title}
+        </h3>
       </div>
-      <div>
-        <h1>
-          <span>
-            <i className={icon} /> {title}
-          </span>
-        </h1>
-      </div>
-      <div>
-        <div>
-        {/* <span>Hello asdasdas{admin ? admin : user}</span> */}
-        </div>
-      </div>
-    </div>
+    </nav>
   );
 };
 

@@ -50,4 +50,4 @@ Track issues with Bug Tracker
 [x] Only admin can register user or add another admin
 [x] Make users logs
 [x] Only admin can close the issue
-
+[ ] Remodel UI

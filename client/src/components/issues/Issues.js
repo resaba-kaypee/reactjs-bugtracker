@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import IssueItem from "./IssueItem";
+import IssueFilter from "./IssueFilter";
 import IssueContext from "../../context/issue/issueContext";
 import Spinner from "../layout/Spinner";
 
@@ -19,6 +20,16 @@ const Issues = () => {
 
   return (
     <Fragment>
+      <IssueFilter />
+      <button
+        type="button"
+        className="btn btn-secondary btn-block"
+        data-toggle="modal"
+        data-target="#addIssue"
+      >
+        Add Issue
+      </button>
+      <hr />
       {issues !== null && !loading ? (
         <TransitionGroup>
           {filtered !== null
