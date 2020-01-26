@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../../context/auth/authContext";
 import IssueContext from "../../../context/issue/issueContext";
 
-const UserSideNav = (props) => {
+const UserSideNav = props => {
   const authContext = useContext(AuthContext);
   const issueContext = useContext(IssueContext);
   const { clearIssues } = issueContext;
@@ -15,31 +15,42 @@ const UserSideNav = (props) => {
 
   return (
     <Fragment>
-      <ul className="list-group bg-light rounded-right">
-        <li className="list-group-item">
-          <div>
-            <h1>Hello</h1>
-          </div>
-        </li>
-        <li className="list-group-item">
-          <i className="fas fa-home"></i> <Link to="/dashBoard/home">Home</Link>
-        </li>
-        <li className="list-group-item">
-          <i className="fas fa-bug"></i> <Link to="/dashBoard/issues">Issues</Link>
-        </li>
-        <li className="list-group-item">
-          <i className="fas fa-address-book"></i> <Link to="/dashBoard/contacts">Contacts</Link>
-        </li>
-        <li className="list-group-item">
-          <a onClick={onLogout} href="#!">
-            <i className="fas fa-sign-out-alt"></i>{" "}
-            <span className="hide-sm"> Logout</span>
-          </a>
-        </li>
-        <li className="list-group-item">
-          <i className="fas fa-info-circle"></i> <Link to="/dashBoard/about">About</Link>
-        </li>
-      </ul>
+      <Link
+        className="list-group-item list-group-item-action bg-light"
+        to="/dashBoard/home"
+      >
+        <i className="fas fa-home"></i> Home
+      </Link>
+
+      <Link
+        className="list-group-item list-group-item-action bg-light"
+        to="/dashBoard/issues"
+      >
+        <i className="fas fa-bug"></i> Issues
+      </Link>
+
+      <Link
+        className="list-group-item list-group-item-action bg-light"
+        to="/dashBoard/contacts"
+      >
+        <i className="fas fa-address-book"></i> Contacts
+      </Link>
+
+      <a
+        onClick={onLogout}
+        href="#!"
+        className="list-group-item list-group-item-action bg-light"
+      >
+        <i className="fas fa-sign-out-alt"></i>{" "}
+        <span className="hide-sm"> Logout</span>
+      </a>
+
+      <Link
+        className="list-group-item list-group-item-action bg-light"
+        to="/dashBoard/about"
+      >
+        <i className="fas fa-info-circle"></i> About
+      </Link>
     </Fragment>
   );
 };

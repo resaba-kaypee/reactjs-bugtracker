@@ -21,7 +21,7 @@ const Navbar = ({ title, icon, onHideNav }) => {
   }, [admin, user, authContext, authAdminContext]);
 
   return (
-    <nav className="navbar navbar-dark bg-dark">
+    <nav className="navbar navbar-light bg-light">
       <div className="navbar-brand">
         <h3>
           <i className={icon} /> {title}

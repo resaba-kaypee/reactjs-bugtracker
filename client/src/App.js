@@ -38,6 +38,7 @@ const App = () => {
                       <AdminIssueModal />
                       <AdminEditIssueModal />
                       <Switch>
+                        <Route exact path="/" component={Login} />
                         <PrivateAdminRoute
                           exact
                           path="/admin"
@@ -54,7 +55,6 @@ const App = () => {
                           component={Log}
                         />
                         <PrivateRoute path="/dashBoard" component={DashBoard} />
-                        <Route exact path="/login" component={Login} />
                       </Switch>
                     </div>
                   </Fragment>

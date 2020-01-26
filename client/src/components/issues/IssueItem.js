@@ -65,14 +65,37 @@ const IssueItem = ({ issue }) => {
               <i className="fas fa-edit"></i>
             </button>
             {/* <button className="btn btn-light float-right" onClick={onClose}>
-              <i class="fas fa-window-close"></i>
-            </button> */}
+          <i class="fas fa-window-close"></i>
+        </button> */}
           </p>
         </span>
       </div>
     </div>
   );
 };
+
+// <Fragment>
+//     <th scope="row">{_id}</th>
+//     <td>{assignedTo}</td>
+//     <td>{status}</td>
+//     <td>{severity}</td>
+//     <td>{date}</td>
+//     <td>{description}</td>
+//     <td>
+//       <button className="btn btn-light float-right" type="button">
+//         <i className="fas fa-trash-alt"></i>
+//       </button>
+//       <button
+//         className="btn btn-light float-right"
+//         type="button"
+//         data-toggle="modal"
+//         data-target="#editIssue"
+//         disabled={status === "closed" ? "disabled" : null}
+//       >
+//         <i className="fas fa-edit"></i>
+//       </button>
+//     </td>
+// </Fragment>
 
 IssueItem.propTypes = {
   issue: PropTypes.object.isRequired

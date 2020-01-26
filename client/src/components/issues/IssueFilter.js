@@ -19,14 +19,15 @@ const IssueFilter = () => {
   };
 
   return (
-    <form>
+    <span>
       <input
+        className="rounded"
         ref={text}
         type="text"
         placeholder="Filter issue..."
         onChange={onChange}
       />
-    </form>
+    </span>
   );
 };
 
