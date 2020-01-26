@@ -132,50 +132,5 @@ const Login = props => {
     </div>
   );
 };
-// <div className="container">
-//   <div className="d-flex justify-content-center">
-//     <div className="align-self-center col-md-8">
-//       <form className="bordered" onSubmit={onSubmit} noValidate>
-// <Alerts />
-// <h2 className="page-header">
-//   {!isAdmin ? "User " : "Administrator "}{" "}
-//   <span className="text-primary">Login</span>
-// </h2>
-//         <div className="form-group align-self-center">
-//           <label htmlFor="email">Email Address</label>
-//           <input
-//             type="email"
-// name="email"
-// value={email}
-// onChange={onChange}
-//           />
-//         </div>
-//         <div className="form-group">
-//           <label htmlFor="password">Password</label>
-//           <input
-//             type="password"
-// name="password"
-// value={password}
-// onChange={onChange}
-//           />
-//         </div>
-
-//         <button type="submit" className="btn btn-primary btn-block">
-//           Login
-//         </button>
-
-// <button
-//   type="button"
-//   className="btn btn-primary btn-block"
-//   onClick={() => {
-//     setIsAdmin(!isAdmin);
-//   }}
-// >
-//   Login as {isAdmin ? "User" : "Admin"}
-// </button>
-//       </form>
-//     </div>
-//   </div>
-// </div>
 
 export default Login;

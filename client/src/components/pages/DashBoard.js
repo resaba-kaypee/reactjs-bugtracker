@@ -23,7 +23,7 @@ const DashBoard = () => {
   return (
     <div className={"d-flex " + (isToggled ? "toggled" : "")} id="wrapper">
       <nav className="bg-light border-right" id="sidebar-wrapper">
-        <div className="sidebar-heading">Start Bootstrap </div>
+  <div className="sidebar-heading">Hello {authContext.user && authContext.user.name ? authContext.user.name : ""}</div>
         <div className="list-group list-group-flush">
           <UserSideNav />
         </div>

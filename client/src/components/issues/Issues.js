@@ -62,57 +62,5 @@ const Issues = () => {
     </Fragment>
   );
 };
-// <div className="card">
-//   <div className="card-header">
-//     <span className="navbar-brand" href="#!">
-//       <i className="fas fa-columns" /> Viewing Issues
-//     </span>
-//     <span>
-//     <IssueFilter />
-//     </span>
-//     <div>
-//       <a href="#!">
-//         <i className="fas fa-plus-square" /> Report Issue
-//       </a>
-//     </div>
-//   </div>
-//   <div className="card-body-table">
-//     {issues !== null && !loading ? (
-//       <table className="table table-hover">
-//         <thead className="bg-primary text-light">
-//           <tr>
-//             <th scope="col">Id</th>
-//             <th scope="col">Tech</th>
-//             <th scope="col">Resolved</th>
-//             <th scope="col">Severity</th>
-//             <th scope="col">Updated</th>
-//             <th scope="col">Summary</th>
-//             <th scope="col"></th>
-//             <th scope="col"></th>
-//           </tr>
-//         </thead>
-//         {filtered !== null ? (
-//           <tbody>
-//             {filtered.map(issue => (
-//               <tr key={issue._id}>
-//                 <IssueItem issue={issue} />
-//               </tr>
-//             ))}
-//           </tbody>
-//         ) : (
-//           <tbody>
-//             {issues.map(issue => (
-//               <tr key={issue._id}>
-//                 <IssueItem issue={issue} />
-//               </tr>
-//             ))}
-//           </tbody>
-//         )}
-//       </table>
-//     ) : (
-//       <Spinner />
-//     )}
-//   </div>
-// </div>
 
 export default Issues;
