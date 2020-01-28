@@ -1,7 +1,3 @@
-/*
-*might add sort by date/severity/asc/desc
-*/
-
 import React, { useContext, useRef, useEffect } from "react";
 import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
 

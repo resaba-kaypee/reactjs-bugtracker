@@ -3,6 +3,7 @@
 /* Global Styles */
 :root {
   /* --primary-color: #003699; */
+  --danger-color: #a72626;
   --success-color: #fff3cd;
 }
 
@@ -62,9 +63,6 @@
 }
 
 /* Forms */
-input {
-  margin: 1.2rem 0;
-}
 
 .form-text {
   display: block;
@@ -344,10 +342,6 @@ h3 {
   width: 40px;
   height: 30px;
   cursor: pointer;
-}
-
-.navbar-expand-lg{
-  margin-bottom: 20px;
 }
 
 .burger-menu-piece {

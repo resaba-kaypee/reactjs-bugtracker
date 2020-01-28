@@ -79,7 +79,7 @@ const AddIssueForm = () => {
       High <br />
       <hr />
       <span>
-        <strong>Last updated by:</strong> <i className="fas fa-user"></i>
+        <strong>Tech:</strong> <i className="fas fa-user"></i>
         {assignedTo}
       </span>
       <p>

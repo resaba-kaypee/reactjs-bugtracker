@@ -99,6 +99,7 @@ const IssueState = props => {
   const clearFilter = issue => {
     dispatch({ type: CLEAR_FILTER });
   };
+  
   return (
     <IssueContext.Provider
       value={{

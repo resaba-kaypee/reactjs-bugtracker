@@ -14,7 +14,7 @@ const Login = props => {
   useEffect(() => {
     // authenticate admin
     if (authAdminContext.isAuthenticated) {
-      props.history.push("/admin");
+      props.history.push("/admin/overview");
     }
 
     if (authAdminContext.error === "Invalid Credentials") {

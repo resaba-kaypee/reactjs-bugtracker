@@ -72,7 +72,6 @@ const Register = () => {
         password
       });
     }
-    // setAlert("Register", "success")
   }
 
   return (

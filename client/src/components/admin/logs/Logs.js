@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import LogItem from "./LogItem";
-import LogContext from "../../context/log/logContext";
-import Spinner from "../layout/Spinner";
+import LogContext from "../../../context/log/logContext";
+import Spinner from "../../layout/Spinner";
 
 const Logs = () => {
   const logContext = useContext(LogContext);

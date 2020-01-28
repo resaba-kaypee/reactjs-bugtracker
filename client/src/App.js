@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import AdminHome from "./components/admin/AdminHome";
 import DashBoard from "./components/pages/DashBoard";
-import Register from "./components/auth/Register";
-import Log from "./components/logs/Logs";
 import Login from "./components/auth/Login";
 import IssueState from "./context/issue/IssueState";
 import LogState from "./context/log/LogState";
@@ -39,21 +37,7 @@ const App = () => {
                       <AdminEditIssueModal />
                       <Switch>
                         <Route exact path="/" component={Login} />
-                        <PrivateAdminRoute
-                          exact
-                          path="/admin"
-                          component={AdminHome}
-                        />
-                        <PrivateAdminRoute
-                          exact
-                          path="/admin/register"
-                          component={Register}
-                        />
-                        <PrivateAdminRoute
-                          exact
-                          path="/admin/logs"
-                          component={Log}
-                        />
+                        <PrivateAdminRoute path="/admin" component={AdminHome} />
                         <PrivateRoute path="/dashBoard" component={DashBoard} />
                       </Switch>
                     </div>

@@ -23,14 +23,21 @@ const DashBoard = () => {
   return (
     <div className={"d-flex " + (isToggled ? "toggled" : "")} id="wrapper">
       <nav className="bg-light border-right" id="sidebar-wrapper">
-  <div className="sidebar-heading">Hello {authContext.user && authContext.user.name ? authContext.user.name : ""}</div>
+        <div className="sidebar-heading">
+          Hello{" "}
+          {authContext.user && authContext.user.name
+            ? authContext.user.name
+            : ""}
+        </div>
         <div className="list-group list-group-flush">
           <UserSideNav />
         </div>
       </nav>
 
       <div id="page-content-wrapper">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <nav
+          className="navbar navbar-expand-lg navbar-light bg-light border-bottom"
+        >
           <div
             id="menu-toggle"
             className="navbar-brand"
