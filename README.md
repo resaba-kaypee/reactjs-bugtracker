@@ -34,6 +34,7 @@ Track issues with Bug Tracker
 * Added bootstrap modals for adding and updating issues
 
 # Bugs to fix
+[ ] Alert errors stacking up when making continous input errors in register/login from
 [x] Issue can be edited by user even if status is close
 [x] When adding a user/ admin that already in db It shows the error alert and success alert
 [x] When adding new admin/user context not making a proper check if a admin/user already exist
