@@ -26,6 +26,7 @@ Track issues with Bug Tracker
 * Edit and delete button is disabled if the status is close
 
 # Changelog
+* Can now create, get, update and delete project
 * Added users logger
 * Only admins can add a user
 * You can log in as user or admin
