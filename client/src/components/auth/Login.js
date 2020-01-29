@@ -3,6 +3,7 @@ import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
 import AuthAdminContext from "../../context/authAdmin/authAdminContext";
 import Alerts from "../layout/Alerts";
+import Users from "../../assets/img/users.png"
 
 const Login = props => {
   const alertContext = useContext(AlertContext);
@@ -81,7 +82,7 @@ const Login = props => {
         <img
           id="profile-img"
           className="profile-img-card"
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          src={Users}
           alt="img"
         />
         <p id="profile-name" className="profile-name-card"></p>

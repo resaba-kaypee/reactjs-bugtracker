@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import AuthContext from "../../context/auth/authContext";
 import AuthAdminContext from "../../context/authAdmin/authAdminContext";
 
-const Navbar = ({ title, icon, onHideNav }) => {
+const Navbar = ({ title, icon }) => {
   const authAdminContext = useContext(AuthAdminContext);
   const authContext = useContext(AuthContext);
 
