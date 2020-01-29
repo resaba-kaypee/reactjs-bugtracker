@@ -1,15 +1,30 @@
+/*
+register admin
+register user
+==============
+add new issue
+get all issues
+update issue
+delete issue
+==============
+add new project
+get all project
+update project
+delete project
+*/
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
-const authAdmin = require("../middleware/authAdmin")
+const authAdmin = require("../middleware/authAdmin");
 
 const Admin = require("../models/Admin");
 const User = require("../models/User");
 const Issue = require("../models/Issue");
-
+const Project = require("../models/Project");
 
 // @route   POST api/admin/register
 // @desc    Register a admin
@@ -46,16 +61,15 @@ router.post(
           email,
           password
         });
-  
+
         const salt = await bcrypt.genSalt(10);
         admin.password = await bcrypt.hash(password, salt);
-  
+
         await admin.save();
 
-        return res.status(200).json({msg: "Admin registered"})
+        return res.status(200).json({ msg: "Admin registered" });
       }
 
-      
       // const payload = {
       //   admin: {
       //     id: admin.id
@@ -114,15 +128,14 @@ router.post(
           email,
           password
         });
-  
+
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
-  
+
         await user.save();
 
-        return res.status(200).json({msg: "User registered"})
+        return res.status(200).json({ msg: "User registered" });
       }
-
 
       // const payload = {
       //   user: {
@@ -258,5 +271,112 @@ router.delete("/issues/:id", authAdmin, async (req, res) => {
   }
 });
 
+/*********  **********  **********  **********
+                                    PROJECT
+*********  **********  **********  ***********/
+
+// @route   POST api/admin/project
+// @desc    Add new project
+// @access  Private
+router.post(
+  "/project",
+  [
+    authAdmin,
+    [
+      check("description", "Description is required")
+        .not()
+        .isEmpty(),
+      check("name", "Name is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    // res.send("Send projects");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, status, description } = req.body;
+
+    try {
+      const newProject = new Project({
+        name,
+        description,
+        status
+      });
+
+      const project = await newProject.save();
+
+      res.json(project);
+    } catch (error) {
+      console.error("fr: admin add new project:", error.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+// @route   GET api/admin/projects
+// @desc    Get all projects
+// @access  Private
+router.get("/projects", authAdmin, async (req, res) => {
+  // res.send("get all projects")
+  try {
+    const projects = await Project.find({}).sort({
+      date: -1
+    });
+    res.json(projects);
+  } catch (error) {
+    console.error("fr: get all projects:", error.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route   PUT api/admin/project/:id
+// @desc    Update project
+// @access  Public
+router.put(
+  "/project/:id",
+  authAdmin,
+  async (req, res) => {
+    const { tech } = req.body;
+
+    try {
+      let project = await Project.findById(req.params.id);
+      if (!project) return res.status(404).json({ msg: "Project not found" });
+
+      project = await Project.findByIdAndUpdate(
+        req.params.id,
+        { $push: { techs: tech } },
+        { new: true }
+      );
+
+      res.json(project);
+    } catch (err) {
+      console.error("fr: admin update project:", err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+// @route   DELETE api/admin/project/:id
+// @desc    Delete project
+// @access  Public
+router.delete("/project/:id", 
+authAdmin,
+ async (req, res) => {
+  try {
+    let project = await Project.findById(req.params.id);
+
+    if (!project) return res.status(404).json({ msg: "Project not found" });
+
+    await Project.findByIdAndRemove(req.params.id);
+    res.json({ msg: "Project removed" });
+  } catch (err) {
+    console.error("fr: admin delete project:", err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 module.exports = router;
