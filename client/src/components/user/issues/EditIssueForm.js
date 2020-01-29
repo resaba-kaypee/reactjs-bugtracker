@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
-import IssueContext from "../../context/issue/issueContext";
-import AuthContext from "../../context/auth/authContext";
-import AlertContext from "../../context/alert/alertContext";
+import IssueContext from "../../../context/issue/issueContext";
+import AuthContext from "../../../context/auth/authContext";
+import AlertContext from "../../../context/alert/alertContext";
 
 const EditIssueForm = () => {
   const issueContext = useContext(IssueContext);

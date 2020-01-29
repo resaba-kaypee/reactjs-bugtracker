@@ -1,6 +1,6 @@
 import React from "react";
 import EditIssueForm from "./EditIssueForm";
-import Alerts from "../../components/layout/Alerts"
+import Alerts from "../../../components/layout/Alerts"
 
 const EditIssueModal = () => {
   return (

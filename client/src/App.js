@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
-import AdminHome from "./components/admin/AdminHome";
-import DashBoard from "./components/pages/DashBoard";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import UserDashBoard from "./components/user/UserDashBoard";
 import Login from "./components/auth/Login";
 import IssueState from "./context/issue/IssueState";
 import LogState from "./context/log/LogState";
@@ -37,8 +37,8 @@ const App = () => {
                       <AdminEditIssueModal />
                       <Switch>
                         <Route exact path="/" component={Login} />
-                        <PrivateAdminRoute path="/admin" component={AdminHome} />
-                        <PrivateRoute path="/dashBoard" component={DashBoard} />
+                        <PrivateAdminRoute path="/admin" component={AdminDashboard} />
+                        <PrivateRoute path="/dashBoard" component={UserDashBoard} />
                       </Switch>
                     </div>
                   </Fragment>

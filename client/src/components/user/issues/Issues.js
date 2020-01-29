@@ -2,8 +2,8 @@ import React, { Fragment, useContext, useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import IssueItem from "./IssueItem";
 import IssueFilter from "./IssueFilter";
-import IssueContext from "../../context/issue/issueContext";
-import Spinner from "../layout/Spinner";
+import IssueContext from "../../../context/issue/issueContext";
+import Spinner from "../../layout/Spinner";
 
 const Issues = () => {
   const issueContext = useContext(IssueContext);

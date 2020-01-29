@@ -7,7 +7,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
-import IssueContext from "../../context/issue/issueContext";
+import IssueContext from "../../../context/issue/issueContext";
 
 const IssueItem = ({ issue }) => {
   const issueContext = useContext(IssueContext);

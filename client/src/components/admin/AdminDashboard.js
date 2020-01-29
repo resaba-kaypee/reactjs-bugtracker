@@ -11,12 +11,12 @@ import AdminIssueModal from "./issues/AdminIssueModal";
 import AdminEditIssueModal from "./issues/AdminEditIssueModal";
 import Button from "../layout/Button";
 import About from "../pages/About";
-import AdminSideNav from "../pages/sidenav/AdminSideNav";
+import AdminSideNav from "../layout/sidenav/AdminSideNav";
 import Overview from "./overview/Overview";
 import AuthAdminContext from "../../context/authAdmin/authAdminContext";
 
 
-const AdminHome = () => {
+const AdminDashboard = () => {
   const authAdminContext = useContext(AuthAdminContext);
 
   useEffect(() => {
@@ -74,4 +74,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default AdminDashboard;
