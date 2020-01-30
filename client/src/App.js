@@ -9,6 +9,7 @@ import LogState from "./context/log/LogState";
 import AuthAdminState from "./context/authAdmin/AuthAdminState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
+import ProjectState from "./context/project/ProjectState";
 import setAuthToken from "./utils/setAuthToken";
 import PrivateAdminRoute from "./components/routing/PrivateAdminRoute";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -26,26 +27,34 @@ const App = () => {
     <React.StrictMode>
       <AuthAdminState>
         <AuthState>
-          <LogState>
-            <IssueState>
-              <AlertState>
-                <Router>
-                  <Fragment>
-                    <Navbar />
-                    <div className="">
-                      <AdminIssueModal />
-                      <AdminEditIssueModal />
-                      <Switch>
-                        <Route exact path="/" component={Login} />
-                        <PrivateAdminRoute path="/admin" component={AdminDashboard} />
-                        <PrivateRoute path="/dashBoard" component={UserDashBoard} />
-                      </Switch>
-                    </div>
-                  </Fragment>
-                </Router>
-              </AlertState>
-            </IssueState>
-          </LogState>
+          <ProjectState>
+            <LogState>
+              <IssueState>
+                <AlertState>
+                  <Router>
+                    <Fragment>
+                      <Navbar />
+                      <div className="">
+                        <AdminIssueModal />
+                        <AdminEditIssueModal />
+                        <Switch>
+                          <Route exact path="/" component={Login} />
+                          <PrivateAdminRoute
+                            path="/admin"
+                            component={AdminDashboard}
+                          />
+                          <PrivateRoute
+                            path="/dashBoard"
+                            component={UserDashBoard}
+                          />
+                        </Switch>
+                      </div>
+                    </Fragment>
+                  </Router>
+                </AlertState>
+              </IssueState>
+            </LogState>
+          </ProjectState>
         </AuthState>
       </AuthAdminState>
     </React.StrictMode>

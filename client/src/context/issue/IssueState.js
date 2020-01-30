@@ -35,7 +35,7 @@ const IssueState = props => {
     }
   };
 
-  // Add issue
+  // Add issue  
   const addIssue = async issue => {
     const config = {
       headers: {

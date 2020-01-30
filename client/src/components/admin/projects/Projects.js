@@ -1,10 +1,23 @@
-import React from "react";
+import React, {useEffect, useContext} from "react";
+import ProjectItem from "./ProjectItem"
+import ProjectContext from "../../../context/project/projectContext"
+import Spinner from "../../../assets/img/spinner.gif";
 
 const Projects = () => {
+  const projectContext = useContext(ProjectContext);
+  const {projects, getProjects, loading, filtered} = projectContext;
+
+  useEffect(() => {
+    getProjects();
+    //eslint-disable-next-line
+  }, [])
   return (
-    <div className="card" style={{
-      marginTop: "20px"
-    }}>
+    <div
+      className="card"
+      style={{
+        marginTop: "20px"
+      }}
+    >
       <div className="card-header bg-primary text-light">
         <span className="h4">
           <i className="fas fa-puzzle-piece"></i> Projects
@@ -17,7 +30,7 @@ const Projects = () => {
           </button>
         </div>
         <div className="card-body">
-          <table className="table table-hover">
+          <table className="table table-bordered">
             <thead>
               <tr>
                 <th scope="col">Name</th>
@@ -26,26 +39,25 @@ const Projects = () => {
                 <th scope="col">Date Created</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Bugtacker App</td>
-                <td>development</td>
-                <td>Simple bug tracking app</td>
-                <td>January 24th 2020, 4:37:20 am</td>
-              </tr>
-              <tr>
-                <td>Sole Nation</td>
-                <td>development</td>
-                <td>E-commerce web app</td>
-                <td>January 24th 2020, 4:37:20 am</td>
-              </tr>
-              <tr>
-                <td>Fancy House</td>
-                <td>development</td>
-                <td>Realstate web app</td>
-                <td>January 24th 2020, 4:37:20 am</td>
-              </tr>
-            </tbody>
+            {projects !== null && !loading ? (
+              filtered !== null ? (
+                filtered.map(project => (
+                  <ProjectItem key={project._id} project={project} />
+                ))
+              ) : (
+                projects.map(project => (
+                  <ProjectItem key={project._id} project={project} />
+                ))
+              )
+            ) : (
+              <tbody>
+                <tr>
+                  <td colSpan="4" align="center">
+                    <img src={Spinner} alt="spinner"/>
+                  </td>
+                </tr>
+              </tbody>
+            )}
           </table>
         </div>
       </div>

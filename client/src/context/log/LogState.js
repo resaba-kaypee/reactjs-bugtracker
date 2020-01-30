@@ -5,7 +5,7 @@ import logReducer from "./logReducer";
 
 import { GET_LOGS, LOG_ERROR } from "../types";
 
-const LogState = props => {
+const LogState = props => { 
   const initialState = {
     logs: null,
     error: null,

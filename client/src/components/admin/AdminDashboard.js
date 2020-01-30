@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import ProjectIssues from "./issues/ProjectIssues";
-// import IssueFilter from "./issues/IssueFilter";
 import Users from "../../assets/img/users.png"
 import Logs from "./logs/Logs";
 import Register from "../auth/Register"
