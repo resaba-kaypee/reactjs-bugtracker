@@ -21,6 +21,7 @@ const IssueFilter = () => {
   return (
     <form>
       <input
+        className="rounded"
         ref={text}
         type="text"
         placeholder="Filter issue..."

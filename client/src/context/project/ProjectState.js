@@ -3,13 +3,13 @@ import axios from "axios";
 import ProjectContext from "./projectContext";
 import projectReducer from "./projectReducer";
 import {
-  ADD_PROJECTS,
+  ADD_PROJECT,
   GET_PROJECTS,
   DELETE_PROJECT,
   UPDATE_PROJECT,
   PROJECT_ERROR,
   FILTER_PROJECTS,
-  CLEAR_FILTER_PROJECTS,
+  CLEAR_FILTERED_PROJECTS,
   CLEAR_PROJECTS
 } from "../types";
 
@@ -24,7 +24,19 @@ const ProjectState = props => {
   const [state, dispatch] = useReducer(projectReducer, initialState);
 
   // Add project
-  const addProject = () => {};
+  const addProject = async project => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    try {
+      const res = await axios.post("/api/admin/project", project, config);
+      dispatch({ type: ADD_PROJECT, payload: res.data });
+    } catch (err) {
+      dispatch({ PROJECT_ERROR, payload: err.response.msg });
+    }
+  };
 
   // Get all project
   const getProjects = async () => {
@@ -43,10 +55,14 @@ const ProjectState = props => {
   const deleteProject = () => {};
 
   // Filter projects
-  const filterProjects = () => {};
+  const filterProjects = text => {
+    dispatch({ type: FILTER_PROJECTS, payload: text });
+  };
 
   // Clear filtered issues
-  const clearFilteredProjects = () => {};
+  const clearFilteredProjects = () => {
+    dispatch({ type: CLEAR_FILTERED_PROJECTS });
+  };
 
   // Clear projects when logging out
   const clearProjects = () => {};

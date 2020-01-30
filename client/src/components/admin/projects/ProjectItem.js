@@ -1,15 +1,18 @@
 import React, { Fragment } from "react";
+import Moment from "react-moment";
 
 const ProjectItem = ({ project }) => {
-  const { name, status, description, date } = project;
+  const { projectName, status, description, date } = project;
   return (
     <Fragment>
       <tbody>
         <tr>
-          <td>{name}</td>
+          <td>{projectName}</td>
           <td>{status}</td>
           <td>{description}</td>
-          <td>{date}</td>
+          <td>
+            <Moment format="MMMM Do YYYY">{date}</Moment>
+          </td>
         </tr>
       </tbody>
     </Fragment>

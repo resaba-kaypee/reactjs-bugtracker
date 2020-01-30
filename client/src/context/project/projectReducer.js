@@ -1,11 +1,11 @@
 import {
-  ADD_PROJECTS,
+  ADD_PROJECT,
   GET_PROJECTS,
   DELETE_PROJECT,
   UPDATE_PROJECT,
   PROJECT_ERROR,
   FILTER_PROJECTS,
-  CLEAR_FILTER_PROJECTS,
+  CLEAR_FILTERED_PROJECTS,
   CLEAR_PROJECTS
 } from "../types";
 
@@ -17,9 +17,11 @@ export default (state, action) => {
         projects: action.payload,
         loading: false
       };
-    case ADD_PROJECTS:
+    case ADD_PROJECT:
       return {
-        ...state
+        ...state,
+        projects: [action.payload, ...state.projects],
+        loading: false
       };
     case UPDATE_PROJECT:
       return {
@@ -35,13 +37,18 @@ export default (state, action) => {
       };
     case FILTER_PROJECTS:
       return {
-        ...state
+        ...state,
+        filtered: state.projects.filter(project => {
+          const regex = new RegExp(`${action.payload}`, "gi");
+          return project.description.match(regex) || project.projectName.match(regex);
+        })
+      };
+    case CLEAR_FILTERED_PROJECTS:
+      return {
+        ...state,
+        filtered: null
       };
     case CLEAR_PROJECTS:
-      return {
-        ...state
-      };
-    case CLEAR_FILTER_PROJECTS:
       return {
         ...state
       };

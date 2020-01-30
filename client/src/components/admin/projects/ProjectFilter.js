@@ -3,7 +3,7 @@ import ProjectContext from "../../../context/project/projectContext";
 
 const IssueFilter = () => {
   const projectContext = useContext(ProjectContext);
-  const { filterIssues, clearFilter, filtered } = projectContext;
+  const { filterProjects, clearFilteredProjects, filtered } = projectContext;
   const text = useRef("");
   useEffect(() => {
     if (filtered === null) {
@@ -12,18 +12,19 @@ const IssueFilter = () => {
   });
   const onChange = e => {
     if (text.current.value !== "") {
-      filterIssues(e.target.value);
+      filterProjects(e.target.value);
     } else {
-      clearFilter();
+      clearFilteredProjects();
     }
   };
 
   return (
     <form>
       <input
+        className="rounded"
         ref={text}
         type="text"
-        placeholder="Filter issue..."
+        placeholder="Filter project..."
         onChange={onChange}
       />
     </form>

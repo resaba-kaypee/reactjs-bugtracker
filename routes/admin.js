@@ -286,7 +286,7 @@ router.post(
       check("description", "Description is required")
         .not()
         .isEmpty(),
-      check("name", "Name is required")
+      check("projectName", "Name is required")
         .not()
         .isEmpty()
     ]
@@ -298,11 +298,11 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, status, description } = req.body;
+    const { projectName, status, description } = req.body;
 
     try {
       const newProject = new Project({
-        name,
+        projectName,
         description,
         status
       });

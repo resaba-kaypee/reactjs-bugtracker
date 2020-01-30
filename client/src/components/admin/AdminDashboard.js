@@ -8,6 +8,7 @@ import Contacts from "./contacts/Contacts";
 import Projects from "./projects/Projects";
 import AdminIssueModal from "./issues/AdminIssueModal";
 import AdminEditIssueModal from "./issues/AdminEditIssueModal";
+import AddProjectModal from "./projects/modal/AddProjectModal"
 import Button from "../layout/Button";
 import About from "../pages/About";
 import AdminSideNav from "../layout/sidenav/AdminSideNav";
@@ -58,6 +59,7 @@ const AdminDashboard = () => {
         <div className="container-fluid">
           <AdminIssueModal />
           <AdminEditIssueModal />
+          <AddProjectModal />
           <Switch>
             <Route path="/admin/overview" component={Overview} />
             <Route path="/admin/projects" component={Projects} />
