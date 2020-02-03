@@ -10,14 +10,20 @@ import {
   PROJECT_ERROR,
   FILTER_PROJECTS,
   CLEAR_FILTERED_PROJECTS,
-  CLEAR_PROJECTS
+  CLEAR_PROJECTS,
+  SET_CURRENT_PROJECT,
+  CLEAR_CURRENT_PROJECT,
+  GET_USERS,
+  USERS_ERROR
 } from "../types";
 
 const ProjectState = props => {
   const initialState = {
     projects: null,
+    users: null,
     errors: null,
     filtered: null,
+    current: null,
     loading: true
   };
 
@@ -49,7 +55,19 @@ const ProjectState = props => {
   };
 
   // Update project
-  const updateProject = () => {};
+  const updateProject = async project => {
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    };
+    try {
+      const res = await axios.put(`/api/admin/project/${project.id}`, project, config);
+      dispatch({ type: UPDATE_PROJECT, payload: res.data });
+    } catch (err) {
+      dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
+    }
+  };
 
   // Delete project
   const deleteProject = () => {};
@@ -64,23 +82,48 @@ const ProjectState = props => {
     dispatch({ type: CLEAR_FILTERED_PROJECTS });
   };
 
+    // Set current updating project
+    const setCurrentProject = project => {
+      dispatch({type: SET_CURRENT_PROJECT, payload: project})
+    }
+
+    // Clear current updating project
+    const clearCurrentProject = () => {
+      dispatch({type: CLEAR_CURRENT_PROJECT})
+    }
+
   // Clear projects when logging out
   const clearProjects = () => {};
+
+  // Gett all users
+  const getUsers = async () => {
+    try {
+      const res = await axios.get("/api/admin/users");
+      dispatch({ type: GET_USERS, payload: res.data });
+    } catch (err) {
+      dispatch({type: USERS_ERROR, payload: err.response.msg})
+    }
+  };
 
   return (
     <ProjectContext.Provider
       value={{
         projects: state.projects,
         filtered: state.filtered,
+        users: state.users,
         errors: state.errors,
         loading: state.loading,
+        current: state.current,
         addProject,
         getProjects,
         updateProject,
         deleteProject,
         filterProjects,
         clearFilteredProjects,
-        clearProjects
+        clearProjects,
+        setCurrentProject,
+        clearCurrentProject,
+        getUsers
       }}
     >
       {props.children}

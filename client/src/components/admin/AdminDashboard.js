@@ -9,6 +9,7 @@ import Projects from "./projects/Projects";
 import AdminIssueModal from "./issues/AdminIssueModal";
 import AdminEditIssueModal from "./issues/AdminEditIssueModal";
 import AddProjectModal from "./projects/modal/AddProjectModal"
+import UpdateProjectModal from "./projects/modal/UpdateProjectModal"
 import Button from "../layout/Button";
 import About from "../pages/About";
 import AdminSideNav from "../layout/sidenav/AdminSideNav";
@@ -60,6 +61,7 @@ const AdminDashboard = () => {
           <AdminIssueModal />
           <AdminEditIssueModal />
           <AddProjectModal />
+          <UpdateProjectModal />
           <Switch>
             <Route path="/admin/overview" component={Overview} />
             <Route path="/admin/projects" component={Projects} />

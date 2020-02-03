@@ -1,5 +1,5 @@
-import React, { Fragment, useContext, useEffect } from "react";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import React, { useContext, useEffect } from "react";
+// import { CSSTransition, TransitionGroup } from "react-transition-group";
 import ProjectIssueItem from "./ProjectIssueItem";
 import IssueFilter from "./IssueFilter";
 import AuthAdminContext from "../../../context/authAdmin/authAdminContext";

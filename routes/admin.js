@@ -1,6 +1,7 @@
 /*
 register admin
 register user
+get all users
 ==============
 add new issue
 get all issues
@@ -160,6 +161,22 @@ router.post(
     }
   }
 );
+
+// @route   GET api/admin/users
+// @desc    Get all users
+// @access  Public
+router.get("/users", authAdmin, async (req, res) => {
+  try {
+    const users = await User.find({}).sort({
+      date: -1
+    });
+    if (!users) return res.status(404).json({ msg: "Users not found" });
+    res.json(users);
+  } catch (error) {
+    console.error("fr: get all users:", error.message);
+    res.status(500).send("Server error");
+  }
+});
 
 // @route   GET api/issues
 // @desc    Get all users issue
@@ -335,37 +352,43 @@ router.get("/projects", authAdmin, async (req, res) => {
 
 // @route   PUT api/admin/project/:id
 // @desc    Update project
-// @access  Public
-router.put(
-  "/project/:id",
-  authAdmin,
-  async (req, res) => {
-    const { tech } = req.body;
+// @access  Private
+router.put("/project/:id", authAdmin, async (req, res) => {
+  const { projectName, status, description, tech } = req.body;
+  const projectFields = {};
+  if (projectName) projectFields.projectName = projectName;
+  if (status) projectFields.status = status;
+  if (description) projectFields.description = description;
 
-    try {
-      let project = await Project.findById(req.params.id);
-      if (!project) return res.status(404).json({ msg: "Project not found" });
+  try {
+    let project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ msg: "Project not found" });
 
+    if (Object.keys(projectFields).length > 0) {
+      project = await Project.findByIdAndUpdate(
+        req.params.id,
+        { $set: projectFields },
+        { new: true }
+      );
+    } else {
       project = await Project.findByIdAndUpdate(
         req.params.id,
         { $push: { techs: tech } },
         { new: true }
       );
-
-      res.json(project);
-    } catch (err) {
-      console.error("fr: admin update project:", err.message);
-      res.status(500).send("Server Error");
     }
+
+    res.json(project);
+  } catch (err) {
+    console.error("fr: admin update project:", err.message);
+    res.status(500).send("Server Error");
   }
-);
+});
 
 // @route   DELETE api/admin/project/:id
 // @desc    Delete project
 // @access  Public
-router.delete("/project/:id", 
-authAdmin,
- async (req, res) => {
+router.delete("/project/:id", authAdmin, async (req, res) => {
   try {
     let project = await Project.findById(req.params.id);
 

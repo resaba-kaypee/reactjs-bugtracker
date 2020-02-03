@@ -493,3 +493,7 @@ h3 {
     transform: translate3d(0, 0, 0);
   }
 }
+
+.table td{
+  vertical-align: middle;
+}

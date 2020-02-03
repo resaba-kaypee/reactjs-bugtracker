@@ -26,10 +26,6 @@ const IssueItem = ({ issue }) => {
     setCurrent(issue);
   };
 
-  const capitalize = val => {
-    return val.charAt(0).toUpperCase() + val.slice(1);
-  };
-
   return (
     <div style={{ marginBottom: "20px" }}>
       <div className="row">

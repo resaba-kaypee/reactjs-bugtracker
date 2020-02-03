@@ -6,7 +6,11 @@ import {
   PROJECT_ERROR,
   FILTER_PROJECTS,
   CLEAR_FILTERED_PROJECTS,
-  CLEAR_PROJECTS
+  CLEAR_PROJECTS,
+  SET_CURRENT_PROJECT,
+  CLEAR_CURRENT_PROJECT,
+  GET_USERS,
+  USERS_ERROR
 } from "../types";
 
 export default (state, action) => {
@@ -25,7 +29,11 @@ export default (state, action) => {
       };
     case UPDATE_PROJECT:
       return {
-        ...state
+        ...state,
+        projects: state.projects.map(project =>
+          project._id === action.payload.id ? action.payload : project
+        ),
+        loading: false
       };
     case DELETE_PROJECT:
       return {
@@ -33,24 +41,48 @@ export default (state, action) => {
       };
     case PROJECT_ERROR:
       return {
-        ...state
+        ...state,
+        errors: action.payload
       };
     case FILTER_PROJECTS:
       return {
         ...state,
         filtered: state.projects.filter(project => {
           const regex = new RegExp(`${action.payload}`, "gi");
-          return project.description.match(regex) || project.projectName.match(regex);
+          return (
+            project.description.match(regex) || project.projectName.match(regex)
+          );
         })
+      };
+    case CLEAR_PROJECTS:
+      return {
+        ...state
+      };
+    case SET_CURRENT_PROJECT:
+      return {
+        ...state,
+        current: action.payload
+      };
+    case CLEAR_CURRENT_PROJECT:
+      return {
+        ...state,
+        current: null
       };
     case CLEAR_FILTERED_PROJECTS:
       return {
         ...state,
         filtered: null
       };
-    case CLEAR_PROJECTS:
+    case GET_USERS:
       return {
-        ...state
+        ...state,
+        users: action.payload,
+        loading: false
+      };
+    case USERS_ERROR:
+      return {
+        ...state,
+        errors: action.payload
       };
     default:
       return state;

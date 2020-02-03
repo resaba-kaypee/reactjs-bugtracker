@@ -23,6 +23,8 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const CLEAR_SUCCESS = "CLEAR_SUCCESS";
+export const GET_USERS = "GET_USERS";
+export const USERS_ERROR = "USERS_ERROR";
 //================LOGS
 export const GET_LOGS = "GET_LOGS";
 export const LOG_ERROR = "LOG_ERROR";
@@ -33,6 +35,8 @@ export const DELETE_PROJECT = "DELETE_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
 export const PROJECT_ERROR = "PROJECT_ERROR";
 export const FILTER_PROJECTS = "FILTER_PROJECTS";
+export const SET_CURRENT_PROJECT = "SET_CURRENT_PROJECT";
+export const CLEAR_CURRENT_PROJECT = "CLEAR_CURRENT_PROJECT";
 export const CLEAR_PROJECTS = "CLEAR_PROJECTS";
 export const CLEAR_FILTERED_PROJECTS = "CLEAR_FILTER_PROJECTS";
 

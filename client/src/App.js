@@ -27,8 +27,8 @@ const App = () => {
     <React.StrictMode>
       <AuthAdminState>
         <AuthState>
-          <ProjectState>
-            <LogState>
+          <LogState>
+            <ProjectState>
               <IssueState>
                 <AlertState>
                   <Router>
@@ -53,8 +53,8 @@ const App = () => {
                   </Router>
                 </AlertState>
               </IssueState>
-            </LogState>
-          </ProjectState>
+            </ProjectState>
+          </LogState>
         </AuthState>
       </AuthAdminState>
     </React.StrictMode>

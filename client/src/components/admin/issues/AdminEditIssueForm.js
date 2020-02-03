@@ -39,7 +39,6 @@ const EditIssueForm = () => {
         assignedTo,
         date: new Date()
       };
-      console.log(updated);
       updateIssue(updated);
     }
     clearAll();

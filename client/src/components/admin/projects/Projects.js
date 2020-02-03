@@ -10,7 +10,7 @@ const Projects = () => {
 
   useEffect(() => {
     getProjects();
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
   return (
     <div
