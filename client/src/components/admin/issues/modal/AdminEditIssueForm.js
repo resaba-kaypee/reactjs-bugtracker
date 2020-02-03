@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, Fragment } from "react";
-import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
-import AlertContext from "../../../context/alert/alertContext";
+import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
+import AlertContext from "../../../../context/alert/alertContext";
 
 const EditIssueForm = () => {
   const alertContext = useContext(AlertContext);
@@ -109,11 +109,10 @@ const EditIssueForm = () => {
       High <br />
       <hr />
       <div>
-        <input
+        <button
           type="submit"
-          value="Save changes"
           className="btn btn-primary btn-block"
-        />
+        >Save changes</button>
       </div>
     </form>
   );

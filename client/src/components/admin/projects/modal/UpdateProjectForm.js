@@ -28,7 +28,7 @@ const UpdateProjectForm = () => {
       setStatus(current.status);
       setDescripton(current.description);
     }
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, [current]);
 
   const onSubmit = e => {
@@ -38,7 +38,7 @@ const UpdateProjectForm = () => {
       setAlert("Please fill in the required fields", "danger");
     } else if (!isTechUpdating) {
       const updated = {
-        id: current._id,
+        _id: current._id,
         projectName,
         status,
         description
@@ -49,7 +49,7 @@ const UpdateProjectForm = () => {
 
     if (isTechUpdating) {
       const addedTech = {
-        id: current._id,
+        _id: current._id,
         tech
       };
       updateProject(addedTech);

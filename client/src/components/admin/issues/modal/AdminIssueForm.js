@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import AlertContext from "../../../context/alert/alertContext";
-import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
+import AlertContext from "../../../../context/alert/alertContext";
+import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
 import Moment from "react-moment";
 
 const AddIssueForm = () => {

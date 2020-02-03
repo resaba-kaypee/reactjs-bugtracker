@@ -9,14 +9,11 @@ import LogState from "./context/log/LogState";
 import AuthAdminState from "./context/authAdmin/AuthAdminState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
-import ProjectState from "./context/project/ProjectState";
 import setAuthToken from "./utils/setAuthToken";
 import PrivateAdminRoute from "./components/routing/PrivateAdminRoute";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import "./assets/css/all.css";
 import "./App.css";
-import AdminIssueModal from "./components/admin/issues/AdminIssueModal";
-import AdminEditIssueModal from "./components/admin/issues/AdminEditIssueModal";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -26,17 +23,14 @@ const App = () => {
   return (
     <React.StrictMode>
       <AuthAdminState>
-        <AuthState>
-          <LogState>
-            <ProjectState>
+          <AuthState>
+            <LogState>
               <IssueState>
                 <AlertState>
                   <Router>
                     <Fragment>
                       <Navbar />
                       <div className="">
-                        <AdminIssueModal />
-                        <AdminEditIssueModal />
                         <Switch>
                           <Route exact path="/" component={Login} />
                           <PrivateAdminRoute
@@ -53,9 +47,8 @@ const App = () => {
                   </Router>
                 </AlertState>
               </IssueState>
-            </ProjectState>
-          </LogState>
-        </AuthState>
+            </LogState>
+          </AuthState>
       </AuthAdminState>
     </React.StrictMode>
   );

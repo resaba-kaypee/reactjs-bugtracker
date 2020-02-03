@@ -1,13 +1,13 @@
 import React from "react";
-import AdminIssueForm from "./AdminIssueForm"
-import Alerts from "../../layout/Alerts"
+import AdminEditIssueForm from "./AdminEditIssueForm";
+import Alerts from "../../../layout/Alerts"
 
-const AddIssueModal = () => {
+const EditIssueModal = () => {
   return (
     <div>
       <div
         className="modal fade"
-        id="addIssueAdmin"
+        id="adminEditIssue"
         tabIndex="-1"
         role="dialog"
         aria-labelledby=""
@@ -17,7 +17,7 @@ const AddIssueModal = () => {
           <div className="modal-content">
             <div className="modal-body">
               <Alerts/>
-              <AdminIssueForm />
+              <AdminEditIssueForm />
             </div>
             <div className="modal-footer">
               <button
@@ -35,4 +35,4 @@ const AddIssueModal = () => {
   );
 };
 
-export default AddIssueModal;
+export default EditIssueModal;

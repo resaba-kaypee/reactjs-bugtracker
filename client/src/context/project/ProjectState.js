@@ -29,6 +29,16 @@ const ProjectState = props => {
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
 
+  // Get all project
+  const getProjects = async () => {
+    try {
+      const res = await axios.get("/api/admin/projects");
+      dispatch({ type: GET_PROJECTS, payload: res.data });
+    } catch (err) {
+      dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
+    }
+  };
+
   // Add project
   const addProject = async project => {
     const config = {
@@ -44,16 +54,6 @@ const ProjectState = props => {
     }
   };
 
-  // Get all project
-  const getProjects = async () => {
-    try {
-      const res = await axios.get("/api/admin/projects");
-      dispatch({ type: GET_PROJECTS, payload: res.data });
-    } catch (err) {
-      dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
-    }
-  };
-
   // Update project
   const updateProject = async project => {
     const config = {
@@ -62,7 +62,11 @@ const ProjectState = props => {
       }
     };
     try {
-      const res = await axios.put(`/api/admin/project/${project.id}`, project, config);
+      const res = await axios.put(
+        `/api/admin/project/${project._id}`,
+        project,
+        config
+      );
       dispatch({ type: UPDATE_PROJECT, payload: res.data });
     } catch (err) {
       dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
@@ -82,15 +86,15 @@ const ProjectState = props => {
     dispatch({ type: CLEAR_FILTERED_PROJECTS });
   };
 
-    // Set current updating project
-    const setCurrentProject = project => {
-      dispatch({type: SET_CURRENT_PROJECT, payload: project})
-    }
+  // Set current updating project
+  const setCurrentProject = project => {
+    dispatch({ type: SET_CURRENT_PROJECT, payload: project });
+  };
 
-    // Clear current updating project
-    const clearCurrentProject = () => {
-      dispatch({type: CLEAR_CURRENT_PROJECT})
-    }
+  // Clear current updating project
+  const clearCurrentProject = () => {
+    dispatch({ type: CLEAR_CURRENT_PROJECT });
+  };
 
   // Clear projects when logging out
   const clearProjects = () => {};
@@ -101,7 +105,7 @@ const ProjectState = props => {
       const res = await axios.get("/api/admin/users");
       dispatch({ type: GET_USERS, payload: res.data });
     } catch (err) {
-      dispatch({type: USERS_ERROR, payload: err.response.msg})
+      dispatch({ type: USERS_ERROR, payload: err.response.msg });
     }
   };
 

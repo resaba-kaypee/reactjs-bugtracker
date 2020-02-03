@@ -141,6 +141,9 @@ const AuthAdminState = props => {
     }
   };
 
+  /**
+   * ********************************************************** ISSUES
+   */
   // Get issue
   const getIssues = async () => {
     try {

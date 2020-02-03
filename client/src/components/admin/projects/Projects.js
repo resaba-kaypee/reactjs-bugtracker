@@ -10,8 +10,14 @@ const Projects = () => {
 
   useEffect(() => {
     getProjects();
-    // eslint-disable-next-line
+
+    //eslint-disable-next-line
   }, []);
+
+  if (projects !== null && projects.length === 0 && !loading) {
+    return <h4>No projects...</h4>;
+  }
+
   return (
     <div
       className="card"
@@ -48,25 +54,25 @@ const Projects = () => {
                 <th scope="col">Date Created</th>
               </tr>
             </thead>
-            {projects !== null && !loading ? (
-              filtered !== null ? (
-                filtered.map(project => (
-                  <ProjectItem key={project._id} project={project} />
-                ))
+            <tbody>
+              {projects !== null && !loading ? (
+                filtered !== null ? (
+                  filtered.map(project => (
+                    <ProjectItem key={project._id} project={project} />
+                  ))
+                ) : (
+                  projects.map(project => (
+                    <ProjectItem key={project._id} project={project} />
+                  ))
+                )
               ) : (
-                projects.map(project => (
-                  <ProjectItem key={project._id} project={project} />
-                ))
-              )
-            ) : (
-              <tbody>
                 <tr>
                   <td colSpan="4" align="center">
                     <img src={Spinner} alt="spinner" />
                   </td>
                 </tr>
-              </tbody>
-            )}
+              )}
+            </tbody>
           </table>
         </div>
       </div>

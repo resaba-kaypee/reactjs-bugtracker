@@ -131,6 +131,7 @@ export default (state, action) => {
         ...state,
         success: null
       };
+
     default:
       return state;
   }
