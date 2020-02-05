@@ -25,8 +25,7 @@ const AddProjectForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const regex = new RegExp(/^[a-zA-Z0-9][\w.\s]+$/, "gi");
-    if (!projectName.match(regex) || !description.match(regex)) {
+    if (projectName === "" || description === "") {
       setAlert("Please fill in required fields", "danger");
     } else {
       // console.log(project)

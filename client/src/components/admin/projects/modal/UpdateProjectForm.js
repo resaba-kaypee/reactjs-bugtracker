@@ -149,10 +149,10 @@ const UpdateProjectForm = () => {
                   <td>
                     <ul>
                       {/* use current assigned users */}
-                      {current !== null && !loading ? (
+                      {current !== null && current.techs.length > 0 ? (
                         current.techs.map(tech => <li key={tech}>{tech}</li>)
                       ) : (
-                        <li>--No assigned tech--</li>
+                        <li>--No techs assigned--</li>
                       )}
                     </ul>
                   </td>

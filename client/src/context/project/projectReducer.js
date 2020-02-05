@@ -37,12 +37,16 @@ export default (state, action) => {
       };
     case DELETE_PROJECT:
       return {
-        ...state
+        ...state,
+        projects: state.projects.filter(
+          project => project._id !== action.payload
+        ),
+        loading: false
       };
     case PROJECT_ERROR:
       return {
         ...state,
-        errors: action.payload
+        error: action.payload
       };
     case FILTER_PROJECTS:
       return {
@@ -56,7 +60,8 @@ export default (state, action) => {
       };
     case CLEAR_PROJECTS:
       return {
-        ...state
+        ...state,
+        projects: null
       };
     case SET_CURRENT_PROJECT:
       return {
@@ -82,7 +87,7 @@ export default (state, action) => {
     case USERS_ERROR:
       return {
         ...state,
-        errors: action.payload
+        error: action.payload
       };
     default:
       return state;

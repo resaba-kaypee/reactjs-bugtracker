@@ -1,16 +1,15 @@
 import React, { useContext } from "react";
-import UpdateProjectForm from "./UpdateProjectForm";
 import ProjectContext from "../../../../context/project/projectContext";
-import Alerts from "../../../layout/Alerts";
+import ViewProject from "./ViewProject";
 
-const UpdateProjectModal = () => {
+const ViewProjectModal = () => {
   const projectContext = useContext(ProjectContext);
   const { clearCurrentProject } = projectContext;
   return (
     <div>
       <div
         className="modal fade"
-        id="updateProject"
+        id="viewProject"
         tabIndex="-1"
         role="dialog"
         aria-labelledby=""
@@ -22,8 +21,7 @@ const UpdateProjectModal = () => {
         >
           <div className="modal-content">
             <div className="modal-body modal-lg">
-              <Alerts />
-              <UpdateProjectForm />
+              <ViewProject />
             </div>
             <div className="modal-footer">
               <button
@@ -42,4 +40,4 @@ const UpdateProjectModal = () => {
   );
 };
 
-export default UpdateProjectModal;
+export default ViewProjectModal;

@@ -21,7 +21,7 @@ const ProjectState = props => {
   const initialState = {
     projects: null,
     users: null,
-    errors: null,
+    error: null,
     filtered: null,
     current: null,
     loading: true
@@ -74,7 +74,14 @@ const ProjectState = props => {
   };
 
   // Delete project
-  const deleteProject = () => {};
+  const deleteProject = async _id => {
+    try {
+      await axios.delete(`/api/admin/project/${_id}`);
+      dispatch({ type: DELETE_PROJECT, payload: _id });
+    } catch (err) {
+      dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
+    }
+  };
 
   // Filter projects
   const filterProjects = text => {
@@ -97,7 +104,9 @@ const ProjectState = props => {
   };
 
   // Clear projects when logging out
-  const clearProjects = () => {};
+  const clearProjects = () => {
+    dispatch({ type: CLEAR_PROJECTS });
+  };
 
   // Gett all users
   const getUsers = async () => {

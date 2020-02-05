@@ -9,8 +9,9 @@ Track issues with Bug Tracker
 
 ### Features
 * Designed using Bootstrap 4
+* Create projects and tracks bugs
 * Add | Edit issues with Bootstrap modals
-* Filterable issue list
+* Filterable issue and projects list
 * Register | Log-in | Log-out system that use JWT for authentication
 * Register | Log-in form validation
 
@@ -27,6 +28,7 @@ Track issues with Bug Tracker
 
 # Changelog
 * Can now create, get, update and delete project
+* Assign users to projects
 * Added users logger
 * Only admins can add a user
 * You can log in as user or admin

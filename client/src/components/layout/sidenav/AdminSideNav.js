@@ -4,7 +4,7 @@ import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
 
 const UserSideNav = props => {
   const authAdminContext = useContext(AuthAdminContext);
-  const { clearIssues } = authAdminContext;
+  const { clearIssues, clearProjects } = authAdminContext;
 
   const onLogout = () => {
     authAdminContext.logout();

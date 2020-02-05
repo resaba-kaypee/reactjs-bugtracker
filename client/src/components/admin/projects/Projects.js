@@ -10,7 +10,6 @@ const Projects = () => {
 
   useEffect(() => {
     getProjects();
-
     //eslint-disable-next-line
   }, []);
 
@@ -51,7 +50,7 @@ const Projects = () => {
                 <th scope="col">Name</th>
                 <th scope="col">Status</th>
                 <th scope="col">Description</th>
-                <th scope="col">Date Created</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>

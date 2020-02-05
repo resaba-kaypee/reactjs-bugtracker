@@ -52,7 +52,7 @@ const IssueItem = ({ issue }) => {
       </div>
       <div className="row">
         <div className="border border-info rounded col col-10 col-md-8">
-          <strong>Date:</strong> <span className="text-primary"><Moment format="MMMM Do YYYY, h:mm:ss a">{date}</Moment></span>
+          <strong>Date:</strong> <span className="text-primary"><Moment format="MMMM Do YYYY, h:mm:ss a" date={date}/></span>
         </div>
         <button
           className="btn btn-light border border-info rounded col col-1 col-md-2"
