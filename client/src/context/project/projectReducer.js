@@ -10,6 +10,7 @@ import {
   SET_CURRENT_PROJECT,
   CLEAR_CURRENT_PROJECT,
   GET_USERS,
+  REMOVE_USER,
   USERS_ERROR
 } from "../types";
 
@@ -78,6 +79,15 @@ export default (state, action) => {
         ...state,
         filtered: null
       };
+    case REMOVE_USER: {
+      return {
+        ...state,
+        projects: state.projects.map(project =>
+          project._id === action.payload._id ? action.payload : project
+        ),
+        loading: false
+      };
+    }
     case GET_USERS:
       return {
         ...state,

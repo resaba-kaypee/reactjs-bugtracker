@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import UpdateProjectFormTechList from "./UpdateProjectFormTechList";
 import ProjectContext from "../../../../context/project/projectContext";
 import AlertContext from "../../../../context/alert/alertContext";
 
@@ -11,6 +12,8 @@ const UpdateProjectForm = () => {
     users,
     loading,
     current,
+    projects,
+    getProjects,
     updateProject,
     clearCurrentProject
   } = projectContext;
@@ -23,6 +26,7 @@ const UpdateProjectForm = () => {
 
   useEffect(() => {
     getUsers();
+    getProjects();
     if (current !== null) {
       setProjectName(current.projectName);
       setStatus(current.status);
@@ -56,7 +60,7 @@ const UpdateProjectForm = () => {
       setAlert("User successfully added!", "success");
     }
 
-    clearAll();
+    // clearAll();
   };
 
   const clearAll = () => clearCurrentProject();
@@ -147,13 +151,19 @@ const UpdateProjectForm = () => {
                     <label>Assigned Tech to Project</label>
                   </td>
                   <td>
-                    <ul>
-                      {/* use current assigned users */}
-                      {current !== null && current.techs.length > 0 ? (
-                        current.techs.map(tech => <li key={tech}>{tech}</li>)
-                      ) : (
-                        <li>--No techs assigned--</li>
-                      )}
+                    <ul className="list-group">
+                      {/* use project assigned users */}
+                      {projects !== null &&
+                        projects.length > 0 &&
+                        projects.map(
+                          project =>
+                            project.projectName === projectName && (
+                              <UpdateProjectFormTechList
+                                key={project.techs}
+                                project={project}
+                              />
+                            )
+                        )}
                     </ul>
                   </td>
                 </tr>
@@ -162,7 +172,7 @@ const UpdateProjectForm = () => {
                   <td>
                     <select
                       className="form-control"
-                      name="status"
+                      name="tech"
                       value={tech}
                       onChange={e => setTech(e.target.value)}
                       onBlur={e => setTech(e.target.value)}

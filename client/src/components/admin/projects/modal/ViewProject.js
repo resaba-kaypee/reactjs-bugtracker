@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Moment from "react-moment"
+import Moment from "react-moment";
 import ViewProjectIssueList from "./ViewProjectIssueList";
 import ProjectContext from "../../../../context/project/projectContext";
 import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
@@ -71,7 +71,9 @@ const ViewProject = () => {
                 <td>
                   <label style={fontWeight}>Date created</label>
                 </td>
-                <td><Moment format="MMMM Do YYYY, h:mm:ss a" date={date}/></td>
+                <td>
+                  <Moment format="MMMM Do YYYY, h:mm:ss a" date={date} />
+                </td>
               </tr>
 
               <tr>
@@ -79,11 +81,15 @@ const ViewProject = () => {
                   <label style={fontWeight}>Assigned Tech to Project</label>
                 </td>
                 <td>
-                  <ul>
+                  <ul className="list-group">
                     {current !== null && current.techs.length > 0 ? (
-                      current.techs.map(tech => <li key={tech}>{tech}</li>)
+                      current.techs.map(tech => (
+                        <li className="list-group-item" key={tech}>
+                          {tech}
+                        </li>
+                      ))
                     ) : (
-                      <li>--No techs assigned--</li>
+                      <li className="list-group-item">--No techs assigned--</li>
                     )}
                   </ul>
                 </td>

@@ -385,6 +385,33 @@ router.put("/project/:id", authAdmin, async (req, res) => {
   }
 });
 
+// @route   PUT api/admin/removeTech/:id
+// @desc    Remove tech from project
+// @access  Private
+router.put(
+  "/removeTech/:id",
+  // authAdmin,
+  async (req, res) => {
+    const { tech } = req.body;
+
+    try {
+      let project = await Project.findById(req.params.id);
+      if (!project) return res.status(404).json({ msg: "Project not found" });
+
+      project = await Project.findByIdAndUpdate(
+        req.params.id,
+        { $pull: { techs: tech } },
+        { new: true }
+      );
+
+      res.json(project);
+    } catch (err) {
+      console.error("fr: admin remove tech from project:", err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
 // @route   DELETE api/admin/project/:id
 // @desc    Delete project
 // @access  Public

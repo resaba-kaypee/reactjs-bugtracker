@@ -1,13 +1,18 @@
 import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
+import ProjectContext from "../../../context/project/projectContext";
 
 const UserSideNav = props => {
   const authAdminContext = useContext(AuthAdminContext);
-  const { clearIssues, clearProjects } = authAdminContext;
+  const { clearIssues } = authAdminContext;
+
+  const projectContext = useContext(ProjectContext);
+  const { clearProjects } = projectContext;
 
   const onLogout = () => {
     authAdminContext.logout();
+    clearProjects();
     clearIssues();
   };
 

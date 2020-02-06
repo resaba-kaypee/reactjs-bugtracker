@@ -14,6 +14,7 @@ import {
   SET_CURRENT_PROJECT,
   CLEAR_CURRENT_PROJECT,
   GET_USERS,
+  REMOVE_USER,
   USERS_ERROR
 } from "../types";
 
@@ -35,7 +36,7 @@ const ProjectState = props => {
       const res = await axios.get("/api/admin/projects");
       dispatch({ type: GET_PROJECTS, payload: res.data });
     } catch (err) {
-      dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
+      dispatch({ type: PROJECT_ERROR, payload: err });
     }
   };
 
@@ -108,13 +109,31 @@ const ProjectState = props => {
     dispatch({ type: CLEAR_PROJECTS });
   };
 
-  // Gett all users
+  // Get all users
   const getUsers = async () => {
     try {
       const res = await axios.get("/api/admin/users");
       dispatch({ type: GET_USERS, payload: res.data });
     } catch (err) {
-      dispatch({ type: USERS_ERROR, payload: err.response.msg });
+      dispatch({ type: USERS_ERROR, payload: err });
+    }
+  };
+
+  const removeUser = async project => {
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    };
+    try {
+      const res = await axios.put(
+        `/api/admin/removeTech/${project._id}`,
+        project,
+        config
+      );
+      dispatch({ type: REMOVE_USER, payload: res.data });
+    } catch (err) {
+      dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
     }
   };
 
@@ -136,7 +155,8 @@ const ProjectState = props => {
         clearProjects,
         setCurrentProject,
         clearCurrentProject,
-        getUsers
+        getUsers,
+        removeUser
       }}
     >
       {props.children}

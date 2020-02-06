@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 
 const ViewProjectIssueList = ({ issue }) => {
-  const { projectName, description, status } = issue;
+  const { description } = issue;
   return (
     <Fragment>
       <li className="list-group-item">
-        {projectName} {description} {status}
+        <strong>Summary: </strong>{description}
       </li>
     </Fragment>
   );

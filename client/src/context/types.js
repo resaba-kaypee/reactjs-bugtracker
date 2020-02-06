@@ -25,6 +25,7 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const CLEAR_SUCCESS = "CLEAR_SUCCESS";
 export const GET_USERS = "GET_USERS";
 export const USERS_ERROR = "USERS_ERROR";
+export const REMOVE_USER = "REMOVE_USER";
 //================LOGS
 export const GET_LOGS = "GET_LOGS";
 export const LOG_ERROR = "LOG_ERROR";
