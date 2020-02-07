@@ -197,7 +197,7 @@ router.get("/issues", authAdmin, async (req, res) => {
 // @desc    Add new issue
 // @access  Private
 router.post(
-  "/issues",
+  "/issue",
   [
     authAdmin,
     [
@@ -213,14 +213,15 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { description, severity, status, assignedTo, date } = req.body;
+    const { projectName, description, priority, status, tech, date } = req.body;
 
     try {
       const newIssue = new Issue({
+        projectName,
         description,
-        severity,
+        priority,
         status,
-        assignedTo,
+        tech,
         date
       });
 
@@ -228,7 +229,7 @@ router.post(
 
       res.json(issue);
     } catch (error) {
-      console.error("fr: admin add new issue", error.message);
+      console.error("fr: admin add new issue:", error.message);
       res.status(500).send("Server error");
     }
   }

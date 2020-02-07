@@ -5,23 +5,29 @@ const IssueSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users'
   },
+  projectName: {
+    type: String,
+    required: true
+  },
   description: {
     type: String,
     required: true
   },
-  severity: {
+  priority: {
     type: String,
     required: true
   },
   status: {
     type: String,
-    default: 'Open'
+    default: 'open'
   },
-  assignedTo: {
-    type: String
+  tech: {
+    type: String,
+    required: true
   },
   date: {
-    type: String
+    type: Date,
+    default: new Date()
   }
 })
 

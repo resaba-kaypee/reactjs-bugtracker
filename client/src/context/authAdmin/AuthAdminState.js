@@ -162,7 +162,7 @@ const AuthAdminState = props => {
       }
     };
     try {
-      const res = await axios.post("/api/admin/issues", issue, config);
+      const res = await axios.post("/api/admin/issue", issue, config);
       dispatch({ type: ADD_ISSUE, payload: res.data });
     } catch (err) {
       dispatch({ type: ISSUE_ERROR, payload: err.response.msg });

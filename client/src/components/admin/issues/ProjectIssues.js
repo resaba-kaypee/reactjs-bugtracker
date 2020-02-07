@@ -25,7 +25,7 @@ const ProjectIssues = () => {
     >
       <div className="card-header bg-primary text-light">
         <span className="h4">
-          <i className="fas fa-columns"></i> Viewing Project Issues
+          <i className="fas fa-bug"></i> Viewing Project Issues
         </span>
       </div>
       <div className="card-body">
@@ -36,7 +36,7 @@ const ProjectIssues = () => {
             data-toggle="modal"
             data-target="#addIssueAdmin"
           >
-            Report Issue
+            <i className="far fa-plus-square"></i> Report Issue
           </button>
           <span className="float-right">
             <IssueFilter />

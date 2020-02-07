@@ -12,8 +12,8 @@ const IssueItem = ({ issue }) => {
     projectName,
     description,
     status,
-    severity,
-    assignedTo,
+    priority,
+    tech,
     date
   } = issue;
 
@@ -42,12 +42,12 @@ const IssueItem = ({ issue }) => {
           <span className="text-primary">{status}</span>
         </div>
         <div className="border border-info rounded col col-3">
-          <strong>Severity:</strong>{" "}
-          <span className="text-primary">{severity}</span>
+          <strong>Priority:</strong>{" "}
+          <span className="text-primary">{priority}</span>
         </div>
         <div className="border border-info rounded col col-3">
           <strong>Tech:</strong>{" "}
-          <span className="text-primary">{assignedTo}</span>
+          <span className="text-primary">{tech}</span>
         </div>
       </div>
       <div className="row">
@@ -78,43 +78,6 @@ const IssueItem = ({ issue }) => {
     </div>
   );
 };
-
-// <div>
-//   <h4>from admin</h4>
-//   <h5 className="text-info">
-//     <a
-//       href="#!"
-//       data-toggle="modal"
-//       data-target="#adminEditIssue"
-//       onClick={onEdit}
-//     >
-//       {description}
-//     </a>
-//   </h5>
-//   <div>
-//     <span className="text-secondary">
-//       <span
-//         className={
-//           "badge " + (status === "open" ? "badge-light" : "badge-dark")
-//         }
-//       >
-//         Status: {capitalize(status)}
-//       </span>
-//       {" | "}
-//       <span>
-//         Severity: <span className="text-dark">{capitalize(severity)}</span>
-//       </span>
-//       <p>
-//         <span className="text-dark">ID#: {_id}</span> last updated by{" "}
-//         <span className="text-dark">{assignedTo}</span> on{" "}
-//         <Moment format="MMMM Do YYYY, h:mm:ss a">{date}</Moment>
-//         <button className="btn btn-light float-right" onClick={onDelete}>
-//           <i className="fas fa-trash-alt"></i>
-//         </button>
-//       </p>
-//     </span>
-//   </div>
-// </div>
 
 IssueItem.propTypes = {
   issue: PropTypes.object.isRequired

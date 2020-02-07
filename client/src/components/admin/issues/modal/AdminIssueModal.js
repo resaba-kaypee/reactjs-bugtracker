@@ -1,6 +1,6 @@
 import React from "react";
-import AdminIssueForm from "./AdminIssueForm"
-import Alerts from "../../../layout/Alerts"
+import AdminIssueForm from "./AdminIssueForm";
+import Alerts from "../../../layout/Alerts";
 
 const AddIssueModal = () => {
   return (
@@ -13,10 +13,13 @@ const AddIssueModal = () => {
         aria-labelledby=""
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered" role="document">
+        <div
+          className="modal-dialog modal-dialog-centered modal-lg"
+          role="document"
+        >
           <div className="modal-content">
-            <div className="modal-body">
-              <Alerts/>
+            <div className="modal-body modal-lg">
+              <Alerts />
               <AdminIssueForm />
             </div>
             <div className="modal-footer">

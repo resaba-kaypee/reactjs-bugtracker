@@ -1,7 +1,7 @@
 # reactjs-BugTracker
 Track issues with Bug Tracker
 
-# Build
+# Technologies
 * Created an express api \(Mongodb for database, Node, Express\)
 * JSON web token for authentication and protect routes
 * Used React Hooks for managing state \(useReducer, useContext\)
@@ -27,8 +27,8 @@ Track issues with Bug Tracker
 * Edit and delete button is disabled if the status is close
 
 # Changelog
-* Can now create, get, update and delete project
 * Assign users to projects
+* Can now create, get, update and delete project
 * Added users logger
 * Only admins can add a user
 * You can log in as user or admin
