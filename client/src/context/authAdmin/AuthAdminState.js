@@ -23,6 +23,7 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   ADD_ISSUE,
+  ADD_COMMENT,
   DELETE_ISSUE
 } from "../types";
 
@@ -188,6 +189,26 @@ const AuthAdminState = props => {
     }
   };
 
+  // Add comment to issue
+  const addComment = async comment => {
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    };
+    try {
+      console.log(comment)
+      const res = await axios.put(
+        `/api/admin/comment/${comment.id}`,
+        comment,
+        config
+      );
+      dispatch({ type: ADD_COMMENT, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+    }
+  };
+
   // Delete issue
   const deleteIssue = async id => {
     try {
@@ -246,9 +267,10 @@ const AuthAdminState = props => {
         clearIssues,
         clearFilter,
         clearCurrent,
+        getIssues,
         addIssue,
         updateIssue,
-        getIssues,
+        addComment,
         deleteIssue
       }}
     >

@@ -5,6 +5,7 @@ export const DELETE_ISSUE = "DELETE_ISSUE";
 export const SET_CURRENT = "SET_CURRENT";
 export const CLEAR_CURRENT = "CLEAR_CURRENT";
 export const UPDATE_ISSUE = "UPDATE_ISSUE";
+export const ADD_COMMENT = "ADD_COMMENT";
 export const FILTER_ISSUES = "FILTER_ISSUES";
 export const CLEAR_ISSUES = "CLEAR_ISSUES";
 export const CLEAR_FILTER = "CLEAR_FILTER";

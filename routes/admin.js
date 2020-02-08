@@ -19,6 +19,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const authAdmin = require("../middleware/authAdmin");
 
@@ -181,7 +182,9 @@ router.get("/users", authAdmin, async (req, res) => {
 // @route   GET api/issues
 // @desc    Get all users issue
 // @access  Private
-router.get("/issues", authAdmin, async (req, res) => {
+router.get("/issues", 
+// authAdmin, 
+async (req, res) => {
   try {
     const issues = await Issue.find({}).sort({
       date: -1
@@ -239,14 +242,14 @@ router.post(
 // @desc    Update issue
 // @access  Public
 router.put("/update/:id", authAdmin, async (req, res) => {
-  const { description, severity, status, assignedTo, date } = req.body;
+  const { description, priority, status, tech, date } = req.body;
 
   // Build issue object
   const issueFields = {};
   if (description) issueFields.description = description;
   if (status) issueFields.status = status;
-  if (severity) issueFields.severity = severity;
-  if (assignedTo) issueFields.assignedTo = assignedTo;
+  if (priority) issueFields.priority = priority;
+  if (tech) issueFields.tech = tech;
   if (date) issueFields.date = date;
 
   try {
@@ -257,6 +260,38 @@ router.put("/update/:id", authAdmin, async (req, res) => {
     issue = await Issue.findByIdAndUpdate(
       req.params.id,
       { $set: issueFields },
+      { new: true }
+    );
+
+    res.json(issue);
+  } catch (err) {
+    console.error("fr: admin update issue", err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/admin/comment/:id
+// @desc    Add comment to issue
+// @access  Public
+router.put("/comment/:id", 
+// authAdmin, 
+async (req, res) => {
+  const { message, tech } = req.body;
+
+  // Build issue object
+  const commentFields = {};
+  commentFields._id = uuid.v4();
+  if (message) commentFields.message = message;
+  if (tech) commentFields.tech = tech;
+
+  try {
+    let issue = await Issue.findById(req.params.id);
+
+    if (!issue) return res.status(404).json({ msg: "Issue not found" });
+
+    issue = await Issue.findByIdAndUpdate(
+      req.params.id,
+      { $push: { comments: commentFields } },
       { new: true }
     );
 

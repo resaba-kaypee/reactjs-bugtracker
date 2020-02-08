@@ -12,14 +12,13 @@ import About from "../pages/About";
 import AdminSideNav from "../layout/sidenav/AdminSideNav";
 import Overview from "./overview/Overview";
 // modals
-import AdminIssueModal from "./issues/modal/AdminIssueModal";
-import AdminEditIssueModal from "./issues/modal/AdminEditIssueModal";
+import ReportIssueModal from "./issues/modal/ReportIssueModal";
+import UpdateIssueModal from "./issues/modal/UpdateIssueModal";
 import AddProjectModal from "./projects/modal/AddProjectModal";
 import UpdateProjectModal from "./projects/modal/UpdateProjectModal";
 import ViewProjectModal from "./projects/modal/ViewProjectModal"
 // state | context
 import AuthAdminContext from "../../context/authAdmin/authAdminContext";
-// import ProjectState from "../../context/project/ProjectState";
 
 const AdminDashboard = () => {
   const authAdminContext = useContext(AuthAdminContext);
@@ -63,8 +62,8 @@ const AdminDashboard = () => {
 
         <div className="container-fluid">
           {/* <ProjectState> */}
-              <AdminIssueModal />
-              <AdminEditIssueModal />
+              <ReportIssueModal />
+              <UpdateIssueModal />
               <AddProjectModal />
               <UpdateProjectModal />
               <ViewProjectModal />

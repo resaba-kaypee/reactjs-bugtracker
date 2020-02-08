@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const IssueSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'users'
+    ref: "users"
   },
   projectName: {
     type: String,
@@ -19,16 +19,17 @@ const IssueSchema = mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'open'
+    default: "open"
   },
   tech: {
     type: String,
     required: true
   },
+  comments: [{}],
   date: {
     type: Date,
     default: new Date()
   }
-})
+});
 
-module.exports = mongoose.model('issue', IssueSchema);
+module.exports = mongoose.model("issue", IssueSchema);

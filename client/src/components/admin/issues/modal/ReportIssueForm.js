@@ -5,7 +5,7 @@ import AlertContext from "../../../../context/alert/alertContext";
 import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
 import ProjectContext from "../../../../context/project/projectContext";
 
-const AddIssueForm = () => {
+const ReportIssueForm = () => {
   const alertContext = useContext(AlertContext);
   const authAdminContext = useContext(AuthAdminContext);
   const projectContext = useContext(ProjectContext);
@@ -27,19 +27,6 @@ const AddIssueForm = () => {
   const [status, setStatus] = useState("open");
   const [tech, setTech] = useState("");
   const [date, setDate] = useState(new Date());
-
-  // const [issue, setIssue] = useState({
-  //   projectName: "",
-  //   description: "",
-  //   priority: "low",
-  //   status: "open",
-  //   tech: "",
-  //   date: new Date()
-  // });
-
-  // const { projectName, description, priority, tech, date, status } = issue;
-
-  // const onChange = e => setIssue({ ...issue, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
@@ -207,56 +194,4 @@ const AddIssueForm = () => {
   );
 };
 
-export default AddIssueForm;
-
-// <form onSubmit={onSubmit}>
-//   <h2 className="text-primary text-center">Add Issue</h2>
-//   <input
-//     type="text"
-//     placeholder="Issue"
-//     name="description"
-//     value={description}
-//     onChange={onChange}
-//   />
-//   <h4>Severity</h4>
-//   <input
-//     type="radio"
-//     name="severity"
-//     value="low"
-//     checked={severity === "low"}
-//     onChange={onChange}
-//   />
-//   Low{" "}
-//   <input
-//     type="radio"
-//     name="severity"
-//     value="medium"
-//     checked={severity === "medium"}
-//     onChange={onChange}
-//   />
-//   Medium{" "}
-//   <input
-//     type="radio"
-//     name="severity"
-//     value="high"
-//     checked={severity === "high"}
-//     onChange={onChange}
-//   />
-//   High <br />
-//   <hr />
-//   <span>
-//     <strong>Tech:</strong> <i className="fas fa-user"></i>
-//     {assignedTo}
-//   </span>
-//   <p>
-//     Date Issue:
-//     <Moment format="MMMM Do YYYY, h:mm:ss a">{date}</Moment>
-//   </p>
-//   <div>
-//     <input
-//       type="submit"
-//       value="Add Issue"
-//       className="btn btn-primary btn-block"
-//     />
-//   </div>
-// </form>
+export default ReportIssueForm;

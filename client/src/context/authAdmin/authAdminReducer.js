@@ -17,6 +17,7 @@ import {
   CLEAR_CURRENT,
   GET_ISSUES,
   ADD_ISSUE,
+  ADD_COMMENT,
   DELETE_ISSUE
 } from "../types";
 
@@ -72,6 +73,14 @@ export default (state, action) => {
         loading: false
       };
     case UPDATE_ISSUE:
+      return {
+        ...state,
+        issues: state.issues.map(issue =>
+          issue._id === action.payload._id ? action.payload : issue
+        ),
+        loading: false
+      };
+    case ADD_COMMENT:
       return {
         ...state,
         issues: state.issues.map(issue =>
