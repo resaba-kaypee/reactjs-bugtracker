@@ -27,6 +27,7 @@ Track issues with Bug Tracker
 * Edit and delete button is disabled if the status is close
 
 # Changelog
+* Add comments to issue
 * Assign users to projects
 * Can now create, get, update and delete project
 * Added users logger

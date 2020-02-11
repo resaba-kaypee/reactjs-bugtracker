@@ -6,14 +6,20 @@ const UpdateIssueForm = () => {
   const alertContext = useContext(AlertContext);
   const authAdminContext = useContext(AuthAdminContext);
   const { setAlert } = alertContext;
-  const { current, updateIssue, addComment, clearCurrent, admin } = authAdminContext;
+  const {
+    current,
+    updateIssue,
+    addComment,
+    admin
+  } = authAdminContext;
 
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("low");
   const [status, setStatus] = useState("open");
   const [tech, setTech] = useState();
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
+  const [isCommenting, setIsCommenting] = useState(false);
 
   useEffect(() => {
     if (current !== null) {
@@ -33,7 +39,7 @@ const UpdateIssueForm = () => {
 
     if (!/^[a-zA-Z0-9][\w.\s]+$/i.test(description)) {
       setAlert("Please enter valid description", "danger");
-    } else {
+    } else if (!isCommenting) {
       const updated = {
         id: current._id,
         description,
@@ -46,23 +52,23 @@ const UpdateIssueForm = () => {
       console.log(updated);
     }
 
-    if(!/^[a-zA-Z0-9][\w.\s]+$/i.test(message)){
-      setAlert("Please enter valid comment", "danger")
-    } else {
+    if (!/^[a-zA-Z0-9][\w.\s]+$/i.test(message) && isCommenting) {
+      setAlert("Please enter valid comment", "danger");
+    } else if(isCommenting) {
       const comment = {
         id: current._id,
         tech,
         message
-      }
-      setMessage("")
-      addComment(comment)
+      };
+      addComment(comment);
     }
 
     clearAll();
   };
 
   const clearAll = () => {
-    clearCurrent();
+    setMessage("");
+    setDescription("")
   };
 
   return (
@@ -153,6 +159,7 @@ const UpdateIssueForm = () => {
                     <button
                       type="submit"
                       className="btn btn-primary float-right"
+                      onClick={() => setIsCommenting(false)}
                     >
                       <i className="far fa-plus-square"></i> Report Issue
                     </button>
@@ -180,6 +187,7 @@ const UpdateIssueForm = () => {
                     <button
                       type="submit"
                       className="btn btn-primary float-right"
+                      onClick={() => setIsCommenting(true)}
                     >
                       <i className="far fa-plus-square"></i> Add Comment
                     </button>
