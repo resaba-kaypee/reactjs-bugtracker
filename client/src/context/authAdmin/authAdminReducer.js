@@ -122,7 +122,7 @@ export default (state, action) => {
         ...state,
         filtered: state.issues.filter(issue => {
           const regex = new RegExp(`${action.payload}`, "gi");
-          return issue.description.match(regex) || issue.date.match(regex);
+          return issue.description.match(regex) || issue.date.match(regex) || issue.projectName.match(regex);
         })
       };
     case CLEAR_FILTER:

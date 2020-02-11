@@ -34,9 +34,7 @@ const ProjectIssues = () => {
             >
               <i className="far fa-plus-square"></i> Report Issue
             </button>
-            <span className="float-right">
-              <IssueFilter />
-            </span>
+            <IssueFilter />
           </div>
           <div
             className="card-body"
@@ -66,45 +64,4 @@ const ProjectIssues = () => {
   );
 };
 
-// {issues !== null && !loading ? (
-//   filtered !== null ? (
-//     filtered.map(issue => (
-//       <ProjectIssueItem key={issue._id} issue={issue} />
-//     ))
-//   ) : (
-//     issues.map(issue => (
-//       <ProjectIssueItem key={issue._id} issue={issue} />
-//     ))
-//   )
-// ) : (
-//   <Spinner />
-// )}
-
-// <Fragment>
-//   {issues !== null && !loading ? (
-//     <TransitionGroup>
-//       {filtered !== null
-//         ? filtered.map(issue => (
-//             <CSSTransition classNames="item" key={issue._id} timeout={500}>
-//               <ul className="list-group">
-//                 <li className="list-group-item">
-//                   <IssueItem issue={issue}></IssueItem>
-//                 </li>
-//               </ul>
-//             </CSSTransition>
-//           ))
-//         : issues.map(issue => (
-//             <CSSTransition classNames="item" key={issue._id} timeout={500}>
-//               <ul className="list-group">
-//                 <li className="list-group-item">
-//                   <IssueItem issue={issue}></IssueItem>
-//                 </li>
-//               </ul>
-//             </CSSTransition>
-//           ))}
-//     </TransitionGroup>
-//   ) : (
-//     <Spinner />
-//   )}
-// </Fragment>
 export default ProjectIssues;
