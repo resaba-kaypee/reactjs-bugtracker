@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 import Moment from "react-moment";
 
 const LogItem = ({ log }) => {
-  const { action, date, username} = log;
+  const { action, date, username } = log;
 
   return (
     <Fragment>
-      <span>{username} just {action}</span> on{" "}
-      <Moment format="MMMM Do YYYY, h:mm:ss a">{date}</Moment>
+      <td>
+        <strong>{username}</strong> just {action} on{" "}
+        <strong>
+          <Moment format="MMMM Do YYYY, h:mm:ss a" date={date} />
+        </strong>
+      </td>
     </Fragment>
   );
 };

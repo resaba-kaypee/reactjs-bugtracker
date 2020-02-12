@@ -3,11 +3,17 @@ import axios from "axios";
 import LogContext from "./logContext";
 import logReducer from "./logReducer";
 
-import { GET_LOGS, LOG_ERROR } from "../types";
+import {
+  GET_LOGS,
+  LOG_ERROR,
+  FILTER_LOGS,
+  CLEAR_FILTERED_LOGS
+} from "../types";
 
-const LogState = props => { 
+const LogState = props => {
   const initialState = {
     logs: null,
+    filtered: null,
     error: null,
     loading: true
   };
@@ -24,11 +30,25 @@ const LogState = props => {
     }
   };
 
+  // Filter logs
+  const filterLogs = text => {
+    dispatch({ type: FILTER_LOGS, payload: text });
+  };
+
+  // Clear filtered logs
+  const clearFilteredLogs = () => {
+    dispatch({ type: CLEAR_FILTERED_LOGS });
+  };
+
   return (
     <LogContext.Provider
       value={{
         logs: state.logs,
-        getLogs
+        error: state.error,
+        filtered: state.filtered,
+        getLogs,
+        filterLogs,
+        clearFilteredLogs
       }}
     >
       {props.children}

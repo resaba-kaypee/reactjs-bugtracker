@@ -30,6 +30,8 @@ export const REMOVE_USER = "REMOVE_USER";
 //================LOGS
 export const GET_LOGS = "GET_LOGS";
 export const LOG_ERROR = "LOG_ERROR";
+export const FILTER_LOGS = "FILTER_LOGS";
+export const CLEAR_FILTERED_LOGS = "CLEAR_FILTERED_LOGS"
 //================PROJECTS
 export const GET_PROJECTS = "GET_PROJECTS";
 export const ADD_PROJECT = "ADD_PROJECT";
