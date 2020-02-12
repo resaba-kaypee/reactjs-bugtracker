@@ -70,7 +70,7 @@ const UpdateProjectForm = () => {
       <div className="border">
         <div className="card-header bg-primary text-light">
           <span className="h4">
-            <i className="far fa-edit"></i> Update Project
+            <i className="fas fa-edit"></i> Update Project
           </span>
         </div>
         <div className="card-body">
@@ -136,9 +136,10 @@ const UpdateProjectForm = () => {
                   <td colSpan="2">
                     <button
                       type="submit"
-                      className="btn btn-primary float-right"
+                      className="btn btn-outline-secondary float-right"
                       onClick={() => setIsTechUpdating(false)}
                     >
+                      <i className="fas fa-plus"></i>{" "}
                       Update Project
                     </button>
                   </td>
@@ -191,10 +192,11 @@ const UpdateProjectForm = () => {
                   </td>
                   <td>
                     <button
-                      className="btn btn-primary float-right"
+                      className="btn btn-outline-secondary float-right"
                       type="submit"
                       onClick={() => setIsTechUpdating(true)}
                     >
+                      <i className="fas fa-user-alt"></i>{" "}
                       Add user to project
                     </button>
                   </td>

@@ -161,7 +161,7 @@ const UpdateIssueForm = () => {
                       className="btn btn-primary float-right"
                       onClick={() => setIsCommenting(false)}
                     >
-                      <i className="far fa-plus-square"></i> Report Issue
+                      <i className="fas fa-plus"></i> Report Issue
                     </button>
                   </td>
                 </tr>
@@ -189,7 +189,7 @@ const UpdateIssueForm = () => {
                       className="btn btn-primary float-right"
                       onClick={() => setIsCommenting(true)}
                     >
-                      <i className="far fa-plus-square"></i> Add Comment
+                      <i className="fas fa-plus"></i> Add Comment
                     </button>
                   </td>
                 </tr>

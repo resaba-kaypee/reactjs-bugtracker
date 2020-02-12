@@ -19,12 +19,12 @@ const IssueFilter = () => {
   };
 
   return (
-    <form>
+    <form className="form-inline my-2 my-lg-0 float-right">
       <input
-        className="rounded"
+        className="form-control mr-sm-2"
         ref={text}
-        type="text"
-        placeholder="Filter project..."
+        type="search"
+        placeholder="Search project..."
         onChange={onChange}
       />
     </form>

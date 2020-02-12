@@ -129,7 +129,7 @@ const IssueItem = ({ issue }) => {
           >
             {comments !== null && comments.length > 0 ? (
               comments.map(comment => (
-                <li className="list-group-item" key={comment._id}>{comment.message}</li>
+                <li className="list-group-item" style={{backgroundColor: "none"}} key={comment._id}>{comment.message}</li>
               ))
             ) : (
               <li className="list-group-item">No comments about this issue yet</li>

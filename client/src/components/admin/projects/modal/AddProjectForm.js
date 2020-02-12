@@ -44,7 +44,7 @@ const AddProjectForm = () => {
       <div className="border">
         <div className="card-header bg-primary text-light">
           <span className="h4">
-            <i className="far fa-plus-square"></i> Create New Project
+            <i className="fas fa-plus"></i> Create New Project
           </span>
         </div>
         <div className="card-body">
@@ -112,9 +112,9 @@ const AddProjectForm = () => {
                   <td colSpan="2">
                     <button
                       type="submit"
-                      className="btn btn-primary float-right"
+                      className="btn btn-outline-secondary float-right"
                     >
-                      <i className="far fa-plus-square"></i> Create
+                      <i className="fas fa-plus"></i> Create
                     </button>
                   </td>
                 </tr>

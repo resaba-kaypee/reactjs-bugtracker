@@ -58,7 +58,7 @@ const ReportIssueForm = () => {
       <div className="border">
         <div className="card-header bg-primary text-light">
           <span className="h4">
-            <i className="far fa-plus-square"></i> Issue Summary
+            <i className="fas fa-plus"></i> Issue Summary
           </span>
         </div>
         <div className="card-body">
@@ -181,7 +181,7 @@ const ReportIssueForm = () => {
                       type="submit"
                       className="btn btn-primary float-right"
                     >
-                      <i className="far fa-plus-square"></i> Report Issue
+                      <i className="fas fa-plus"></i> Report Issue
                     </button>
                   </td>
                 </tr>

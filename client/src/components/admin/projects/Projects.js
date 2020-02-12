@@ -19,29 +19,29 @@ const Projects = () => {
 
   return (
     <div
-      className="card"
+      className="card shadow bg-white rounded"
       style={{
         marginTop: "20px"
       }}
     >
-      <div className="card-header bg-primary text-light">
+      <div className="card-header bg-primary text-light shadow-sm">
         <span className="h4">
-          <i className="fas fa-puzzle-piece"></i> Projects
+          <i className="fas fa-puzzle-piece"></i> Viewing Projects
         </span>
       </div>
       <div className="card-body">
-        <div className="card-header">
+        <div className="card-header shadow bg-white rounded">
           <button
-            className="btn btn-primary"
+            className="btn btn-outline-secondary"
             type="button"
             data-toggle="modal"
             data-target="#addProject"
           >
-            <i className="far fa-plus-square"></i> Create New Project
+            <i className="fas fa-plus"></i> Create New Project
           </button>
-          <span className="float-right">
+
             <ProjectFilter />
-          </span>
+
         </div>
         <div className="card-body">
           <table className="table table-bordered">
