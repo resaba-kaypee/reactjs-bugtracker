@@ -181,8 +181,8 @@ const UpdateProjectForm = () => {
                       <option>--Select---</option>
                       {users !== null && !loading ? (
                         users.map(user => (
-                          <option key={user._id} value={user.name}>
-                            {user.name}
+                          <option key={user._id} value={user.firstName + " " + user.lastName}>
+                            {user.firstName} {user.lastName}
                           </option>
                         ))
                       ) : (

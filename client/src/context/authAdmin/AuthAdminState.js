@@ -9,6 +9,8 @@ import {
   REGISTER_FAIL,
   ADMIN_LOADED,
   AUTH_ERROR,
+  GET_USERS,
+  USERS_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
@@ -32,6 +34,7 @@ const AuthAdminState = props => {
     token: localStorage.getItem("token"),
     isAuthenticated: null,
     admin: null,
+    users: null,
     issues: null,
     loading: true,
     error: null,
@@ -117,6 +120,16 @@ const AuthAdminState = props => {
     }
   };
 
+  // Get all users
+  const getAllUsers = async () => {
+    try {
+      const res = await axios.get("/api/admin/users");
+      dispatch({ type: GET_USERS, payload: res.data });
+    } catch (err) {
+      dispatch({ type: USERS_ERROR, payload: err });
+    }
+  };
+
   // Login Admin
   const login = async formData => {
     const config = {
@@ -197,7 +210,7 @@ const AuthAdminState = props => {
       }
     };
     try {
-      console.log(comment)
+      console.log(comment);
       const res = await axios.put(
         `/api/admin/comment/${comment.id}`,
         comment,
@@ -249,6 +262,7 @@ const AuthAdminState = props => {
         token: state.token,
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
+        users: state.users,
         admin: state.admin,
         error: state.error,
         issues: state.issues,
@@ -271,6 +285,7 @@ const AuthAdminState = props => {
         addIssue,
         updateIssue,
         addComment,
+        getAllUsers,
         deleteIssue
       }}
     >

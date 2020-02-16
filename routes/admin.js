@@ -103,7 +103,10 @@ router.post(
   "/registerUser",
   authAdmin,
   [
-    check("name", "Please enter a name")
+    check("firstName", "Please enter a first name")
+      .not()
+      .isEmpty(),
+    check("lastName", "Please enter a last name")
       .not()
       .isEmpty(),
     check("email", "Please include a valid email").isEmail(),
@@ -118,7 +121,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { name, email, password } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -126,9 +129,11 @@ router.post(
         return res.status(400).json({ msg: "User already exists" });
       } else {
         user = new User({
-          name,
+          firstName,
+          lastName,
           email,
-          password
+          password,
+          role
         });
 
         const salt = await bcrypt.genSalt(10);
@@ -157,7 +162,7 @@ router.post(
       //   }
       // );
     } catch (err) {
-      console.error("fr: register user", err.message);
+      console.error("fr register user:", err.message);
       res.status(500).send("Server error");
     }
   }
@@ -182,19 +187,21 @@ router.get("/users", authAdmin, async (req, res) => {
 // @route   GET api/issues
 // @desc    Get all users issue
 // @access  Private
-router.get("/issues", 
-// authAdmin, 
-async (req, res) => {
-  try {
-    const issues = await Issue.find({}).sort({
-      date: -1
-    });
-    res.json(issues);
-  } catch (error) {
-    console.error("fr: get all issue", error.message);
-    res.status(500).send("Server error");
+router.get(
+  "/issues",
+  // authAdmin,
+  async (req, res) => {
+    try {
+      const issues = await Issue.find({}).sort({
+        date: -1
+      });
+      res.json(issues);
+    } catch (error) {
+      console.error("fr: get all issue", error.message);
+      res.status(500).send("Server error");
+    }
   }
-});
+);
 
 // @route   POST api/issues
 // @desc    Add new issue
@@ -273,34 +280,36 @@ router.put("/update/:id", authAdmin, async (req, res) => {
 // @route   PUT api/admin/comment/:id
 // @desc    Add comment to issue
 // @access  Public
-router.put("/comment/:id", 
-// authAdmin, 
-async (req, res) => {
-  const { message, tech } = req.body;
+router.put(
+  "/comment/:id",
+  // authAdmin,
+  async (req, res) => {
+    const { message, tech } = req.body;
 
-  // Build issue object
-  const commentFields = {};
-  commentFields._id = uuid.v4();
-  if (message) commentFields.message = message;
-  if (tech) commentFields.tech = tech;
+    // Build issue object
+    const commentFields = {};
+    commentFields._id = uuid.v4();
+    if (message) commentFields.message = message;
+    if (tech) commentFields.tech = tech;
 
-  try {
-    let issue = await Issue.findById(req.params.id);
+    try {
+      let issue = await Issue.findById(req.params.id);
 
-    if (!issue) return res.status(404).json({ msg: "Issue not found" });
+      if (!issue) return res.status(404).json({ msg: "Issue not found" });
 
-    issue = await Issue.findByIdAndUpdate(
-      req.params.id,
-      { $push: { comments: commentFields } },
-      { new: true }
-    );
+      issue = await Issue.findByIdAndUpdate(
+        req.params.id,
+        { $push: { comments: commentFields } },
+        { new: true }
+      );
 
-    res.json(issue);
-  } catch (err) {
-    console.error("fr: admin update issue", err.message);
-    res.status(500).send("Server Error");
+      res.json(issue);
+    } catch (err) {
+      console.error("fr: admin update issue", err.message);
+      res.status(500).send("Server Error");
+    }
   }
-});
+);
 
 // @route   DELETE api/issues/:id
 // @desc    Delete issue

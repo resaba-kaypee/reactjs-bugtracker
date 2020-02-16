@@ -29,28 +29,28 @@ const UserSideNav = props => {
         className="list-group-item list-group-item-action bg-light"
         to="/admin/projects"
       >
-        <i className="fas fa-puzzle-piece"></i> Projects
+        <i className="fas fa-puzzle-piece"></i> Manage Projects
       </Link>
 
       <Link
         className="list-group-item list-group-item-action bg-light"
         to="/admin/issues"
       >
-        <i className="fas fa-bug"></i> Issues
+        <i className="fas fa-bug"></i> Manage Issues
+      </Link>
+
+      <Link
+        className="list-group-item list-group-item-action bg-light"
+        to="/admin/users"
+      >
+        <i className="far fa-plus-square" /> Manage Users
       </Link>
 
       <Link
         className="list-group-item list-group-item-action bg-light"
         to="/admin/logs"
       >
-        <i className="far fa-list-alt"></i> Logs
-      </Link>
-
-      <Link
-        className="list-group-item list-group-item-action bg-light"
-        to="/admin/register"
-      >
-        <i className="far fa-plus-square" /> Add user
+        <i className="far fa-list-alt"></i> View Users Logs
       </Link>
 
       <Link

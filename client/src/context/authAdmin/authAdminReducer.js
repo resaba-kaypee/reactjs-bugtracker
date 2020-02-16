@@ -6,6 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  GET_USERS,
+  USERS_ERROR,
   CLEAR_ERRORS,
   CLEAR_SUCCESS,
   UPDATE_ISSUE,
@@ -60,6 +62,17 @@ export default (state, action) => {
         admin: null,
         error: action.payload
       };
+      case GET_USERS:
+        return {
+          ...state,
+          users: action.payload,
+          loading: false
+        };
+      case USERS_ERROR:
+        return {
+          ...state,
+          error: action.payload
+        };
     case GET_ISSUES:
       return {
         ...state,
