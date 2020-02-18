@@ -40,7 +40,7 @@ const AddProjectForm = () => {
   };
 
   return (
-    <div className="container">
+    <div>
       <div className="border">
         <div className="card-header bg-primary text-light">
           <span className="h4">
