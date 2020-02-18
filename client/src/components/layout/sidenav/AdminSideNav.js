@@ -53,13 +53,6 @@ const UserSideNav = props => {
         <i className="far fa-list-alt"></i> View Users Logs
       </Link>
 
-      <Link
-        className="list-group-item list-group-item-action bg-light"
-        to="/admin/contacts"
-      >
-        <i className="far fa-address-book"></i> Contacts
-      </Link>
-
       <a
         onClick={onLogout}
         href="#!"
