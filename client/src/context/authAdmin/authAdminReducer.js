@@ -6,7 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  GET_USERS,
+  GET_ALL_USERS,
+  DELETE_USER,
   USERS_ERROR,
   CLEAR_ERRORS,
   CLEAR_SUCCESS,
@@ -62,17 +63,23 @@ export default (state, action) => {
         admin: null,
         error: action.payload
       };
-      case GET_USERS:
-        return {
-          ...state,
-          users: action.payload,
-          loading: false
-        };
-      case USERS_ERROR:
-        return {
-          ...state,
-          error: action.payload
-        };
+    case GET_ALL_USERS:
+      return {
+        ...state,
+        users: action.payload,
+        loading: false
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+        users: state.users.filter(user => user._id !== action.payload),
+        loading: false
+      };
+    case USERS_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      };
     case GET_ISSUES:
       return {
         ...state,
@@ -135,7 +142,11 @@ export default (state, action) => {
         ...state,
         filtered: state.issues.filter(issue => {
           const regex = new RegExp(`${action.payload}`, "gi");
-          return issue.description.match(regex) || issue.date.match(regex) || issue.projectName.match(regex);
+          return (
+            issue.description.match(regex) ||
+            issue.date.match(regex) ||
+            issue.projectName.match(regex)
+          );
         })
       };
     case CLEAR_FILTER:
@@ -153,7 +164,6 @@ export default (state, action) => {
         ...state,
         success: null
       };
-
     default:
       return state;
   }

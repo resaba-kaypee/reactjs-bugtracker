@@ -2,6 +2,7 @@
 register admin
 register user
 get all users
+delete user
 ==============
 add new issue
 get all issues
@@ -28,7 +29,7 @@ const User = require("../models/User");
 const Issue = require("../models/Issue");
 const Project = require("../models/Project");
 
-// @route   POST api/admin/register
+// @route   POST api/admin/registerAdmin
 // @desc    Register a admin
 // @access  Private
 router.post(
@@ -96,7 +97,7 @@ router.post(
   }
 );
 
-// @route   POST api/admin/user
+// @route   POST api/admin/registerUser
 // @desc    Register a user
 // @access  Private
 router.post(
@@ -184,12 +185,33 @@ router.get("/users", authAdmin, async (req, res) => {
   }
 });
 
-// @route   GET api/issues
+// @route   DELETE api/admin/deleteUser
+// @desc    Delete user
+// @access  Private
+router.delete("/deleteUser/:id", authAdmin, async (req, res) => {
+  try {
+    let user = await User.findById(req.params.id);
+
+    if (!user) return res.status(404).json({ msg: "User not found" });
+
+    await User.findByIdAndRemove(req.params.id);
+    res.json({ msg: "User deleted" });
+  } catch (err) {
+    console.error("fr admin delete user:", err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+/*********  **********  **********  **********
+                                    ISSUES
+*********  **********  **********  ***********/
+
+// @route   GET api/admin/issues
 // @desc    Get all users issue
 // @access  Private
 router.get(
   "/issues",
-  // authAdmin,
+  authAdmin,
   async (req, res) => {
     try {
       const issues = await Issue.find({}).sort({
@@ -203,7 +225,7 @@ router.get(
   }
 );
 
-// @route   POST api/issues
+// @route   POST api/admin/issue
 // @desc    Add new issue
 // @access  Private
 router.post(
@@ -282,7 +304,7 @@ router.put("/update/:id", authAdmin, async (req, res) => {
 // @access  Public
 router.put(
   "/comment/:id",
-  // authAdmin,
+  authAdmin,
   async (req, res) => {
     const { message, tech } = req.body;
 

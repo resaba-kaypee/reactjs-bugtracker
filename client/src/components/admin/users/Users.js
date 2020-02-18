@@ -1,7 +1,8 @@
 import React, { useEffect, useContext } from "react";
 import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
-import Spinner from "../../../assets/img/spinner.gif"
+import Spinner from "../../../assets/img/spinner.gif";
 import UserFilter from "./UserFilter";
+import UsersItem from "./UsersItem";
 
 const Users = () => {
   const authAdminContext = useContext(AuthAdminContext);
@@ -68,21 +69,7 @@ const Users = () => {
             </thead>
             <tbody>
               {users !== null && !loading ? (
-                users.map(user => (
-                  <tr key={user._id}>
-                    <td>{user._id.slice(0, 12)}</td>
-                    <td>{user.role}</td>
-                    <td>
-                      {user.firstName} {user.lastName}
-                      <button
-                        className="btn btn-light float-right"
-                        title="Delete User"
-                      >
-                        <i className="fas fa-trash-alt"></i>
-                      </button>
-                    </td>
-                  </tr>
-                ))
+                users.map(user => <UsersItem key={user._id} user={user}/>)
               ) : (
                 <tr>
                   <td colSpan="3" align="center">

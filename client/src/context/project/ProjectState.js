@@ -13,15 +13,12 @@ import {
   CLEAR_PROJECTS,
   SET_CURRENT_PROJECT,
   CLEAR_CURRENT_PROJECT,
-  GET_USERS,
-  REMOVE_USER,
-  USERS_ERROR
+  REMOVE_USER
 } from "../types";
 
 const ProjectState = props => {
   const initialState = {
     projects: null,
-    users: null,
     error: null,
     filtered: null,
     current: null,
@@ -109,16 +106,7 @@ const ProjectState = props => {
     dispatch({ type: CLEAR_PROJECTS });
   };
 
-  // Get all users
-  const getUsers = async () => {
-    try {
-      const res = await axios.get("/api/admin/users");
-      dispatch({ type: GET_USERS, payload: res.data });
-    } catch (err) {
-      dispatch({ type: USERS_ERROR, payload: err });
-    }
-  };
-
+  // Remove user from assigned projects
   const removeUser = async project => {
     const config = {
       headers: {
@@ -155,7 +143,6 @@ const ProjectState = props => {
         clearProjects,
         setCurrentProject,
         clearCurrentProject,
-        getUsers,
         removeUser
       }}
     >

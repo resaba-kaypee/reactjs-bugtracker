@@ -1,15 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import UpdateProjectFormTechList from "./UpdateProjectFormTechList";
 import ProjectContext from "../../../../context/project/projectContext";
+import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
 import AlertContext from "../../../../context/alert/alertContext";
 
 const UpdateProjectForm = () => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const projectContext = useContext(ProjectContext);
+  const authAdminContext = useContext(AuthAdminContext);
+
   const {
-    getUsers,
-    users,
     loading,
     current,
     projects,
@@ -18,6 +19,8 @@ const UpdateProjectForm = () => {
     clearCurrentProject
   } = projectContext;
 
+  const { getAllUsers, users } = authAdminContext;
+
   const [projectName, setProjectName] = useState("");
   const [status, setStatus] = useState("");
   const [description, setDescripton] = useState("");
@@ -25,7 +28,7 @@ const UpdateProjectForm = () => {
   const [isTechUpdating, setIsTechUpdating] = useState(false);
 
   useEffect(() => {
-    getUsers();
+    getAllUsers();
     getProjects();
     if (current !== null) {
       setProjectName(current.projectName);
@@ -139,8 +142,7 @@ const UpdateProjectForm = () => {
                       className="btn btn-outline-secondary float-right"
                       onClick={() => setIsTechUpdating(false)}
                     >
-                      <i className="fas fa-plus"></i>{" "}
-                      Update Project
+                      <i className="fas fa-plus"></i> Update Project
                     </button>
                   </td>
                 </tr>
@@ -181,7 +183,10 @@ const UpdateProjectForm = () => {
                       <option>--Select---</option>
                       {users !== null && !loading ? (
                         users.map(user => (
-                          <option key={user._id} value={user.firstName + " " + user.lastName}>
+                          <option
+                            key={user._id}
+                            value={user.firstName + " " + user.lastName}
+                          >
                             {user.firstName} {user.lastName}
                           </option>
                         ))
@@ -196,8 +201,7 @@ const UpdateProjectForm = () => {
                       type="submit"
                       onClick={() => setIsTechUpdating(true)}
                     >
-                      <i className="fas fa-user-alt"></i>{" "}
-                      Add user to project
+                      <i className="fas fa-user-alt"></i> Add user to project
                     </button>
                   </td>
                 </tr>

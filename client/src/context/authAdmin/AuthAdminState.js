@@ -9,7 +9,7 @@ import {
   REGISTER_FAIL,
   ADMIN_LOADED,
   AUTH_ERROR,
-  GET_USERS,
+  GET_ALL_USERS,
   USERS_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -26,7 +26,8 @@ import {
   CLEAR_CURRENT,
   ADD_ISSUE,
   ADD_COMMENT,
-  DELETE_ISSUE
+  DELETE_ISSUE,
+  DELETE_USER
 } from "../types";
 
 const AuthAdminState = props => {
@@ -124,9 +125,19 @@ const AuthAdminState = props => {
   const getAllUsers = async () => {
     try {
       const res = await axios.get("/api/admin/users");
-      dispatch({ type: GET_USERS, payload: res.data });
+      dispatch({ type: GET_ALL_USERS, payload: res.data });
     } catch (err) {
       dispatch({ type: USERS_ERROR, payload: err });
+    }
+  };
+
+  // Delete registered user
+  const deleteUser = async id => {
+    try {
+      await axios.delete(`/api/admin/deleteUser/${id}`);
+      dispatch({ type: DELETE_USER, payload: id });
+    } catch (err) {
+      dispatch({ type: USERS_ERROR, payload: err.response.msg });
     }
   };
 
@@ -284,9 +295,10 @@ const AuthAdminState = props => {
         getIssues,
         addIssue,
         updateIssue,
+        deleteIssue,
         addComment,
         getAllUsers,
-        deleteIssue
+        deleteUser
       }}
     >
       {props.children}

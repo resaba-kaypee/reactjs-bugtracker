@@ -9,9 +9,7 @@ import {
   CLEAR_PROJECTS,
   SET_CURRENT_PROJECT,
   CLEAR_CURRENT_PROJECT,
-  GET_USERS,
-  REMOVE_USER,
-  USERS_ERROR
+  REMOVE_USER
 } from "../types";
 
 export default (state, action) => {
@@ -88,17 +86,6 @@ export default (state, action) => {
         loading: false
       };
     }
-    case GET_USERS:
-      return {
-        ...state,
-        users: action.payload,
-        loading: false
-      };
-    case USERS_ERROR:
-      return {
-        ...state,
-        error: action.payload
-      };
     default:
       return state;
   }

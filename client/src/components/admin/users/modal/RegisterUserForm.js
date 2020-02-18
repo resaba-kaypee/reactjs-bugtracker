@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import useForm from "../../validate/useForm";
 import validate from "../../validate/validate";
-import Alerts from "../../../layout/Alerts";
 import AlertContext from "../../../../context/alert/alertContext";
 import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
 
