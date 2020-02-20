@@ -23,86 +23,19 @@ const config = require("config");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const authAdmin = require("../middleware/authAdmin");
+const auth = require("../middleware/auth");
 
 const Admin = require("../models/Admin");
 const User = require("../models/User");
 const Issue = require("../models/Issue");
 const Project = require("../models/Project");
 
-// @route   POST api/admin/registerAdmin
-// @desc    Register a admin
-// @access  Private
-router.post(
-  "/registerAdmin",
-  authAdmin,
-  [
-    check("name", "Please enter a name")
-      .not()
-      .isEmpty(),
-    check("email", "Please include a valid email").isEmail(),
-    check(
-      "password",
-      "Please enter a password with 6 or more characters"
-    ).isLength({ min: 6 })
-  ],
-  async (req, res) => {
-    // res.send('admin registered')
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { name, email, password } = req.body;
-
-    try {
-      let admin = await Admin.findOne({ email });
-      if (admin) {
-        return res.status(400).json({ msg: "Admin already exists" });
-      } else {
-        admin = new Admin({
-          name,
-          email,
-          password
-        });
-
-        const salt = await bcrypt.genSalt(10);
-        admin.password = await bcrypt.hash(password, salt);
-
-        await admin.save();
-
-        return res.status(200).json({ msg: "Admin registered" });
-      }
-
-      // const payload = {
-      //   admin: {
-      //     id: admin.id
-      //   }
-      // };
-
-      // jwt.sign(
-      //   payload,
-      //   config.get("jwtSecret"),
-      //   {
-      //     expiresIn: 360000
-      //   },
-      //   (err, token) => {
-      //     if (err) throw err;
-      //     res.json({ token });
-      //   }
-      // );
-    } catch (err) {
-      console.error("fr: register admin", err.message);
-      res.status(500).send("Server error");
-    }
-  }
-);
-
 // @route   POST api/admin/registerUser
 // @desc    Register a user
 // @access  Private
 router.post(
   "/registerUser",
-  authAdmin,
+  auth,
   [
     check("firstName", "Please enter a first name")
       .not()
@@ -172,7 +105,7 @@ router.post(
 // @route   GET api/admin/users
 // @desc    Get all users
 // @access  Public
-router.get("/users", authAdmin, async (req, res) => {
+router.get("/users", auth, async (req, res) => {
   try {
     const users = await User.find({}).sort({
       date: -1
@@ -188,7 +121,7 @@ router.get("/users", authAdmin, async (req, res) => {
 // @route   DELETE api/admin/deleteUser
 // @desc    Delete user
 // @access  Private
-router.delete("/deleteUser/:id", authAdmin, async (req, res) => {
+router.delete("/deleteUser/:id", auth, async (req, res) => {
   try {
     let user = await User.findById(req.params.id);
 
@@ -211,7 +144,7 @@ router.delete("/deleteUser/:id", authAdmin, async (req, res) => {
 // @access  Private
 router.get(
   "/issues",
-  authAdmin,
+  auth,
   async (req, res) => {
     try {
       const issues = await Issue.find({}).sort({
@@ -231,7 +164,7 @@ router.get(
 router.post(
   "/issue",
   [
-    authAdmin,
+    auth,
     [
       check("description", "Description is required")
         .not()
@@ -304,7 +237,7 @@ router.put("/update/:id", authAdmin, async (req, res) => {
 // @access  Public
 router.put(
   "/comment/:id",
-  authAdmin,
+  auth,
   async (req, res) => {
     const { message, tech } = req.body;
 
@@ -336,7 +269,7 @@ router.put(
 // @route   DELETE api/issues/:id
 // @desc    Delete issue
 // @access  Public
-router.delete("/issues/:id", authAdmin, async (req, res) => {
+router.delete("/issues/:id", auth, async (req, res) => {
   try {
     let issue = await Issue.findById(req.params.id);
 
@@ -365,7 +298,7 @@ router.delete("/issues/:id", authAdmin, async (req, res) => {
 router.post(
   "/project",
   [
-    authAdmin,
+    auth,
     [
       check("description", "Description is required")
         .not()
@@ -420,7 +353,7 @@ router.get("/projects", authAdmin, async (req, res) => {
 // @route   PUT api/admin/project/:id
 // @desc    Update project
 // @access  Private
-router.put("/project/:id", authAdmin, async (req, res) => {
+router.put("/project/:id", auth, async (req, res) => {
   const { projectName, status, description, tech } = req.body;
   const projectFields = {};
   if (projectName) projectFields.projectName = projectName;
@@ -457,7 +390,7 @@ router.put("/project/:id", authAdmin, async (req, res) => {
 // @access  Private
 router.put(
   "/removeTech/:id",
-  // authAdmin,
+  auth,
   async (req, res) => {
     const { tech } = req.body;
 
@@ -482,7 +415,7 @@ router.put(
 // @route   DELETE api/admin/project/:id
 // @desc    Delete project
 // @access  Public
-router.delete("/project/:id", authAdmin, async (req, res) => {
+router.delete("/project/:id", auth, async (req, res) => {
   try {
     let project = await Project.findById(req.params.id);
 

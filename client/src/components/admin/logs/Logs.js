@@ -46,14 +46,14 @@ const Logs = () => {
               {logs !== null && !loading ? (
                 filtered !== null ? (
                   filtered.map(log => (
-                    <tr>
-                      <LogItem key={log._id} log={log} />
+                    <tr key={log._id}>
+                      <LogItem log={log} />
                     </tr>
                   ))
                 ) : (
                   logs.map(log => (
-                    <tr>
-                      <LogItem key={log._id} log={log} />
+                    <tr key={log._id}>
+                      <LogItem log={log} />
                     </tr>
                   ))
                 )

@@ -1,7 +1,13 @@
 const mongoose = require("mongoose");
 
 const LogSchema = mongoose.Schema({
-  username: {
+  firstName: {
+    type: String
+  },
+  lastName: {
+    type: String
+  },
+  role: {
     type: String
   },
   action: {

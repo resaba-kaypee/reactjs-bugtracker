@@ -52,7 +52,7 @@ const UserDashBoard = () => {
           <AddIssueModal />
           <EditIssueModal />
           <Switch>
-            <Route path="/dashBoard/home" component={Overview} />
+            <Route path="/user/home" component={Overview} />
             <Route path="/dashBoard/issues" component={Issues} />
             <Route path="/dashBoard/contacts" component={Contacts} />
             <Route path="/dashBoard/about" component={About} />

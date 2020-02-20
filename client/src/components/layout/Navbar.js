@@ -21,7 +21,7 @@ const Navbar = ({ title, icon }) => {
   }, [admin, user, authContext, authAdminContext]);
 
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar navbar-dark bg-primary shadow-sm">
       <div className="navbar-brand">
         <h3>
           <i className={icon} /> {title}

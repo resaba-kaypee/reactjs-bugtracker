@@ -46,55 +46,55 @@ const AuthAdminState = props => {
 
   const [state, dispatch] = useReducer(authAdminReducer, initialState);
 
-  // Load Admin
-  const loadAdmin = async () => {
-    // load token into global headers
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
+  // Load Admin (not needed)
+  // const loadAdmin = async () => {
+  //   // load token into global headers
+  //   if (localStorage.token) {
+  //     setAuthToken(localStorage.token);
+  //   }
 
-    try {
-      // check if valid admin is logging in
-      const res = await axios.get("/api/authAdmin");
+  //   try {
+  //     // check if valid admin is logging in
+  //     const res = await axios.get("/api/authAdmin");
 
-      dispatch({
-        type: ADMIN_LOADED,
-        payload: res.data
-      });
-    } catch (err) {
-      // invalid credentials
-      dispatch({ type: AUTH_ERROR });
-    }
-  };
+  //     dispatch({
+  //       type: ADMIN_LOADED,
+  //       payload: res.data
+  //     });
+  //   } catch (err) {
+  //     // invalid credentials
+  //     dispatch({ type: AUTH_ERROR });
+  //   }
+  // };
 
-  // Register Admin
-  const registerAdmin = async formData => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+  // Register Admin (not needed)
+  // const registerAdmin = async formData => {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   };
 
-    try {
-      const res = await axios.post(
-        "/api/admin/registerAdmin",
-        formData,
-        config
-      );
+  //   try {
+  //     const res = await axios.post(
+  //       "/api/admin/registerAdmin",
+  //       formData,
+  //       config
+  //     );
 
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data.msg
-      });
+  //     dispatch({
+  //       type: REGISTER_SUCCESS,
+  //       payload: res.data.msg
+  //     });
 
-      // loadAdmin();
-    } catch (err) {
-      dispatch({
-        type: REGISTER_FAIL,
-        payload: err.data.msg
-      });
-    }
-  };
+  //     // loadAdmin();
+  //   } catch (err) {
+  //     dispatch({
+  //       type: REGISTER_FAIL,
+  //       payload: err.data.msg
+  //     });
+  //   }
+  // };
 
   // Register User
   const registerUser = async formData => {
@@ -141,30 +141,30 @@ const AuthAdminState = props => {
     }
   };
 
-  // Login Admin
-  const login = async formData => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+  // Login Admin (not needed)
+  // const login = async formData => {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   };
 
-    try {
-      const res = await axios.post("/api/authAdmin", formData, config);
+  //   try {
+  //     const res = await axios.post("/api/authAdmin", formData, config);
 
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-      });
+  //     dispatch({
+  //       type: LOGIN_SUCCESS,
+  //       payload: res.data
+  //     });
 
-      loadAdmin();
-    } catch (err) {
-      dispatch({
-        type: LOGIN_FAIL,
-        payload: err.response.data.msg
-      });
-    }
-  };
+  //     loadAdmin();
+  //   } catch (err) {
+  //     dispatch({
+  //       type: LOGIN_FAIL,
+  //       payload: err.response.data.msg
+  //     });
+  //   }
+  // };
 
   /**
    * ********************************************************** ISSUES
@@ -280,10 +280,10 @@ const AuthAdminState = props => {
         success: state.success,
         filtered: state.filtered,
         current: state.current,
-        loadAdmin,
-        registerAdmin,
+        // loadAdmin,
+        // registerAdmin,
         registerUser,
-        login,
+        // login,
         logout,
         setCurrent,
         filterIssues,

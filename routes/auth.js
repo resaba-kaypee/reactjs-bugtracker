@@ -23,7 +23,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 // @route   POST api/auth
-// @desc    Auth user and get token
+// @desc    Auth user to login and get token
 // @access  Public
 router.post(
   "/",
@@ -40,6 +40,7 @@ router.post(
 
     try {
       let user = await User.findOne({ email });
+
       if (!user) {
         return res.status(400).json({ msg: "Invalid Credentials" });
       }
@@ -52,7 +53,9 @@ router.post(
       const payload = {
         user: {
           id: user.id,
-          name: user.name
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role
         }
       };
 
@@ -69,13 +72,15 @@ router.post(
       );
 
       const newLog = new Log({
-        username: payload.user.name,
+        fistName: payload.user.firstName,
+        lastName: payload.user.lastName,
+        role: payload.user.role,
         action: "logged in",
       })
       await newLog.save();
 
     } catch (error) {
-      console.error("fr: auth user", error.message);
+      console.error("fr auth user:", error.message);
       res.status(500).send("Server error");
     }
   }
@@ -85,10 +90,11 @@ router.post(
 // @route   POST api/auth
 // @desc    Logout user
 // @access  Public
-router.get("/logout", auth, async (req,res) => {
+router.get("/logout", auth, async (req, res) => {
   try {
     const newLog = new Log({
-      username: req.user.name,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
       action: "logged out",
     })
 

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // component
-import Navbar from "./components/layout/Navbar";
+// import Navbar from "./components/layout/Navbar";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import UserDashBoard from "./components/user/UserDashBoard";
 import Login from "./components/pages/Login";
@@ -27,34 +27,31 @@ const App = () => {
   return (
     <React.StrictMode>
       <AuthAdminState>
-        <ProjectState>
         <AuthState>
-          <LogState>
-            <IssueState>
-              <AlertState>
-                <Router>
-                  <Fragment>
-                    <Navbar />
-                    <div className="">
-                      <Switch>
-                        <Route exact path="/" component={Login} />
-                        <PrivateAdminRoute
-                          path="/admin"
-                          component={AdminDashboard}
-                        />
-                        <PrivateRoute
-                          path="/dashBoard"
-                          component={UserDashBoard}
-                        />
-                      </Switch>
-                    </div>
-                  </Fragment>
-                </Router>
-              </AlertState>
-            </IssueState>
-          </LogState>
+          <ProjectState>
+            <LogState>
+              <IssueState>
+                <AlertState>
+                  <Router>
+                    <Fragment>
+                      {/* <Navbar /> */}
+                      <div className="">
+                        <Switch>
+                          <Route exact path="/" component={Login} />
+                          <Route path="/admin" component={AdminDashboard} />
+                          <PrivateRoute
+                            path="/user"
+                            component={UserDashBoard}
+                          />
+                        </Switch>
+                      </div>
+                    </Fragment>
+                  </Router>
+                </AlertState>
+              </IssueState>
+            </LogState>
+          </ProjectState>
         </AuthState>
-        </ProjectState>
       </AuthAdminState>
     </React.StrictMode>
   );

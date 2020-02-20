@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const authAdmin = require("../middleware/authAdmin")
+const auth = require("../middleware/auth")
 
 const { check, validationResult } = require("express-validator");
 const Admin = require("../models/Admin");
@@ -11,10 +12,10 @@ const Admin = require("../models/Admin");
 // @route   GET api/authAdmin
 // @desc    Get logged in admin
 // @access  Private
-router.get("/", authAdmin, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const admin = await Admin.findById(req.admin.id).select("-password");
-    res.json(admin);
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
   } catch (error) {
     console.error("fr: get logged in admin", error.message);
     res.status(500).send("Server error");
@@ -35,22 +36,23 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { email, password } = req.body;
+
+    const { email, password, role } = req.body;
 
     try {
-      let admin = await Admin.findOne({ email });
-      if (!admin) {
+      let user = await User.find({ email, role });
+      if (!user && user.role !== "admin") {
         return res.status(400).json({ msg: "Invalid Credentials" });
       }
 
-      const isMatch = await bcrypt.compare(password, admin.password);
+      const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(400).json({ msg: "Invalid Credentials" });
       }
 
       const payload = {
-        admin: {
-          id: admin.id
+        user: {
+          id: user.id
         }
       };
 

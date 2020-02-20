@@ -18,13 +18,14 @@ import UpdateProjectModal from "./projects/modal/UpdateProjectModal";
 import ViewProjectModal from "./projects/modal/ViewProjectModal";
 import RegisterUserModal from "./users/modal/RegisterUserModal"
 // state | context
-import AuthAdminContext from "../../context/authAdmin/authAdminContext";
+// import AuthAdminContext from "../../context/authAdmin/authAdminContext";
+import AuthContext from "../../context/auth/authContext";
 
 const AdminDashboard = () => {
-  const authAdminContext = useContext(AuthAdminContext);
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    authAdminContext.loadAdmin();
+    authContext.loadUser();
     // eslint-disable-next-line
   }, []);
   const [isToggled, setIsToggled] = useState(false);
