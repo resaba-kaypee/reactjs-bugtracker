@@ -3,9 +3,6 @@ import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
 import AuthAdminContext from "../../context/authAdmin/authAdminContext";
 import Alerts from "../layout/Alerts";
-// import Users from "../../assets/img/users.png";
-import Admin from "../../assets/img/Admin-icon-plain.png";
-import User from "../../assets/img/User-icon-plain.png";
 
 const Login = props => {
   const alertContext = useContext(AlertContext);
@@ -26,12 +23,13 @@ const Login = props => {
 
     // authenticate user
     if (authContext.isAuthenticated && authContext.user !== null) {
-      if(!authContext.loading && authContext.user.role === "admin"){
+      if (authContext.user.role === "admin") {
         props.history.push("/admin/overview");
-      } else if (!authContext.loading && authContext.user.role === "developer"){
+      } else if (authContext.user.role === "developer") {
         props.history.push("/user/home");
       }
     }
+
     if (authContext.error === "Invalid Credentials") {
       setAlert(authContext.error, "danger");
       authContext.clearErrors();
@@ -51,9 +49,11 @@ const Login = props => {
   const [role, setRole] = useState("developer");
   const [checked, setChecked] = useState(true);
   const [isShowing, setIsShowing] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
+
     const values = {
       email,
       password,
@@ -62,10 +62,16 @@ const Login = props => {
 
     if (email === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
-    } else {
-      authContext.login(values);
     }
+    
+    if (isAdmin && role === "admin") {
+      authContext.loginAsAdmin(values);
+    } else if(!isAdmin && role === "developer") {
+      authContext.loginAsUser(values);
+    }
+    console.log(values)
   };
+
   return (
     <div className="container">
       <div className="card my-5">
@@ -74,8 +80,9 @@ const Login = props => {
             <i className="fas fa-bug"></i> Bugtracker
           </span>
         </div>
+        <Alerts />
         <div className="card-body">
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} noValidate>
             <table className="table table-curved">
               <tbody>
                 <tr className="text-light bg-secondary">
@@ -95,9 +102,10 @@ const Login = props => {
                         type="checkbox"
                         checked={!checked}
                         onClick={() => setChecked(!checked)}
-                        onChange={() =>
-                          setRole(!checked ? "developer" : "admin")
-                        }
+                        onChange={() => {
+                          setRole(!checked ? "developer" : "admin");
+                          setIsAdmin(!isAdmin);
+                        }}
                       />
                       <label htmlFor="role" className="label-default"></label>
                     </span>

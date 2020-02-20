@@ -25,6 +25,27 @@ const AuthState = props => {
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  // Load Admin
+  const loadAdmin = async () => {
+    // load token into global headers
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+
+    try {
+      // check if valid admin is logging in
+      const res = await axios.get("/api/authAdmin");
+
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data
+      });
+    } catch (err) {
+      // invalid credentials
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
+
   // Load User
   const loadUser = async () => {
     // load token into global headers
@@ -46,39 +67,40 @@ const AuthState = props => {
     }
   };
 
-  // Register User
-  const register = async formData => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+  // Register User (not needed)
+  // const register = async formData => {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   };
 
-    try {
-      const res = await axios.post("/api/admin/users", formData, config);
+  //   try {
+  //     const res = await axios.post("/api/admin/users", formData, config);
 
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
-      });
+  //     dispatch({
+  //       type: REGISTER_SUCCESS,
+  //       payload: res.data
+  //     });
 
-      // loadUser();
-    } catch (err) {
-      dispatch({
-        type: REGISTER_FAIL,
-        payload: err.response.data.msg
-      });
-    }
-  };
+  //     // loadUser();
+  //   } catch (err) {
+  //     dispatch({
+  //       type: REGISTER_FAIL,
+  //       payload: err.response.data.msg
+  //     });
+  //   }
+  // };
 
   // Login User
-  const login = async formData => {
+  const loginAsUser = async formData => {
     const config = {
       headers: {
         "Content-Type": "application/json"
       }
     };
 
+    console.log("fr loginAsUser:", formData)
     try {
       const res = await axios.post("/api/auth", formData, config);
 
@@ -96,10 +118,52 @@ const AuthState = props => {
     }
   };
 
+    // Login Admin
+    const loginAsAdmin = async formData => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+  
+      console.log("fr loginAsAdmin:", formData)
+      try {
+        const res = await axios.post("/api/authAdmin", formData, config);
+  
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data
+        });
+
+        loadAdmin();
+      } catch (err) {
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: err.response.data.msg
+        });
+      }
+    };
+
   // Logout
-  const logout = () => {
+  const logoutUser = async () => {
     try {
-      const res = axios.get("api/auth/logout");
+      const res = await axios.get("api/auth/logout");
+      dispatch({
+        type: LOGOUT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: err.response.data.msg
+      })
+    }
+  };
+
+  // Logout
+  const logoutAdmin = async () => {
+    try {
+      const res = await axios.get("api/admin/logout");
       dispatch({
         type: LOGOUT,
         payload: res.data
@@ -123,10 +187,12 @@ const AuthState = props => {
         loading: state.loading,
         user: state.user,
         error: state.error,
+        loginAsAdmin,
+        loginAsUser,
+        loadAdmin,
         loadUser,
-        register,
-        login,
-        logout,
+        logoutAdmin,
+        logoutUser,
         clearErrors
       }}
     >

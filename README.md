@@ -56,6 +56,7 @@ Track issues with Bug Tracker
 [x] Only admin can register user or add another admin
 [x] Make users logs
 [x] Only admin can close the issue
-[ ] deleted register admin at authadminstate
-[ ] add delete user at auth admin state
+[x] add delete user at auth admin state
+[ ] fix users logs in client and in server
+[ ] delete all comment in all components
 [ ] Remodel UI

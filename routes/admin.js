@@ -429,4 +429,21 @@ router.delete("/project/:id", auth, async (req, res) => {
   }
 });
 
+// @route   POST api/admin/logout
+// @desc    Logout admin
+// @access  Private
+router.get("/logout", auth, async (req, res) => {
+  try {
+    const newLog = await new Log({
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      action: "logged out",
+    })
+
+    await newLog.save();
+  } catch (err) {
+    console.error("fr: logout", error.message);
+  }
+})
+
 module.exports = router;

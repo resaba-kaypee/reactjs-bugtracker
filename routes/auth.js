@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../middleware/auth");
-const Log = require("../models/Log")
+const Log = require("../models/Log");
 
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
@@ -33,15 +33,22 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { email, password } = req.body;
+
+    const { email, password, role } = req.body;
 
     try {
+
       let user = await User.findOne({ email });
 
       if (!user) {
+        return res.status(400).json({ msg: "Invalid Credentials" });
+      }
+
+      if (user.role !== role) {
         return res.status(400).json({ msg: "Invalid Credentials" });
       }
 
@@ -71,13 +78,13 @@ router.post(
         }
       );
 
-      const newLog = new Log({
-        fistName: payload.user.firstName,
-        lastName: payload.user.lastName,
-        role: payload.user.role,
-        action: "logged in",
-      })
-      await newLog.save();
+      // const newLog = new Log({
+      //   fistName: payload.user.firstName,
+      //   lastName: payload.user.lastName,
+      //   role: payload.user.role,
+      //   action: "logged in",
+      // })
+      // await newLog.save();
 
     } catch (error) {
       console.error("fr auth user:", error.message);
@@ -86,22 +93,21 @@ router.post(
   }
 );
 
-
 // @route   POST api/auth
 // @desc    Logout user
 // @access  Public
 router.get("/logout", auth, async (req, res) => {
   try {
-    const newLog = new Log({
+    const newLog = await new Log({
       firstName: req.user.firstName,
       lastName: req.user.lastName,
-      action: "logged out",
-    })
+      action: "logged out"
+    });
 
     await newLog.save();
   } catch (err) {
     console.error("fr: logout", error.message);
   }
-})
+});
 
 module.exports = router;

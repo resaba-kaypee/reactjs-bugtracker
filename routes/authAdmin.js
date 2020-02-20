@@ -3,11 +3,10 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const authAdmin = require("../middleware/authAdmin")
 const auth = require("../middleware/auth")
 
 const { check, validationResult } = require("express-validator");
-const Admin = require("../models/Admin");
+const User = require("../models/User");
 
 // @route   GET api/authAdmin
 // @desc    Get logged in admin
@@ -37,15 +36,17 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, role } = req.body;
-
+    
     try {
-      let user = await User.find({ email, role });
-      if (!user && user.role !== "admin") {
+      const { email, password, role } = await req.body;
+      let user = await User.findOne({ email });
+
+      if (!user && user.role !== role) {
         return res.status(400).json({ msg: "Invalid Credentials" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
+
       if (!isMatch) {
         return res.status(400).json({ msg: "Invalid Credentials" });
       }
@@ -67,6 +68,7 @@ router.post(
           res.json({ token });
         }
       );
+
     } catch (error) {
       console.error("fr: auth admin", error.message);
       res.status(500).send("Server error");

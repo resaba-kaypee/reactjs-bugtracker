@@ -9,7 +9,7 @@ const UserSideNav = props => {
   const { clearIssues } = issueContext;
 
   const onLogout = () => {
-    authContext.logout();
+    authContext.logoutUser();
     clearIssues();
   };
 

@@ -2,17 +2,17 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import AuthAdminContext from "./authAdminContext";
 import authAdminReducer from "./authAdminReducer";
-import setAuthToken from "../../utils/setAuthToken";
+// import setAuthToken from "../../utils/setAuthToken";
 
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  ADMIN_LOADED,
-  AUTH_ERROR,
+  // ADMIN_LOADED,
+  // AUTH_ERROR,
   GET_ALL_USERS,
   USERS_ERROR,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
+  // LOGIN_SUCCESS,
+  // LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
   CLEAR_SUCCESS,

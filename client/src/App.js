@@ -38,7 +38,7 @@ const App = () => {
                       <div className="">
                         <Switch>
                           <Route exact path="/" component={Login} />
-                          <Route path="/admin" component={AdminDashboard} />
+                          <PrivateRoute path="/admin" component={AdminDashboard} />
                           <PrivateRoute
                             path="/user"
                             component={UserDashBoard}

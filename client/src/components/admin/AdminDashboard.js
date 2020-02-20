@@ -25,7 +25,7 @@ const AdminDashboard = () => {
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    authContext.loadUser();
+    authContext.loadAdmin();
     // eslint-disable-next-line
   }, []);
   const [isToggled, setIsToggled] = useState(false);
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
             src={Users}
             alt="img"
           />
-          Hello {authAdminContext.admin && authAdminContext.admin.name}
+          Hello
         </div>
         <div className="list-group list-group-flush">
           <AdminSideNav />
