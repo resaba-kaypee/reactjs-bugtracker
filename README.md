@@ -58,5 +58,5 @@ Track issues with Bug Tracker
 [x] Only admin can close the issue
 [x] add delete user at auth admin state
 [ ] fix users logs in client and in server
-[ ] delete all comment in all components
+[ ] delete all comments in all components
 [ ] Remodel UI

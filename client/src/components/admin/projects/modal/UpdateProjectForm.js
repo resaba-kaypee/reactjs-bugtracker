@@ -63,10 +63,7 @@ const UpdateProjectForm = () => {
       setAlert("User successfully added!", "success");
     }
 
-    clearAll();
   };
-
-  const clearAll = () => clearCurrentProject();
 
   return (
     <div>
