@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
-import AuthAdminContext from "../../context/authAdmin/authAdminContext";
 import Alerts from "../layout/Alerts";
 
 const Login = props => {
@@ -9,17 +8,8 @@ const Login = props => {
   const { setAlert } = alertContext;
 
   const authContext = useContext(AuthContext);
-  // const authAdminContext = useContext(AuthAdminContext);
 
   useEffect(() => {
-    // authenticate admin
-    // if (authAdminContext.isAuthenticated) {
-    //   props.history.push("/admin/overview");
-    // }
-    // if (authAdminContext.error === "Invalid Credentials") {
-    //   setAlert(authAdminContext.error, "danger");
-    //   authAdminContext.clearErrors();
-    // }
 
     // authenticate user
     if (authContext.isAuthenticated && authContext.user !== null) {
@@ -39,8 +29,6 @@ const Login = props => {
     authContext.error,
     authContext.user,
     authContext.isAuthenticated,
-    // authAdminContext.error,
-    // authAdminContext.isAuthenticated,
     props.history
   ]);
 
@@ -69,7 +57,7 @@ const Login = props => {
     } else if(!isAdmin && role === "developer") {
       authContext.loginAsUser(values);
     }
-    console.log(values)
+
   };
 
   return (

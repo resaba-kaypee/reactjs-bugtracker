@@ -1,17 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
+import AuthContext from "../../../../context/auth/authContext";
 import AlertContext from "../../../../context/alert/alertContext";
 
 const UpdateIssueForm = () => {
   const alertContext = useContext(AlertContext);
   const authAdminContext = useContext(AuthAdminContext);
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   const { setAlert } = alertContext;
-  const {
-    current,
-    updateIssue,
-    addComment,
-    admin
-  } = authAdminContext;
+  const { current, updateIssue, addComment, admin } = authAdminContext;
 
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
@@ -29,10 +27,11 @@ const UpdateIssueForm = () => {
       setStatus(current.status);
     }
 
-    if (admin && admin.name) {
-      setTech(admin.name);
+    if (user && user.firstName && user.lastName) {
+      const username = user.firstName +" "+user.lastName
+      setTech(username);
     }
-  }, [admin, current]);
+  }, [user, current]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -49,26 +48,21 @@ const UpdateIssueForm = () => {
         date: new Date()
       };
       updateIssue(updated);
-      console.log(updated);
+      setAlert("Isssue successfully updated!", "success");
     }
 
     if (!/^[a-zA-Z0-9][\w.\s]+$/i.test(message) && isCommenting) {
       setAlert("Please enter valid comment", "danger");
-    } else if(isCommenting) {
+    } else if (isCommenting) {
       const comment = {
         id: current._id,
         tech,
         message
       };
       addComment(comment);
+      setAlert("Comment successfully added!", "success");
     }
 
-    clearAll();
-  };
-
-  const clearAll = () => {
-    setMessage("");
-    setDescription("")
   };
 
   return (
@@ -76,7 +70,7 @@ const UpdateIssueForm = () => {
       <div className="border">
         <div className="card-header bg-primary text-light">
           <span className="h4">
-            <i className="fas fa-bug"></i> Update {projectName}
+            <i className="fas fa-bug"></i> {projectName} Update Issue
           </span>
         </div>
         <div className="card-body">
@@ -161,7 +155,7 @@ const UpdateIssueForm = () => {
                       className="btn btn-primary float-right"
                       onClick={() => setIsCommenting(false)}
                     >
-                      <i className="fas fa-plus"></i> Report Issue
+                      <i className="fas fa-sync-alt"></i> Update Issue
                     </button>
                   </td>
                 </tr>

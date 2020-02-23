@@ -1,10 +1,7 @@
 import React, { useContext } from "react";
-import ProjectContext from "../../../../context/project/projectContext";
 import ViewProject from "./ViewProject";
 
 const ViewProjectModal = () => {
-  const projectContext = useContext(ProjectContext);
-  const { clearCurrentProject } = projectContext;
   return (
     <div>
       <div
@@ -12,7 +9,7 @@ const ViewProjectModal = () => {
         id="viewProject"
         tabIndex="-1"
         role="dialog"
-        aria-labelledby=""
+        aria-labelledby="" 
         aria-hidden="true"
       >
         <div
@@ -28,7 +25,6 @@ const ViewProjectModal = () => {
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
-                onClick={() => clearCurrentProject()}
               >
                 Close
               </button>

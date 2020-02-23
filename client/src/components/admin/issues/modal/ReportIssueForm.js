@@ -3,20 +3,24 @@ import Moment from "react-moment";
 // state | context
 import AlertContext from "../../../../context/alert/alertContext";
 import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
+import AuthContext from "../../../../context/auth/authContext";
 import ProjectContext from "../../../../context/project/projectContext";
 
 const ReportIssueForm = () => {
   const alertContext = useContext(AlertContext);
   const authAdminContext = useContext(AuthAdminContext);
   const projectContext = useContext(ProjectContext);
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   const { setAlert } = alertContext;
   const { addIssue, admin } = authAdminContext;
   const { getProjects, projects, loading } = projectContext;
 
   useEffect(() => {
     getProjects();
-    if (admin && admin.name) {
-      setTech(admin.name);
+    if (user && user.firstName && user.lastName) {
+      const username = user.firstName +" "+user.lastName
+      setTech(username);
     }
     // eslint-disable-next-line
   }, [authAdminContext, admin]);

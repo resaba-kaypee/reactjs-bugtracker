@@ -15,8 +15,7 @@ const UpdateProjectForm = () => {
     current,
     projects,
     getProjects,
-    updateProject,
-    clearCurrentProject
+    updateProject
   } = projectContext;
 
   const { getAllUsers, users } = authAdminContext;
@@ -51,7 +50,7 @@ const UpdateProjectForm = () => {
         description
       };
       updateProject(updated);
-      setAlert("Project successfully upadted!", "success");
+      setAlert("Project successfully updated!", "success");
     }
 
     if (isTechUpdating) {
@@ -139,7 +138,7 @@ const UpdateProjectForm = () => {
                       className="btn btn-outline-secondary float-right"
                       onClick={() => setIsTechUpdating(false)}
                     >
-                      <i className="fas fa-plus"></i> Update Project
+                      <i className="fas fa-sync-alt"></i> Update Project
                     </button>
                   </td>
                 </tr>
@@ -198,7 +197,7 @@ const UpdateProjectForm = () => {
                       type="submit"
                       onClick={() => setIsTechUpdating(true)}
                     >
-                      <i className="fas fa-user-alt"></i> Add user to project
+                      <i className="fas fa-user-plus"></i> Add user to project
                     </button>
                   </td>
                 </tr>

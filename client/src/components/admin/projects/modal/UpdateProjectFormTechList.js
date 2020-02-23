@@ -7,7 +7,6 @@ const UpdateProjectFormTechList = ({ project }) => {
   const { removeUser } = projectContext;
 
   const removeTech = ({ target }) => {
-    console.log(target.id);
     const remove = {
       _id: _id,
       tech: target.id
@@ -28,7 +27,7 @@ const UpdateProjectFormTechList = ({ project }) => {
               title="Remove Tech"
               onClick={e => removeTech(e)}
             >
-              <i className="fas fa-trash-alt"></i>
+              <i className="fas fa-user-alt-slash"></i>
             </button>
           </li>
         ))
@@ -38,18 +37,5 @@ const UpdateProjectFormTechList = ({ project }) => {
     </Fragment>
   );
 };
-
-// {techs.map(tech => (
-//   <li className="list-group-item" key={tech} onMouseEnter={()=> setRemovedTech(tech)}>
-//     {tech}
-//     <button
-//       className="btn btn-light float-right"
-//       title="Remove Tech"
-//       onClick={() => removeTech()}
-//     >
-//       <i className="fas fa-trash-alt"></i>
-//     </button>
-//   </li>
-// ))}
 
 export default UpdateProjectFormTechList;

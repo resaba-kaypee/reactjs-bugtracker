@@ -46,7 +46,7 @@ const UserSideNav = props => {
         className="list-group-item list-group-item-action bg-light"
         to="/admin/users"
       >
-        <i className="far fa-plus-square" /> Manage Users
+        <i className="fas fa-user-cog" /> Manage Users
       </Link>
 
       <Link

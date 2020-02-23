@@ -221,7 +221,6 @@ const AuthAdminState = props => {
       }
     };
     try {
-      console.log(comment);
       const res = await axios.put(
         `/api/admin/comment/${comment.id}`,
         comment,
