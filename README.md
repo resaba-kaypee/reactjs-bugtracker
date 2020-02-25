@@ -59,6 +59,6 @@ Track issues with Bug Tracker
 [x] add delete user at auth admin state
 [ ] fix users logs in client and in server
 [ ] delete all comments in all components
-[ ] Remodel UI
 [ ] UPDATE PROJECT - can add the tech again to the same project
 [ ] all modals have padding-right makes it off center
+[ ] Remodel UI

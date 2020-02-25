@@ -5,7 +5,7 @@ import authAdminReducer from "./authAdminReducer";
 // import setAuthToken from "../../utils/setAuthToken";
 
 import {
-  REGISTER_SUCCESS,
+  REGISTER_USER,
   REGISTER_FAIL,
   // ADMIN_LOADED,
   // AUTH_ERROR,
@@ -108,12 +108,13 @@ const AuthAdminState = props => {
       const res = await axios.post("/api/admin/registerUser", formData, config);
 
       dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data.msg
+        type: REGISTER_USER,
+        payload: res.data
       });
 
-      // loadAdmin();
+      // getAllUsers();
     } catch (err) {
+      console.log(err.response.data.msg);
       dispatch({
         type: REGISTER_FAIL,
         payload: err.response.data.msg
@@ -127,7 +128,8 @@ const AuthAdminState = props => {
       const res = await axios.get("/api/admin/users");
       dispatch({ type: GET_ALL_USERS, payload: res.data });
     } catch (err) {
-      dispatch({ type: USERS_ERROR, payload: err });
+      console.log(err.response.data.msg)
+      dispatch({ type: USERS_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -137,7 +139,8 @@ const AuthAdminState = props => {
       await axios.delete(`/api/admin/deleteUser/${id}`);
       dispatch({ type: DELETE_USER, payload: id });
     } catch (err) {
-      dispatch({ type: USERS_ERROR, payload: err.response.msg });
+      console.log(err.response.data.msg)
+      dispatch({ type: USERS_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -175,7 +178,8 @@ const AuthAdminState = props => {
       const res = await axios.get("/api/admin/issues");
       dispatch({ type: GET_ISSUES, payload: res.data });
     } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+      console.log(err.response.data.msg)
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -209,7 +213,8 @@ const AuthAdminState = props => {
       );
       dispatch({ type: UPDATE_ISSUE, payload: res.data });
     } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+      console.log(err.response.data.msg)
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -228,7 +233,8 @@ const AuthAdminState = props => {
       );
       dispatch({ type: ADD_COMMENT, payload: res.data });
     } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+      console.log(err.response.data.msg)
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -238,7 +244,8 @@ const AuthAdminState = props => {
       await axios.delete(`/api/admin/issues/${id}`);
       dispatch({ type: DELETE_ISSUE, payload: id });
     } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+      console.log(err.response.data.msg)
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
   };
 

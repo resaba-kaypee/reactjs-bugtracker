@@ -135,7 +135,7 @@ const UpdateProjectForm = () => {
                   <td colSpan="2">
                     <button
                       type="submit"
-                      className="btn btn-outline-secondary float-right"
+                      className="btn btn-outline-primary float-right"
                       onClick={() => setIsTechUpdating(false)}
                     >
                       <i className="fas fa-sync-alt"></i> Update Project
@@ -193,7 +193,7 @@ const UpdateProjectForm = () => {
                   </td>
                   <td>
                     <button
-                      className="btn btn-outline-secondary float-right"
+                      className="btn btn-outline-primary float-right"
                       type="submit"
                       onClick={() => setIsTechUpdating(true)}
                     >

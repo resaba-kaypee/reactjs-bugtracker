@@ -148,7 +148,7 @@ const Login = props => {
                   <td colSpan="2">
                     <button
                       type="submit"
-                      className="btn btn-outline-secondary float-right"
+                      className="btn btn-outline-primary float-right"
                     >
                       <i className="fas fa-sign-in-alt"></i> Sign in
                     </button>

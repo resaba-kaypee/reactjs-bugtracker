@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
 import Spinner from "../../../assets/img/spinner.gif";
 import UserFilter from "./UserFilter";
@@ -6,7 +6,7 @@ import UsersItem from "./UsersItem";
 
 const Users = () => {
   const authAdminContext = useContext(AuthAdminContext);
-  const { getAllUsers, users, loading } = authAdminContext;
+  const { getAllUsers, users, loading, filtered } = authAdminContext;
 
   useEffect(() => {
     getAllUsers();
@@ -41,14 +41,14 @@ const Users = () => {
           <table className="table table-bordered">
             <thead>
               <tr>
-                <th
+                {/* <th
                   scope="col"
                   style={{
                     width: "20%"
                   }}
                 >
                   ID
-                </th>
+                </th> */}
                 <th
                   scope="col"
                   style={{
@@ -69,7 +69,15 @@ const Users = () => {
             </thead>
             <tbody>
               {users !== null && !loading ? (
-                users.map(user => <UsersItem key={user._id} user={user}/>)
+                filtered !== null ? (
+                  filtered.map(user => (
+                    <UsersItem key={user._id} user={user} />
+                  ))
+                ) : (
+                  users.map(user => (
+                    <UsersItem key={user._id} user={user} />
+                  ))
+                )
               ) : (
                 <tr>
                   <td colSpan="3" align="center">

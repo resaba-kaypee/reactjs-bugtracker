@@ -152,7 +152,7 @@ const UpdateIssueForm = () => {
                   <td colSpan="2">
                     <button
                       type="submit"
-                      className="btn btn-primary float-right"
+                      className="btn btn-outline-primary float-right"
                       onClick={() => setIsCommenting(false)}
                     >
                       <i className="fas fa-sync-alt"></i> Update Issue
@@ -180,7 +180,7 @@ const UpdateIssueForm = () => {
                   <td>
                     <button
                       type="submit"
-                      className="btn btn-primary float-right"
+                      className="btn btn-outline-primary float-right"
                       onClick={() => setIsCommenting(true)}
                     >
                       <i className="fas fa-plus"></i> Add Comment

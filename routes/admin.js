@@ -50,51 +50,35 @@ router.post(
     ).isLength({ min: 6 })
   ],
   async (req, res) => {
-    // res.send('user registered')
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    
     const { firstName, lastName, email, password, role } = req.body;
 
     try {
       let user = await User.findOne({ email });
+
       if (user) {
         return res.status(400).json({ msg: "User already exists" });
-      } else {
-        user = new User({
-          firstName,
-          lastName,
-          email,
-          password,
-          role
-        });
-
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, salt);
-
-        await user.save();
-
-        return res.status(200).json({ msg: "User registered" });
       }
 
-      // const payload = {
-      //   user: {
-      //     id: user.id
-      //   }
-      // };
+      user = new User({
+        firstName,
+        lastName,
+        email,
+        password,
+        role
+      });
 
-      // jwt.sign(
-      //   payload,
-      //   config.get("jwtSecret"),
-      //   {
-      //     expiresIn: 360000
-      //   },
-      //   (err, token) => {
-      //     if (err) throw err;
-      //     res.json({ token });
-      //   }
-      // );
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+
+      await user.save();
+      
+      res.json(user);
     } catch (err) {
       console.error("fr register user:", err.message);
       res.status(500).send("Server error");
@@ -142,21 +126,17 @@ router.delete("/deleteUser/:id", auth, async (req, res) => {
 // @route   GET api/admin/issues
 // @desc    Get all users issue
 // @access  Private
-router.get(
-  "/issues",
-  auth,
-  async (req, res) => {
-    try {
-      const issues = await Issue.find({}).sort({
-        date: -1
-      });
-      res.json(issues);
-    } catch (error) {
-      console.error("fr: get all issue", error.message);
-      res.status(500).send("Server error");
-    }
+router.get("/issues", auth, async (req, res) => {
+  try {
+    const issues = await Issue.find({}).sort({
+      date: -1
+    });
+    res.json(issues);
+  } catch (error) {
+    console.error("fr: get all issue", error.message);
+    res.status(500).send("Server error");
   }
-);
+});
 
 // @route   POST api/admin/issue
 // @desc    Add new issue
@@ -235,36 +215,32 @@ router.put("/update/:id", authAdmin, async (req, res) => {
 // @route   PUT api/admin/comment/:id
 // @desc    Add comment to issue
 // @access  Public
-router.put(
-  "/comment/:id",
-  auth,
-  async (req, res) => {
-    const { message, tech } = req.body;
+router.put("/comment/:id", auth, async (req, res) => {
+  const { message, tech } = req.body;
 
-    // Build issue object
-    const commentFields = {};
-    commentFields._id = uuid.v4();
-    if (message) commentFields.message = message;
-    if (tech) commentFields.tech = tech;
+  // Build issue object
+  const commentFields = {};
+  commentFields._id = uuid.v4();
+  if (message) commentFields.message = message;
+  if (tech) commentFields.tech = tech;
 
-    try {
-      let issue = await Issue.findById(req.params.id);
+  try {
+    let issue = await Issue.findById(req.params.id);
 
-      if (!issue) return res.status(404).json({ msg: "Issue not found" });
+    if (!issue) return res.status(404).json({ msg: "Issue not found" });
 
-      issue = await Issue.findByIdAndUpdate(
-        req.params.id,
-        { $push: { comments: commentFields } },
-        { new: true }
-      );
+    issue = await Issue.findByIdAndUpdate(
+      req.params.id,
+      { $push: { comments: commentFields } },
+      { new: true }
+    );
 
-      res.json(issue);
-    } catch (err) {
-      console.error("fr: admin update issue", err.message);
-      res.status(500).send("Server Error");
-    }
+    res.json(issue);
+  } catch (err) {
+    console.error("fr: admin update issue", err.message);
+    res.status(500).send("Server Error");
   }
-);
+});
 
 // @route   DELETE api/issues/:id
 // @desc    Delete issue
@@ -388,29 +364,25 @@ router.put("/project/:id", auth, async (req, res) => {
 // @route   PUT api/admin/removeTech/:id
 // @desc    Remove tech from project
 // @access  Private
-router.put(
-  "/removeTech/:id",
-  auth,
-  async (req, res) => {
-    const { tech } = req.body;
+router.put("/removeTech/:id", auth, async (req, res) => {
+  const { tech } = req.body;
 
-    try {
-      let project = await Project.findById(req.params.id);
-      if (!project) return res.status(404).json({ msg: "Project not found" });
+  try {
+    let project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ msg: "Project not found" });
 
-      project = await Project.findByIdAndUpdate(
-        req.params.id,
-        { $pull: { techs: tech } },
-        { new: true }
-      );
+    project = await Project.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { techs: tech } },
+      { new: true }
+    );
 
-      res.json(project);
-    } catch (err) {
-      console.error("fr: admin remove tech from project:", err.message);
-      res.status(500).send("Server Error");
-    }
+    res.json(project);
+  } catch (err) {
+    console.error("fr: admin remove tech from project:", err.message);
+    res.status(500).send("Server Error");
   }
-);
+});
 
 // @route   DELETE api/admin/project/:id
 // @desc    Delete project
@@ -437,13 +409,13 @@ router.get("/logout", auth, async (req, res) => {
     const newLog = await new Log({
       firstName: req.user.firstName,
       lastName: req.user.lastName,
-      action: "logged out",
-    })
+      action: "logged out"
+    });
 
     await newLog.save();
   } catch (err) {
     console.error("fr: logout", error.message);
   }
-})
+});
 
 module.exports = router;

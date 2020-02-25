@@ -40,8 +40,7 @@ const Projects = () => {
             <i className="fas fa-plus"></i> Create New Project
           </button>
 
-            <ProjectFilter />
-
+          <ProjectFilter />
         </div>
         <div className="card-body">
           <table className="table table-bordered">

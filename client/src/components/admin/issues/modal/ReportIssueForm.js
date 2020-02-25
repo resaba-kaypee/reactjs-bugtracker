@@ -183,7 +183,7 @@ const ReportIssueForm = () => {
                   <td colSpan="2">
                     <button
                       type="submit"
-                      className="btn btn-primary float-right"
+                      className="btn btn-outline-secondary float-right"
                     >
                       <i className="fas fa-plus"></i> Report Issue
                     </button>

@@ -28,14 +28,15 @@ const RegisterUserForm = () => {
   useEffect(() => {
     // check if admin or user is already exist in db
     if (authAdminContext.error) {
+      console.log(authAdminContext.error)
       setAlert(authAdminContext.error, "danger");
       authAdminContext.clearErrors();
     }
 
-    if (authAdminContext.success) {
-      setAlert(authAdminContext.success, "success");
-      authAdminContext.clearSuccess();
-    }
+    // if (authAdminContext.success) {
+    //   setAlert(authAdminContext.success, "success");
+    //   authAdminContext.clearSuccess();
+    // }
 
     // check if there is an error in validating forms
     if (errors && errors.firstName) {
@@ -59,7 +60,9 @@ const RegisterUserForm = () => {
       setErrors({});
     }
     // eslint-disable-next-line
-  }, [errors, authAdminContext.error, authAdminContext.success]);
+  }, [errors, authAdminContext.error,
+    //  authAdminContext.success
+    ]);
 
   function register() {
     authAdminContext.registerUser({
@@ -75,7 +78,7 @@ const RegisterUserForm = () => {
       <div className="border">
         <div className="card-header bg-primary text-light">
           <span className="h4">
-            <i className="fas fa-plus"></i> Register New User
+            <i className="fas fa-user-plus"></i> Register New User
           </span>
         </div>
         <div className="card-body">
@@ -209,7 +212,7 @@ const RegisterUserForm = () => {
                       type="submit"
                       className="btn btn-outline-secondary float-right"
                     >
-                      <i className="fas fa-plus"></i> Register
+                      <i className="fas fa-user-plus"></i> Register
                     </button>
                   </td>
                 </tr>

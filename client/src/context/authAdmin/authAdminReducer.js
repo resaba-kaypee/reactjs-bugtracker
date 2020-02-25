@@ -1,7 +1,6 @@
 import {
-  REGISTER_SUCCESS,
+  REGISTER_USER,
   REGISTER_FAIL,
-  ADMIN_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -26,18 +25,6 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
-    case ADMIN_LOADED:
-      return {
-        ...state,
-        isAuthenticated: true,
-        loading: false,
-        admin: action.payload
-      };
-    case REGISTER_SUCCESS:
-      return {
-        ...state,
-        success: action.payload
-      };
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {
@@ -45,11 +32,6 @@ export default (state, action) => {
         ...action.payload,
         isAuthenticated: true,
         loading: false
-      };
-    case REGISTER_FAIL:
-      return {
-        ...state,
-        error: action.payload
       };
     case LOGIN_FAIL:
     case AUTH_ERROR:
@@ -68,6 +50,17 @@ export default (state, action) => {
         ...state,
         users: action.payload,
         loading: false
+      };
+    case REGISTER_USER:
+      return {
+        ...state,
+        users: [action.payload, ...state.users],
+        loading: false
+      };
+    case REGISTER_FAIL:
+      return {
+        ...state,
+        error: action.payload
       };
     case DELETE_USER:
       return {

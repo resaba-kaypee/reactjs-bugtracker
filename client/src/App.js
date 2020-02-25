@@ -26,8 +26,8 @@ if (localStorage.token) {
 const App = () => {
   return (
     <React.StrictMode>
-      <AuthAdminState>
-        <AuthState>
+      <AuthState>
+        <AuthAdminState>
           <ProjectState>
             <LogState>
               <IssueState>
@@ -38,7 +38,10 @@ const App = () => {
                       <div className="">
                         <Switch>
                           <Route exact path="/" component={Login} />
-                          <PrivateRoute path="/admin" component={AdminDashboard} />
+                          <PrivateRoute
+                            path="/admin"
+                            component={AdminDashboard}
+                          />
                           <PrivateRoute
                             path="/user"
                             component={UserDashBoard}
@@ -51,8 +54,8 @@ const App = () => {
               </IssueState>
             </LogState>
           </ProjectState>
-        </AuthState>
-      </AuthAdminState>
+        </AuthAdminState>
+      </AuthState>
     </React.StrictMode>
   );
 };
