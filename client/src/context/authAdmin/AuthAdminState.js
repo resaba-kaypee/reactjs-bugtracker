@@ -5,43 +5,43 @@ import authAdminReducer from "./authAdminReducer";
 // import setAuthToken from "../../utils/setAuthToken";
 
 import {
-  REGISTER_USER,
-  REGISTER_FAIL,
-  // ADMIN_LOADED,
-  // AUTH_ERROR,
   GET_ALL_USERS,
   USERS_ERROR,
+  REGISTER_USER,
+  REGISTER_FAIL,
+  CLEAR_ERRORS,
+  CLEAR_FILTER,
+  DELETE_USER,
+  LOGOUT,
+  // ADMIN_LOADED,
+  // AUTH_ERROR,
   // LOGIN_SUCCESS,
   // LOGIN_FAIL,
-  LOGOUT,
-  CLEAR_ERRORS,
-  CLEAR_SUCCESS,
-  UPDATE_ISSUE,
-  ISSUE_ERROR,
-  GET_ISSUES,
-  FILTER_ISSUES,
-  CLEAR_FILTER,
-  CLEAR_ISSUES,
-  SET_CURRENT,
-  CLEAR_CURRENT,
-  ADD_ISSUE,
-  ADD_COMMENT,
-  DELETE_ISSUE,
-  DELETE_USER
+  // CLEAR_SUCCESS,
+  // UPDATE_ISSUE,
+  // ISSUE_ERROR,
+  // GET_ISSUES,
+  // FILTER_ISSUES,
+  // CLEAR_ISSUES,
+  // SET_CURRENT,
+  // CLEAR_CURRENT,
+  // ADD_ISSUE,
+  // ADD_COMMENT,
+  // DELETE_ISSUE,
 } from "../types";
 
 const AuthAdminState = props => {
   const initialState = {
-    token: localStorage.getItem("token"),
-    isAuthenticated: null,
-    admin: null,
+    // token: localStorage.getItem("token"),
+    // isAuthenticated: null,
+    // admin: null,
     users: null,
-    issues: null,
+    // issues: null,
     loading: true,
     error: null,
-    success: null,
-    filtered: null,
-    current: null
+    // success: null,
+    filtered: null
+    // current: null
   };
 
   const [state, dispatch] = useReducer(authAdminReducer, initialState);
@@ -111,8 +111,7 @@ const AuthAdminState = props => {
         type: REGISTER_USER,
         payload: res.data
       });
-
-      // getAllUsers();
+ 
     } catch (err) {
       console.log(err.response.data.msg);
       dispatch({
@@ -172,88 +171,78 @@ const AuthAdminState = props => {
   /**
    * ********************************************************** ISSUES
    */
-  // Get issue
-  const getIssues = async () => {
-    try {
-      const res = await axios.get("/api/admin/issues");
-      dispatch({ type: GET_ISSUES, payload: res.data });
-    } catch (err) {
-      console.log(err.response.data.msg)
-      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
-    }
-  };
 
   // Add issue
-  const addIssue = async issue => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-    try {
-      const res = await axios.post("/api/admin/issue", issue, config);
-      dispatch({ type: ADD_ISSUE, payload: res.data });
-    } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
-    }
-  };
+  // const addIssue = async issue => {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   };
+  //   try {
+  //     const res = await axios.post("/api/admin/issue", issue, config);
+  //     dispatch({ type: ADD_ISSUE, payload: res.data });
+  //   } catch (err) {
+  //     dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+  //   }
+  // };
 
   // Update issue
-  const updateIssue = async issue => {
-    const config = {
-      headers: {
-        "Content-type": "application/json"
-      }
-    };
-    try {
-      const res = await axios.put(
-        `/api/admin/update/${issue.id}`,
-        issue,
-        config
-      );
-      dispatch({ type: UPDATE_ISSUE, payload: res.data });
-    } catch (err) {
-      console.log(err.response.data.msg)
-      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
-    }
-  };
+  // const updateIssue = async issue => {
+  //   const config = {
+  //     headers: {
+  //       "Content-type": "application/json"
+  //     }
+  //   };
+  //   try {
+  //     const res = await axios.put(
+  //       `/api/admin/update/${issue.id}`,
+  //       issue,
+  //       config
+  //     );
+  //     dispatch({ type: UPDATE_ISSUE, payload: res.data });
+  //   } catch (err) {
+  //     console.log(err.response.data.msg)
+  //     dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
+  //   }
+  // };
 
   // Add comment to issue
-  const addComment = async comment => {
-    const config = {
-      headers: {
-        "Content-type": "application/json"
-      }
-    };
-    try {
-      const res = await axios.put(
-        `/api/admin/comment/${comment.id}`,
-        comment,
-        config
-      );
-      dispatch({ type: ADD_COMMENT, payload: res.data });
-    } catch (err) {
-      console.log(err.response.data.msg)
-      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
-    }
-  };
+  // const addComment = async comment => {
+  //   const config = {
+  //     headers: {
+  //       "Content-type": "application/json"
+  //     }
+  //   };
+  //   try {
+  //     const res = await axios.put(
+  //       `/api/admin/comment/${comment.id}`,
+  //       comment,
+  //       config
+  //     );
+  //     dispatch({ type: ADD_COMMENT, payload: res.data });
+  //   } catch (err) {
+  //     console.log(err.response.data.msg)
+  //     dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
+  //   }
+  // };
 
   // Delete issue
-  const deleteIssue = async id => {
-    try {
-      await axios.delete(`/api/admin/issues/${id}`);
-      dispatch({ type: DELETE_ISSUE, payload: id });
-    } catch (err) {
-      console.log(err.response.data.msg)
-      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
-    }
-  };
+  // const deleteIssue = async id => {
+  //   try {
+  //     await axios.delete(`/api/admin/issues/${id}`);
+  //     dispatch({ type: DELETE_ISSUE, payload: id });
+  //   } catch (err) {
+  //     console.log(err.response.data.msg)
+  //     dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
+  //   }
+  // };
 
   // Set current issue
-  const setCurrent = issue => dispatch({ type: SET_CURRENT, payload: issue });
+  // const setCurrent = issue => dispatch({ type: SET_CURRENT, payload: issue });
 
   // Clear current issue
-  const clearCurrent = () => dispatch({ type: CLEAR_CURRENT });
+  // const clearCurrent = () => dispatch({ type: CLEAR_CURRENT });
 
   // Logout
   const logout = () => dispatch({ type: LOGOUT });
@@ -262,13 +251,13 @@ const AuthAdminState = props => {
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   // Clear Success
-  const clearSuccess = () => dispatch({ type: CLEAR_SUCCESS });
+  // const clearSuccess = () => dispatch({ type: CLEAR_SUCCESS });
 
   // Clear issue
-  const clearIssues = () => dispatch({ type: CLEAR_ISSUES });
+  // const clearIssues = () => dispatch({ type: CLEAR_ISSUES });
 
   // Filter issues
-  const filterIssues = text => dispatch({ type: FILTER_ISSUES, payload: text });
+  // const filterIssues = text => dispatch({ type: FILTER_ISSUES, payload: text });
 
   // Clear filter
   const clearFilter = () => dispatch({ type: CLEAR_FILTER });
@@ -276,33 +265,32 @@ const AuthAdminState = props => {
   return (
     <AuthAdminContext.Provider
       value={{
-        token: state.token,
-        isAuthenticated: state.isAuthenticated,
+        // token: state.token,
+        // isAuthenticated: state.isAuthenticated,
         loading: state.loading,
         users: state.users,
-        admin: state.admin,
+        // admin: state.admin,
         error: state.error,
-        issues: state.issues,
-        success: state.success,
+        // issues: state.issues,
+        // success: state.success,
         filtered: state.filtered,
-        current: state.current,
+        // current: state.current,
         // loadAdmin,
         // registerAdmin,
         registerUser,
         // login,
         logout,
-        setCurrent,
-        filterIssues,
+        // setCurrent,
+        // filterIssues,
         clearErrors,
-        clearSuccess,
-        clearIssues,
+        // clearSuccess,
+        // clearIssues,
         clearFilter,
-        clearCurrent,
-        getIssues,
-        addIssue,
-        updateIssue,
-        deleteIssue,
-        addComment,
+        // clearCurrent,
+        // addIssue,
+        // updateIssue,
+        // deleteIssue,
+        // addComment,
         getAllUsers,
         deleteUser
       }}

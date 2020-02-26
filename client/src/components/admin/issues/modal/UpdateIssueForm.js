@@ -1,15 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
+import IssueContext from "../../../../context/issue/issueContext";
 import AuthContext from "../../../../context/auth/authContext";
 import AlertContext from "../../../../context/alert/alertContext";
 
 const UpdateIssueForm = () => {
   const alertContext = useContext(AlertContext);
-  const authAdminContext = useContext(AuthAdminContext);
+  const issueContext = useContext(IssueContext);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const { setAlert } = alertContext;
-  const { current, updateIssue, addComment, admin } = authAdminContext;
+  const { current, updateIssue, addComment } = issueContext;
 
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");

@@ -3,13 +3,14 @@ import Moment from "react-moment";
 import ViewProjectIssueList from "./ViewProjectIssueList";
 import ProjectContext from "../../../../context/project/projectContext";
 import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
+import IssueContext from "../../../../context/issue/issueContext"
 
 const ViewProject = () => {
   const projectContext = useContext(ProjectContext);
   const { current } = projectContext;
 
-  const authAdminContext = useContext(AuthAdminContext);
-  const { getIssues, issues } = authAdminContext;
+  const issueContext = useContext(IssueContext);
+  const { getIssues, issues } = issueContext;
 
   const [projectName, setProjectName] = useState("");
   const [status, setStatus] = useState("");

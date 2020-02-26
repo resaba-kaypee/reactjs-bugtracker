@@ -2,18 +2,18 @@ import React, { useState, useContext, useEffect } from "react";
 import Moment from "react-moment";
 // state | context
 import AlertContext from "../../../../context/alert/alertContext";
-import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
+import IssueContext from "../../../../context/issue/issueContext";
 import AuthContext from "../../../../context/auth/authContext";
 import ProjectContext from "../../../../context/project/projectContext";
 
 const ReportIssueForm = () => {
   const alertContext = useContext(AlertContext);
-  const authAdminContext = useContext(AuthAdminContext);
+  const issueContext = useContext(IssueContext);
   const projectContext = useContext(ProjectContext);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const { setAlert } = alertContext;
-  const { addIssue, admin } = authAdminContext;
+  const { addIssue } = issueContext;
   const { getProjects, projects, loading } = projectContext;
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const ReportIssueForm = () => {
       setTech(username);
     }
     // eslint-disable-next-line
-  }, [authAdminContext, admin]);
+  }, [user]);
 
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
@@ -45,7 +45,6 @@ const ReportIssueForm = () => {
         tech,
         date
       };
-      console.log(issue);
       addIssue(issue);
       clearAll();
     }

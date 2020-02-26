@@ -1,13 +1,14 @@
 import {
   ADD_ISSUE,
+  GET_ISSUES,
+  UPDATE_ISSUE,
+  ADD_COMMENT,
   DELETE_ISSUE,
   SET_CURRENT,
   CLEAR_CURRENT,
-  UPDATE_ISSUE,
   FILTER_ISSUES,
   CLEAR_FILTER,
   ISSUE_ERROR,
-  GET_ISSUES,
   CLEAR_ISSUES
 } from "../types";
 
@@ -26,6 +27,14 @@ export default (state, action) => {
         loading: false
       };
     case UPDATE_ISSUE:
+      return {
+        ...state,
+        issues: state.issues.map(issue =>
+          issue._id === action.payload._id ? action.payload : issue
+        ),
+        loading: false
+      };
+    case ADD_COMMENT:
       return {
         ...state,
         issues: state.issues.map(issue =>
@@ -62,7 +71,11 @@ export default (state, action) => {
         ...state,
         filtered: state.issues.filter(issue => {
           const regex = new RegExp(`${action.payload}`, "gi");
-          return issue.description.match(regex) || issue.date.match(regex);
+          return (
+            issue.description.match(regex) ||
+            issue.date.match(regex) ||
+            issue.projectName.match(regex)
+          );
         })
       };
     case CLEAR_FILTER:

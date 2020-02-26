@@ -3,7 +3,7 @@ register admin
 register user
 get all users
 delete user
-==============
+============== to be remove
 add new issue
 get all issues
 update issue
@@ -123,6 +123,7 @@ router.delete("/deleteUser/:id", auth, async (req, res) => {
                                     ISSUES
 *********  **********  **********  ***********/
 
+// **************************************to be removed
 // @route   GET api/admin/issues
 // @desc    Get all users issue
 // @access  Private
@@ -138,6 +139,7 @@ router.get("/issues", auth, async (req, res) => {
   }
 });
 
+// **************************************to be removed
 // @route   POST api/admin/issue
 // @desc    Add new issue
 // @access  Private
@@ -162,6 +164,7 @@ router.post(
 
     try {
       const newIssue = new Issue({
+        user: req.user.id,
         projectName,
         description,
         priority,
@@ -180,6 +183,7 @@ router.post(
   }
 );
 
+// **************************************to be removed
 // @route   PUT api/admin/issues/:id
 // @desc    Update issue
 // @access  Public

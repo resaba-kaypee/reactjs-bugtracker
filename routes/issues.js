@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
+const uuid = require("uuid");
 
 const { check, validationResult } = require("express-validator");
 
@@ -42,26 +43,27 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { description, severity, status, assignedTo, date } = req.body;
+    const { projectName, description, priority, status, tech, date } = req.body;
 
     try {
       const newIssue = new Issue({
-        description,
-        severity,
-        status,
-        assignedTo,
         user: req.user.id,
+        projectName,
+        description,
+        priority,
+        status,
+        tech,
         date
       });
 
       const issue = await newIssue.save();
 
-      const newLog = new Log({
-        username: req.user.name,
-        action: "added new issue",
-      })
+      // const newLog = new Log({
+      //   username: req.user.name,
+      //   action: "added new issue",
+      // })
   
-      await newLog.save();
+      // await newLog.save();
 
       res.json(issue);
     } catch (error) {
@@ -75,14 +77,14 @@ router.post(
 // @desc    Update issue
 // @access  Public
 router.put("/:id", auth, async (req, res) => {
-  const { description, severity, status, assignedTo, date } = req.body;
+  const { description, priority, status, tech, date } = req.body;
 
   // Build issue object
   const issueFields = {};
   if (description) issueFields.description = description;
   if (status) issueFields.status = status;
-  if (severity) issueFields.severity = severity;
-  if (assignedTo) issueFields.assignedTo = assignedTo;
+  if (priority) issueFields.priority = priority;
+  if (tech) issueFields.tech = tech;
   if (date) issueFields.date = date;
 
   try {
@@ -101,16 +103,46 @@ router.put("/:id", auth, async (req, res) => {
       { new: true }
     );
 
-    const newLog = new Log({
-      username: req.user.name,
-      action: "updated issue",
-    })
+    // const newLog = new Log({
+    //   username: req.user.name,
+    //   action: "updated issue",
+    // })
 
-    await newLog.save();
+    // await newLog.save();
 
     res.json(issue);
   } catch (err) {
     console.error("fr: update issue", err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/issues/:id
+// @desc    Add comment to issue
+// @access  Public
+router.put("/comment/:id", auth, async (req, res) => {
+  const { message, tech } = req.body;
+
+  // Build issue object
+  const commentFields = {};
+  commentFields._id = uuid.v4();
+  if (message) commentFields.message = message;
+  if (tech) commentFields.tech = tech;
+
+  try {
+    let issue = await Issue.findById(req.params.id);
+
+    if (!issue) return res.status(404).json({ msg: "Issue not found" });
+
+    issue = await Issue.findByIdAndUpdate(
+      req.params.id,
+      { $push: { comments: commentFields } },
+      { new: true }
+    );
+
+    res.json(issue);
+  } catch (err) {
+    console.error("fr: admin update issue", err.message);
     res.status(500).send("Server Error");
   }
 });

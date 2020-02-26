@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
-import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
+import IssueContext from "../../../context/issue/issueContext";
 
 const IssueItem = ({ issue }) => {
-  const authAdminContext = useContext(AuthAdminContext);
-  const { setCurrent, clearCurrent, deleteIssue } = authAdminContext;
+  const issueContext = useContext(IssueContext);
+  const { setCurrent, clearCurrent, deleteIssue } = issueContext;
 
   const {
     _id,
@@ -129,7 +129,7 @@ const IssueItem = ({ issue }) => {
           >
             {comments !== null && comments.length > 0 ? (
               comments.map(comment => (
-                <li className="list-group-item" style={{backgroundColor: "none"}} key={comment._id}>{comment.message}</li>
+                <li className="list-group-item" style={{backgroundColor: "none"}} key={comment._id}>{comment.message} by {comment.tech}</li>
               ))
             ) : (
               <li className="list-group-item">No comments about this issue yet</li>

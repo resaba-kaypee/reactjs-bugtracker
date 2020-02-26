@@ -1,9 +1,10 @@
 import React, { useContext, useRef, useEffect } from "react";
 import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
+import IssueContext from "../../../context/issue/issueContext";
 
 const IssueFilter = () => {
-  const authAdminContext = useContext(AuthAdminContext);
-  const { filterIssues, clearFilter, filtered } = authAdminContext;
+  const issueContext = useContext(IssueContext);
+  const { filterIssues, clearFilter, filtered } = issueContext;
   const text = useRef("");
   useEffect(() => {
     if (filtered === null) {

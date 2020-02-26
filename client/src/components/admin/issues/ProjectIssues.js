@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import ProjectIssueItem from "./ProjectIssueItem";
 import IssueFilter from "./IssueFilter";
-import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
+import IssueContext from "../../../context/issue/issueContext";
 import Spinner from "../../layout/Spinner";
 
 const ProjectIssues = () => {
-  const authAdminContext = useContext(AuthAdminContext);
-  const { issues, filtered, getIssues, loading } = authAdminContext;
+  const issueContext = useContext(IssueContext);
+  const { issues, filtered, getIssues, loading } = issueContext;
 
   useEffect(() => {
     getIssues();

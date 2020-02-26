@@ -5,10 +5,11 @@ import issueReducer from "./issueReducer";
 import {
   GET_ISSUES,
   ADD_ISSUE,
+  UPDATE_ISSUE,
+  ADD_COMMENT,
   DELETE_ISSUE,
   SET_CURRENT,
   CLEAR_CURRENT,
-  UPDATE_ISSUE,
   FILTER_ISSUES,
   CLEAR_FILTER,
   CLEAR_ISSUES,
@@ -35,7 +36,7 @@ const IssueState = props => {
     }
   };
 
-  // Add issue  
+  // Add issue
   const addIssue = async issue => {
     const config = {
       headers: {
@@ -45,16 +46,6 @@ const IssueState = props => {
     try {
       const res = await axios.post("/api/issues", issue, config);
       dispatch({ type: ADD_ISSUE, payload: res.data });
-    } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
-    }
-  };
-
-  // Delete issue
-  const deleteIssue = async id => {
-    try {
-      await axios.delete(`/api/issues/${id}`);
-      dispatch({ type: DELETE_ISSUE, payload: id });
     } catch (err) {
       dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
@@ -70,6 +61,33 @@ const IssueState = props => {
     try {
       const res = await axios.put(`/api/issues/${issue.id}`, issue, config);
       dispatch({ type: UPDATE_ISSUE, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
+    }
+  };
+
+  // Add comment to issue
+  const addComment = async comment => {
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    };
+
+    try {
+      const res = await axios.put(`/api/issues/comment/${comment.id}`, comment, config);
+      dispatch({ type: ADD_COMMENT, payload: res.data });
+    } catch (err) {
+      console.log(err.response.data.msg);
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
+    }
+  };
+
+  // Delete issue
+  const deleteIssue = async id => {
+    try {
+      await axios.delete(`/api/issues/${id}`);
+      dispatch({ type: DELETE_ISSUE, payload: id });
     } catch (err) {
       dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
@@ -99,7 +117,7 @@ const IssueState = props => {
   const clearFilter = issue => {
     dispatch({ type: CLEAR_FILTER });
   };
-  
+
   return (
     <IssueContext.Provider
       value={{
@@ -109,11 +127,12 @@ const IssueState = props => {
         error: state.error,
         getIssues,
         addIssue,
-        clearIssues,
+        updateIssue,
+        addComment,
         deleteIssue,
+        clearIssues,
         setCurrent,
         clearCurrent,
-        updateIssue,
         filterIssues,
         clearFilter
       }}

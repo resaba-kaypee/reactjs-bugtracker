@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
+import IssueContext from "../../../../context/issue/issueContext";
 import UpdateIssueForm from "./UpdateIssueForm";
 import Alerts from "../../../layout/Alerts";
 
 const UpdateIssueModal = () => {
-  const authAdminContext = useContext(AuthAdminContext);
-  const { clearCurrent } = authAdminContext;
+  const issueContext = useContext(IssueContext);
+  const { clearCurrent } = issueContext;
   return (
     <div>
       <div
