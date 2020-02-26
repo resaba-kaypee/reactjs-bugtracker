@@ -48,7 +48,7 @@ const ProjectState = props => {
       const res = await axios.post("/api/admin/project", project, config);
       dispatch({ type: ADD_PROJECT, payload: res.data });
     } catch (err) {
-      dispatch({ PROJECT_ERROR, payload: err.response.msg });
+      dispatch({ PROJECT_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -67,7 +67,7 @@ const ProjectState = props => {
       );
       dispatch({ type: UPDATE_PROJECT, payload: res.data });
     } catch (err) {
-      dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
+      dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -77,7 +77,7 @@ const ProjectState = props => {
       await axios.delete(`/api/admin/project/${_id}`);
       dispatch({ type: DELETE_PROJECT, payload: _id });
     } catch (err) {
-      dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
+      dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -121,7 +121,7 @@ const ProjectState = props => {
       );
       dispatch({ type: REMOVE_USER, payload: res.data });
     } catch (err) {
-      dispatch({ type: PROJECT_ERROR, payload: err.response.msg });
+      dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
     }
   };
 

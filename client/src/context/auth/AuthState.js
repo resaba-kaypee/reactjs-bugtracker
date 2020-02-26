@@ -98,7 +98,6 @@ const AuthState = props => {
       }
     };
 
-    console.log("fr loginAsUser:", formData)
     try {
       const res = await axios.post("/api/auth", formData, config);
 
@@ -123,8 +122,7 @@ const AuthState = props => {
           "Content-Type": "application/json"
         }
       };
-  
-      console.log("fr loginAsAdmin:", formData)
+
       try {
         const res = await axios.post("/api/authAdmin", formData, config);
   

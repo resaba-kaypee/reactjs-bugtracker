@@ -5,7 +5,7 @@ import Overview from "./overview/Overview";
 import ManageProjects from "./projects/Projects";
 import ManageProjectIssues from "./issues/ProjectIssues";
 import ManageUsers from "./users/Users";
-// import ViewUsersLogs from "./logs/Logs";
+import ViewUsersLogs from "./logs/Logs";
 import Button from "../layout/Button";
 import AdminSideNav from "../layout/sidenav/AdminSideNav";
 import About from "../pages/About";
@@ -73,7 +73,7 @@ const AdminDashboard = () => {
                 <Route path="/admin/projects" component={ManageProjects} />
                 <Route path="/admin/issues" component={ManageProjectIssues} />
                 <Route path="/admin/users" component={ManageUsers} />
-                {/* <Route path="/admin/logs" component={ViewUsersLogs} /> */}
+                <Route path="/admin/logs" component={ViewUsersLogs} />
                 <Route path="/admin/about" component={About} />
               </Switch>
         </div>

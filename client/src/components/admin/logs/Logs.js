@@ -9,13 +9,9 @@ const Logs = () => {
   const { logs, filtered, getLogs, loading } = logContext;
 
   useEffect(() => {
-    getLogs();
+    // getLogs();
     // eslint-disable-next-line
   }, []);
-
-  if (logs !== null && logs.length === 0 && !loading) {
-    return <h4>No logs...</h4>;
-  }
 
   return (
     <div

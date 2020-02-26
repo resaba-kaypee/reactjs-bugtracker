@@ -3,10 +3,11 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const auth = require("../middleware/auth")
+const auth = require("../middleware/auth");
 
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
+const Log = require("../models/Log");
 
 // @route   GET api/authAdmin
 // @desc    Get logged in admin
@@ -36,7 +37,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    
     try {
       const { email, password, role } = await req.body;
       let user = await User.findOne({ email });
@@ -69,6 +69,15 @@ router.post(
         }
       );
 
+      const newLog = new Log({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        action: "logged in"
+      });
+
+      await newLog.save();
+      console.log(newLog);
     } catch (error) {
       console.error("fr: auth admin", error.message);
       res.status(500).send("Server error");

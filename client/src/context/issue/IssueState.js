@@ -31,7 +31,7 @@ const IssueState = props => {
       const res = await axios.get("/api/issues");
       dispatch({ type: GET_ISSUES, payload: res.data });
     } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -46,7 +46,7 @@ const IssueState = props => {
       const res = await axios.post("/api/issues", issue, config);
       dispatch({ type: ADD_ISSUE, payload: res.data });
     } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -56,7 +56,7 @@ const IssueState = props => {
       await axios.delete(`/api/issues/${id}`);
       dispatch({ type: DELETE_ISSUE, payload: id });
     } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
   };
 
@@ -71,7 +71,7 @@ const IssueState = props => {
       const res = await axios.put(`/api/issues/${issue.id}`, issue, config);
       dispatch({ type: UPDATE_ISSUE, payload: res.data });
     } catch (err) {
-      dispatch({ type: ISSUE_ERROR, payload: err.response.msg });
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
   };
 
