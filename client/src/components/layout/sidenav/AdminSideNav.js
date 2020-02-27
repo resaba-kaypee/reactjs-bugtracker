@@ -1,12 +1,12 @@
 import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
-import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
+import IssueContext from "../../../context/issue/issueContext";
 import AuthContext from "../../../context/auth/authContext";
 import ProjectContext from "../../../context/project/projectContext";
 
 const UserSideNav = props => {
-  const authAdminContext = useContext(AuthAdminContext);
-  const { clearIssues } = authAdminContext;
+  const issueContext = useContext(IssueContext);
+  const { clearIssues } = issueContext;
 
   const authContext = useContext(AuthContext)
 

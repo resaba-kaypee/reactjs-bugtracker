@@ -159,7 +159,7 @@ const AuthState = props => {
   // Logout
   const logoutAdmin = async () => {
     try {
-      const res = await axios.get("api/admin/logout");
+      const res = await axios.post("api/authAdmin/logout");
       dispatch({
         type: LOGOUT,
         payload: res.data

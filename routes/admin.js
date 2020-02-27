@@ -29,6 +29,7 @@ const Admin = require("../models/Admin");
 const User = require("../models/User");
 const Issue = require("../models/Issue");
 const Project = require("../models/Project");
+const Log = require("../models/Log");
 
 // @route   POST api/admin/registerUser
 // @desc    Register a user
@@ -50,12 +51,11 @@ router.post(
     ).isLength({ min: 6 })
   ],
   async (req, res) => {
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    
+
     const { firstName, lastName, email, password, role } = req.body;
 
     try {
@@ -77,7 +77,7 @@ router.post(
       user.password = await bcrypt.hash(password, salt);
 
       await user.save();
-      
+
       res.json(user);
     } catch (err) {
       console.error("fr register user:", err.message);
@@ -289,7 +289,6 @@ router.post(
     ]
   ],
   async (req, res) => {
-    // res.send("Send projects");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -298,15 +297,25 @@ router.post(
     const { projectName, status, description } = req.body;
 
     try {
+      const user = await User.findById(req.user.id);
+
       const newProject = new Project({
+        user: req.user.id,
         projectName,
         description,
         status
       });
 
-      const project = await newProject.save();
+      await newProject.save();
 
-      res.json(project);
+      const newLog = new Log({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        action: "just created new project " + projectName
+      });
+
+      await newLog.save();
+      res.json(newProject);
     } catch (error) {
       console.error("fr: admin add new project:", error.message);
       res.status(500).send("Server error");
@@ -342,6 +351,7 @@ router.put("/project/:id", auth, async (req, res) => {
 
   try {
     let project = await Project.findById(req.params.id);
+    let user = await User.findById(req.user.id);
     if (!project) return res.status(404).json({ msg: "Project not found" });
 
     if (Object.keys(projectFields).length > 0) {
@@ -350,12 +360,26 @@ router.put("/project/:id", auth, async (req, res) => {
         { $set: projectFields },
         { new: true }
       );
+
+      const newLog = new Log({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        action: "just updated " + projectName
+      });
+      await newLog.save();
     } else {
       project = await Project.findByIdAndUpdate(
         req.params.id,
         { $push: { techs: tech } },
         { new: true }
       );
+
+      const newLog = new Log({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        action: `just added ${tech} to ${project.projectName}`
+      });
+      await newLog.save();
     }
 
     res.json(project);
@@ -373,6 +397,8 @@ router.put("/removeTech/:id", auth, async (req, res) => {
 
   try {
     let project = await Project.findById(req.params.id);
+    const user = User.findById(req.user.id);
+
     if (!project) return res.status(404).json({ msg: "Project not found" });
 
     project = await Project.findByIdAndUpdate(
@@ -381,6 +407,12 @@ router.put("/removeTech/:id", auth, async (req, res) => {
       { new: true }
     );
 
+    const newLog = new Log({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      action: `just removed ${tech} from ${project.projectname}`
+    });
+    newLog.save();
     res.json(project);
   } catch (err) {
     console.error("fr: admin remove tech from project:", err.message);
@@ -402,23 +434,6 @@ router.delete("/project/:id", auth, async (req, res) => {
   } catch (err) {
     console.error("fr: admin delete project:", err.message);
     res.status(500).send("Server Error");
-  }
-});
-
-// @route   POST api/admin/logout
-// @desc    Logout admin
-// @access  Private
-router.get("/logout", auth, async (req, res) => {
-  try {
-    const newLog = await new Log({
-      firstName: req.user.firstName,
-      lastName: req.user.lastName,
-      action: "logged out"
-    });
-
-    await newLog.save();
-  } catch (err) {
-    console.error("fr: logout", error.message);
   }
 });
 
