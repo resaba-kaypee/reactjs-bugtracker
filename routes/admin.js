@@ -353,8 +353,7 @@ router.put("/project/:id", auth, async (req, res) => {
     let project = await Project.findById(req.params.id);
     let user = await User.findById(req.user.id);
     if (!project) return res.status(404).json({ msg: "Project not found" });
-
-    if (Object.keys(projectFields).length > 0) {
+    else {
       project = await Project.findByIdAndUpdate(
         req.params.id,
         { $set: projectFields },
@@ -367,10 +366,36 @@ router.put("/project/:id", auth, async (req, res) => {
         action: "just updated " + projectName
       });
       await newLog.save();
-    } else {
+    }
+
+    res.json(project);
+  } catch (err) {
+    console.error("fr: admin update project:", err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/admin/addTech/:id
+// @desc    Add tech to project
+// @access  Private
+router.put("/addTech/:id", auth, async (req, res) => {
+  const { tech } = req.body;
+
+  const techFields = {};
+  techFields._id = uuid.v4();
+  if (tech) techFields.name = tech;
+
+  try {
+    let project = await Project.findById(req.params.id);
+    let user = await User.findById(req.user.id);
+    if (!project) return res.status(404).json({ msg: "Project not found" });
+
+    const found = project.techs.find(user => user.name === tech);
+
+    if (!found) {
       project = await Project.findByIdAndUpdate(
         req.params.id,
-        { $push: { techs: tech } },
+        { $addToSet: { techs: techFields } },
         { new: true }
       );
 
@@ -379,7 +404,10 @@ router.put("/project/:id", auth, async (req, res) => {
         lastName: user.lastName,
         action: `just added ${tech} to ${project.projectName}`
       });
+
       await newLog.save();
+    } else {
+      return res.status(400).json({ msg: "Tech already added in the list" });
     }
 
     res.json(project);
@@ -393,26 +421,30 @@ router.put("/project/:id", auth, async (req, res) => {
 // @desc    Remove tech from project
 // @access  Private
 router.put("/removeTech/:id", auth, async (req, res) => {
-  const { tech } = req.body;
+  const { techID } = req.body;
 
   try {
+    const user = await User.findById(req.user.id);
     let project = await Project.findById(req.params.id);
-    const user = User.findById(req.user.id);
-
     if (!project) return res.status(404).json({ msg: "Project not found" });
+    
+    const found = project.techs.find(tech => tech._id === techID);
+    if (!found) {
+      return res.status(404).json({ msg: "Tech not found in project" });
+    } else {
+      project = await Project.findByIdAndUpdate(
+        req.params.id,
+        { $pull: { techs: {_id: techID} } },
+        { new: true }
+      );
+    }
 
-    project = await Project.findByIdAndUpdate(
-      req.params.id,
-      { $pull: { techs: tech } },
-      { new: true }
-    );
-
-    const newLog = new Log({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      action: `just removed ${tech} from ${project.projectname}`
-    });
-    newLog.save();
+    // const newLog = new Log({
+    //   firstName: user.firstName,
+    //   lastName: user.lastName,
+    //   action: `just removed ${tech} from ${project.projectname}`
+    // });
+    // newLog.save();
     res.json(project);
   } catch (err) {
     console.error("fr: admin remove tech from project:", err.message);

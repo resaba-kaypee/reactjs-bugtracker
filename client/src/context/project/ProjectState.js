@@ -13,7 +13,8 @@ import {
   CLEAR_PROJECTS,
   SET_CURRENT_PROJECT,
   CLEAR_CURRENT_PROJECT,
-  REMOVE_USER
+  REMOVE_USER,
+  ADD_USER
 } from "../types";
 
 const ProjectState = props => {
@@ -107,6 +108,25 @@ const ProjectState = props => {
   };
 
   // Remove user from assigned projects
+  const addUser = async project => {
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    };
+    try {
+      const res = await axios.put(
+        `/api/admin/addTech/${project._id}`,
+        project,
+        config
+      );
+      dispatch({ type: ADD_USER, payload: res.data });
+    } catch (err) {
+      dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
+    }
+  };
+
+  // Remove user from assigned projects
   const removeUser = async project => {
     const config = {
       headers: {
@@ -131,7 +151,7 @@ const ProjectState = props => {
         projects: state.projects,
         filtered: state.filtered,
         users: state.users,
-        errors: state.errors,
+        error: state.error,
         loading: state.loading,
         current: state.current,
         addProject,
@@ -143,7 +163,8 @@ const ProjectState = props => {
         clearProjects,
         setCurrentProject,
         clearCurrentProject,
-        removeUser
+        removeUser,
+        addUser
       }}
     >
       {props.children}

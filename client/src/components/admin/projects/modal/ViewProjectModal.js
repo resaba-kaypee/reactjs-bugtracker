@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import ViewProject from "./ViewProject";
 
 const ViewProjectModal = () => {
@@ -9,7 +9,7 @@ const ViewProjectModal = () => {
         id="viewProject"
         tabIndex="-1"
         role="dialog"
-        aria-labelledby="" 
+        aria-labelledby=""
         aria-hidden="true"
       >
         <div

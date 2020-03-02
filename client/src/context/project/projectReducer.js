@@ -9,7 +9,8 @@ import {
   CLEAR_PROJECTS,
   SET_CURRENT_PROJECT,
   CLEAR_CURRENT_PROJECT,
-  REMOVE_USER
+  REMOVE_USER,
+  ADD_USER
 } from "../types";
 
 export default (state, action) => {
@@ -26,6 +27,8 @@ export default (state, action) => {
         projects: [action.payload, ...state.projects],
         loading: false
       };
+    case ADD_USER:
+    case REMOVE_USER:
     case UPDATE_PROJECT:
       return {
         ...state,
@@ -77,15 +80,6 @@ export default (state, action) => {
         ...state,
         filtered: null
       };
-    case REMOVE_USER: {
-      return {
-        ...state,
-        projects: state.projects.map(project =>
-          project._id === action.payload._id ? action.payload : project
-        ),
-        loading: false
-      };
-    }
     default:
       return state;
   }

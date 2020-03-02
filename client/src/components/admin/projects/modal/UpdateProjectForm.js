@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import UpdateProjectFormTechList from "./UpdateProjectFormTechList";
+import UpdateProjectFormTech from "./UpdateProjectFormTech";
 import ProjectContext from "../../../../context/project/projectContext";
 import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
 import AlertContext from "../../../../context/alert/alertContext";
@@ -15,7 +15,9 @@ const UpdateProjectForm = () => {
     current,
     projects,
     getProjects,
-    updateProject
+    updateProject,
+    addUser,
+    error
   } = projectContext;
 
   const { getAllUsers, users } = authAdminContext;
@@ -34,8 +36,12 @@ const UpdateProjectForm = () => {
       setStatus(current.status);
       setDescripton(current.description);
     }
+
+    if (error && error === "Tech already added in the list") {
+      setAlert(error, "danger");
+    }
     // eslint-disable-next-line
-  }, [current]);
+  }, [current, error]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -53,15 +59,14 @@ const UpdateProjectForm = () => {
       setAlert("Project successfully updated!", "success");
     }
 
-    if (isTechUpdating) {
+    if (isTechUpdating && !error) {
       const addedTech = {
         _id: current._id,
         tech
       };
-      updateProject(addedTech);
+      addUser(addedTech);
       setAlert("User successfully added!", "success");
     }
-
   };
 
   return (
@@ -157,9 +162,10 @@ const UpdateProjectForm = () => {
                         projects.map(
                           project =>
                             project.projectName === projectName && (
-                              <UpdateProjectFormTechList
-                                key={project.techs}
-                                project={project}
+                              <UpdateProjectFormTech
+                                key={project._id}
+                                techs={project.techs}
+                                projectID={project._id}
                               />
                             )
                         )}

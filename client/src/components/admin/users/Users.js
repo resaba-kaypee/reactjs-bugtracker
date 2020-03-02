@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
 import Spinner from "../../../assets/img/spinner.gif";
 import UserFilter from "./UserFilter";

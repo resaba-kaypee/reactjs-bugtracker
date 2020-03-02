@@ -25,9 +25,8 @@ export const LOGOUT = "LOGOUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const CLEAR_SUCCESS = "CLEAR_SUCCESS";
 export const GET_ALL_USERS = "GET_ALL_USERS";
-export const FILTER_USERS = "FILTER_USERS";
+export const FILTER_USERS = "FILTER_USERS"; 
 export const USERS_ERROR = "USERS_ERROR";
-export const REMOVE_USER = "REMOVE_USER";
 export const DELETE_USER = "DELETE_USER";
 //================LOGS
 export const GET_LOGS = "GET_LOGS";
@@ -45,5 +44,7 @@ export const SET_CURRENT_PROJECT = "SET_CURRENT_PROJECT";
 export const CLEAR_CURRENT_PROJECT = "CLEAR_CURRENT_PROJECT";
 export const CLEAR_PROJECTS = "CLEAR_PROJECTS";
 export const CLEAR_FILTERED_PROJECTS = "CLEAR_FILTER_PROJECTS";
+export const REMOVE_USER = "REMOVE_USER";
+export const ADD_USER = "ADD_USER";
 
 

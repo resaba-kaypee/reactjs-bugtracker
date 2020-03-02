@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Moment from "react-moment";
 import ViewProjectIssueList from "./ViewProjectIssueList";
 import ProjectContext from "../../../../context/project/projectContext";
-import AuthAdminContext from "../../../../context/authAdmin/authAdminContext";
 import IssueContext from "../../../../context/issue/issueContext"
 
 const ViewProject = () => {
@@ -85,8 +84,8 @@ const ViewProject = () => {
                   <ul className="list-group">
                     {current !== null && current.techs.length > 0 ? (
                       current.techs.map(tech => (
-                        <li className="list-group-item" key={tech}>
-                          {tech}
+                        <li className="list-group-item" key={tech._id}>
+                          {tech.name}
                         </li>
                       ))
                     ) : (

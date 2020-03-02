@@ -14,7 +14,7 @@ const ProjectSchema = mongoose.Schema({
   description: {
     type: String,
   },
-  techs: [String],
+  techs: [{}],
   date: {
     type: Date,
     default: Date.now()
