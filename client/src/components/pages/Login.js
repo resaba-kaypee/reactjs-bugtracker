@@ -10,7 +10,6 @@ const Login = props => {
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
-
     // authenticate user
     if (authContext.isAuthenticated && authContext.user !== null) {
       if (authContext.user.role === "admin") {
@@ -51,13 +50,12 @@ const Login = props => {
     if (email === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
     }
-    
+
     if (isAdmin && role === "admin") {
       authContext.loginAsAdmin(values);
-    } else if(!isAdmin && role === "developer") {
+    } else if (!isAdmin && role === "developer") {
       authContext.loginAsUser(values);
     }
-
   };
 
   return (
@@ -130,6 +128,7 @@ const Login = props => {
                       />
                       <div className="input-group-append">
                         <button
+                          type="button"
                           className="input-group-text"
                           onClick={() => setIsShowing(!isShowing)}
                         >
