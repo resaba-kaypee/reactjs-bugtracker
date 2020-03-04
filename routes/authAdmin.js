@@ -84,24 +84,4 @@ router.post(
   }
 );
 
-// @route   POST api/authAdmin/logout
-// @desc    Logout admin
-// @access  Private
-router.post("/logout", auth, async (req, res) => {
-
-  try {
-    const newLog = new Log({
-      firstName: req.user.firstName,
-      lastName: req.user.lastName,
-      action: "logged out"
-    });
-
-    await newLog.save();
-    console.log(newLog)
-
-  } catch (err) {
-    console.error("fr: logout", error.message);
-  }
-});
-
 module.exports = router;

@@ -41,7 +41,6 @@ router.post(
     const { email, password, role } = req.body;
 
     try {
-
       let user = await User.findOne({ email });
 
       if (!user) {
@@ -85,7 +84,6 @@ router.post(
       //   action: "logged in",
       // })
       // await newLog.save();
-
     } catch (error) {
       console.error("fr auth user:", error.message);
       res.status(500).send("Server error");
@@ -96,15 +94,16 @@ router.post(
 // @route   POST api/auth
 // @desc    Logout user
 // @access  Public
-router.get("/logout", auth, async (req, res) => {
+router.post("/logout", auth, async (req, res) => {
   try {
-    const newLog = await new Log({
-      firstName: req.user.firstName,
-      lastName: req.user.lastName,
-      action: "logged out"
-    });
+    // const newLog = new Log({
+    //   firstName: req.user.firstName,
+    //   lastName: req.user.lastName,
+    //   action: "logged out"
+    // });
 
-    await newLog.save();
+    // await newLog.save();
+    console.log(req.user);
   } catch (err) {
     console.error("fr: logout", error.message);
   }

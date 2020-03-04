@@ -427,14 +427,14 @@ router.put("/removeTech/:id", auth, async (req, res) => {
     const user = await User.findById(req.user.id);
     let project = await Project.findById(req.params.id);
     if (!project) return res.status(404).json({ msg: "Project not found" });
-    
+
     const found = project.techs.find(tech => tech._id === techID);
     if (!found) {
       return res.status(404).json({ msg: "Tech not found in project" });
     } else {
       project = await Project.findByIdAndUpdate(
         req.params.id,
-        { $pull: { techs: {_id: techID} } },
+        { $pull: { techs: { _id: techID } } },
         { new: true }
       );
     }
@@ -466,6 +466,24 @@ router.delete("/project/:id", auth, async (req, res) => {
   } catch (err) {
     console.error("fr: admin delete project:", err.message);
     res.status(500).send("Server Error");
+  }
+});
+
+// @route   POST api/admin/logout
+// @desc    Logout admin
+// @access  Private
+router.post("/logout", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const newLog = new Log({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      action: "logged out"
+    });
+
+    await newLog.save();
+  } catch (err) {
+    console.error("fr: logout", error.message);
   }
 });
 

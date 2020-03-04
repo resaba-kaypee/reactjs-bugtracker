@@ -5,16 +5,17 @@ import AuthContext from "../../../context/auth/authContext";
 import ProjectContext from "../../../context/project/projectContext";
 
 const UserSideNav = props => {
+  const authContext = useContext(AuthContext);
+  const { logoutAdmin } = authContext;
+
   const issueContext = useContext(IssueContext);
   const { clearIssues } = issueContext;
-
-  const authContext = useContext(AuthContext)
 
   const projectContext = useContext(ProjectContext);
   const { clearProjects } = projectContext;
 
   const onLogout = () => {
-    authContext.logoutAdmin();
+    logoutAdmin();
     clearProjects();
     clearIssues();
   };
