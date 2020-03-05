@@ -327,7 +327,6 @@ router.post(
 // @desc    Get all projects
 // @access  Private
 router.get("/projects", authAdmin, async (req, res) => {
-  // res.send("get all projects")
   try {
     const projects = await Project.find({}).sort({
       date: -1
@@ -429,6 +428,7 @@ router.put("/removeTech/:id", auth, async (req, res) => {
     if (!project) return res.status(404).json({ msg: "Project not found" });
 
     const found = project.techs.find(tech => tech._id === techID);
+
     if (!found) {
       return res.status(404).json({ msg: "Tech not found in project" });
     } else {
@@ -439,12 +439,13 @@ router.put("/removeTech/:id", auth, async (req, res) => {
       );
     }
 
-    // const newLog = new Log({
-    //   firstName: user.firstName,
-    //   lastName: user.lastName,
-    //   action: `just removed ${tech} from ${project.projectname}`
-    // });
-    // newLog.save();
+    const newLog = new Log({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      action: `just removed ${user.firstName} ${user.lastName} from ${project.projectName}`
+    });
+    newLog.save();
+
     res.json(project);
   } catch (err) {
     console.error("fr: admin remove tech from project:", err.message);
@@ -457,11 +458,20 @@ router.put("/removeTech/:id", auth, async (req, res) => {
 // @access  Public
 router.delete("/project/:id", auth, async (req, res) => {
   try {
+    const user = await User.findById(req.user.id);
     let project = await Project.findById(req.params.id);
 
     if (!project) return res.status(404).json({ msg: "Project not found" });
 
     await Project.findByIdAndRemove(req.params.id);
+
+    const newLog = new Log({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      action: `${user.firstName} ${user.lastName} just delete the project ${project.projectName}`
+    });
+    newLog.save();
+    
     res.json({ msg: "Project removed" });
   } catch (err) {
     console.error("fr: admin delete project:", err.message);
