@@ -47,7 +47,7 @@ Track issues with Bug Tracker
 [x] When logging in as admin it redirects to user dashboard
 [x] No error prompt when input is "name@gmail" in email field
 [x] No error prompt when adding issue without input in issue field
-[x] accepting "space" in issue field
+[x] accepting "blank" in issue field
 [x] edit and delete button field should be disabled once issue is closed
 [x] when adding issue, close option in status should be status*
 [x] fixed when updating issue with the current user is not updating the db
@@ -60,10 +60,10 @@ Track issues with Bug Tracker
 [x] UPDATE PROJECT - can add the tech again to the same project
 [x] change project.techs document model to have an _id
 [x] addTech and removeTech is making the same api call
+[x] fix users logout logs in server
 [ ] send message from server to client for every successful api call
 [ ] addTech to project can add blank user to list
 [ ] fix users logs in client and in server
-[ ] fix users logout logs in server
 [ ] delete all comments in all components
 [ ] all modals have padding-right makes it off center
 [ ] Remodel UI
