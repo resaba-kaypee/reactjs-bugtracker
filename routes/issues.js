@@ -61,6 +61,7 @@ router.post(
       const newLog = new Log({
         firstName: req.user.firstName,
         lastName: req.user.lastName,
+        role: user.role,
         action: `${req.user.firstName} ${req.user.lastName} just added new issue to ${projectName}`
       });
 
@@ -108,6 +109,7 @@ router.put("/:id", auth, async (req, res) => {
     const newLog = new Log({
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
       action: `${user.firstName} ${user.lastName} updated issue with the id of ${issue._id}`
     });
 
@@ -147,6 +149,7 @@ router.put("/comment/:id", auth, async (req, res) => {
     const newLog = new Log({
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
       action: `${user.firstName} ${user.lastName} commented to issue with the id of ${issue._id}`
     });
 
@@ -179,6 +182,7 @@ router.delete("/:id", auth, async (req, res) => {
     const newLog = new Log({
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
       action: `${user.firstName} ${user.lastName} deleted issue with the id of ${issue._id}`
     });
 

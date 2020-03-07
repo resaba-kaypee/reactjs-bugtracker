@@ -216,6 +216,7 @@ router.put("/update/:id", authAdmin, async (req, res) => {
   }
 });
 
+// **************************************to be removed
 // @route   PUT api/admin/comment/:id
 // @desc    Add comment to issue
 // @access  Public
@@ -246,6 +247,7 @@ router.put("/comment/:id", auth, async (req, res) => {
   }
 });
 
+// **************************************to be removed
 // @route   DELETE api/issues/:id
 // @desc    Delete issue
 // @access  Public
@@ -311,6 +313,7 @@ router.post(
       const newLog = new Log({
         firstName: user.firstName,
         lastName: user.lastName,
+        role: user.role,
         action: "just created new project " + projectName
       });
 
@@ -362,6 +365,7 @@ router.put("/project/:id", auth, async (req, res) => {
       const newLog = new Log({
         firstName: user.firstName,
         lastName: user.lastName,
+        role: user.role,
         action: `${user.firstName} ${user.lastName} just updated ${projectName}`
       });
       await newLog.save();
@@ -401,6 +405,7 @@ router.put("/addTech/:id", auth, async (req, res) => {
       const newLog = new Log({
         firstName: user.firstName,
         lastName: user.lastName,
+        role: user.role,
         action: `just added ${tech} to ${project.projectName}`
       });
 
@@ -442,9 +447,13 @@ router.put("/removeTech/:id", auth, async (req, res) => {
     const newLog = new Log({
       firstName: user.firstName,
       lastName: user.lastName,
-      action: `just removed ${user.firstName} ${user.lastName} from ${project.projectName}`
+      role: user.role,
+      action: `${user.firstName} ${user.lastName} just removed ${found.name} from ${project.projectName}`
     });
-    newLog.save();
+
+    // newLog.save();
+
+    console.log(newLog)
 
     res.json(project);
   } catch (err) {
@@ -468,6 +477,7 @@ router.delete("/project/:id", auth, async (req, res) => {
     const newLog = new Log({
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
       action: `${user.firstName} ${user.lastName} just delete the project ${project.projectName}`
     });
     newLog.save();
@@ -488,6 +498,7 @@ router.post("/logout", auth, async (req, res) => {
     const newLog = new Log({
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
       action: "logged out"
     });
 
