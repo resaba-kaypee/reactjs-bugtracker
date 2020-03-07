@@ -59,8 +59,9 @@ Track issues with Bug Tracker
 [x] add delete user at auth admin state
 [x] UPDATE PROJECT - can add the tech again to the same project
 [x] change project.techs document model to have an _id
+[x] addTech and removeTech is making the same api call
+[ ] send message from server to client for every successful api call
 [ ] addTech to project can add blank user to list
-[ ] addTech and removeTech is making the same api call
 [ ] fix users logs in client and in server
 [ ] fix users logout logs in server
 [ ] delete all comments in all components

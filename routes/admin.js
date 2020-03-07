@@ -127,17 +127,17 @@ router.delete("/deleteUser/:id", auth, async (req, res) => {
 // @route   GET api/admin/issues
 // @desc    Get all users issue
 // @access  Private
-router.get("/issues", auth, async (req, res) => {
-  try {
-    const issues = await Issue.find({}).sort({
-      date: -1
-    });
-    res.json(issues);
-  } catch (error) {
-    console.error("fr: get all issue", error.message);
-    res.status(500).send("Server error");
-  }
-});
+// router.get("/issues", auth, async (req, res) => {
+//   try {
+//     const issues = await Issue.find({}).sort({
+//       date: -1
+//     });
+//     res.json(issues);
+//   } catch (error) {
+//     console.error("fr: get all issue", error.message);
+//     res.status(500).send("Server error");
+//   }
+// });
 
 // **************************************to be removed
 // @route   POST api/admin/issue
@@ -342,7 +342,7 @@ router.get("/projects", authAdmin, async (req, res) => {
 // @desc    Update project
 // @access  Private
 router.put("/project/:id", auth, async (req, res) => {
-  const { projectName, status, description, tech } = req.body;
+  const { projectName, status, description } = req.body;
   const projectFields = {};
   if (projectName) projectFields.projectName = projectName;
   if (status) projectFields.status = status;
@@ -362,7 +362,7 @@ router.put("/project/:id", auth, async (req, res) => {
       const newLog = new Log({
         firstName: user.firstName,
         lastName: user.lastName,
-        action: "just updated " + projectName
+        action: `${user.firstName} ${user.lastName} just updated ${projectName}`
       });
       await newLog.save();
     }

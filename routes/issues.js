@@ -7,7 +7,7 @@ const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 const Issue = require("../models/Issue");
-const Log = require("../models/Log")
+const Log = require("../models/Log");
 
 // @route   GET api/issues
 // @desc    Get all users issue
@@ -56,16 +56,17 @@ router.post(
         date
       });
 
-      const issue = await newIssue.save();
+      await newIssue.save();
 
-      // const newLog = new Log({
-      //   username: req.user.name,
-      //   action: "added new issue",
-      // })
-  
-      // await newLog.save();
+      const newLog = new Log({
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        action: `${req.user.firstName} ${req.user.lastName} just added new issue to ${projectName}`
+      });
 
-      res.json(issue);
+      await newLog.save();
+
+      res.json(newIssue);
     } catch (error) {
       console.error("fr: add new issue", error.message);
       res.status(500).send("Server error");
@@ -89,6 +90,7 @@ router.put("/:id", auth, async (req, res) => {
 
   try {
     let issue = await Issue.findById(req.params.id);
+    let user = await User.findById(req.user.id);
 
     if (!issue) return res.status(404).json({ msg: "Issue not found" });
 
@@ -103,12 +105,13 @@ router.put("/:id", auth, async (req, res) => {
       { new: true }
     );
 
-    // const newLog = new Log({
-    //   username: req.user.name,
-    //   action: "updated issue",
-    // })
+    const newLog = new Log({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      action: `${user.firstName} ${user.lastName} updated issue with the id of ${issue._id}`
+    });
 
-    // await newLog.save();
+    await newLog.save();
 
     res.json(issue);
   } catch (err) {
@@ -131,6 +134,7 @@ router.put("/comment/:id", auth, async (req, res) => {
 
   try {
     let issue = await Issue.findById(req.params.id);
+    let user = await User.findById(req.user.id);
 
     if (!issue) return res.status(404).json({ msg: "Issue not found" });
 
@@ -139,6 +143,14 @@ router.put("/comment/:id", auth, async (req, res) => {
       { $push: { comments: commentFields } },
       { new: true }
     );
+
+    const newLog = new Log({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      action: `${user.firstName} ${user.lastName} commented to issue with the id of ${issue._id}`
+    });
+
+    await newLog.save();
 
     res.json(issue);
   } catch (err) {
@@ -153,6 +165,7 @@ router.put("/comment/:id", auth, async (req, res) => {
 router.delete("/:id", auth, async (req, res) => {
   try {
     let issue = await Issue.findById(req.params.id);
+    let user = await User.findById(req.user.id);
 
     if (!issue) return res.status(404).json({ msg: "Issue not found" });
 
@@ -164,9 +177,10 @@ router.delete("/:id", auth, async (req, res) => {
     await Issue.findByIdAndRemove(req.params.id);
 
     const newLog = new Log({
-      username: req.user.name,
-      action: "deleted issue",
-    })
+      firstName: user.firstName,
+      lastName: user.lastName,
+      action: `${user.firstName} ${user.lastName} deleted issue with the id of ${issue._id}`
+    });
 
     await newLog.save();
 
