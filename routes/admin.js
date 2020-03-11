@@ -451,9 +451,7 @@ router.put("/removeTech/:id", auth, async (req, res) => {
       action: `${user.firstName} ${user.lastName} just removed ${found.name} from ${project.projectName}`
     });
 
-    // newLog.save();
-
-    console.log(newLog)
+    newLog.save();
 
     res.json(project);
   } catch (err) {
@@ -480,6 +478,7 @@ router.delete("/project/:id", auth, async (req, res) => {
       role: user.role,
       action: `${user.firstName} ${user.lastName} just delete the project ${project.projectName}`
     });
+    
     newLog.save();
     
     res.json({ msg: "Project removed" });
