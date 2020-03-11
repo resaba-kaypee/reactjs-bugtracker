@@ -12,32 +12,7 @@ import {
 
 const LogState = props => {
   const initialState = {
-    logs: [
-      {
-        _id: "001",
-        firstName: "Sam",
-        lastName: "Smith",
-        role: "admin",
-        action: "just logged in",
-        date: "2020-01-10T13:07:10.257+00:00"
-      },
-      {
-        _id: "002",
-        firstName: "Sam",
-        lastName: "Smith",
-        role: "admin",
-        action: "just logged in",
-        date: "2020-01-10T13:07:10.257+00:00"
-      },
-      {
-        _id: "003",
-        firstName: "Sam",
-        lastName: "Smith",
-        role: "admin",
-        action: "just updated in project",
-        date: "2020-01-10T13:07:10.257+00:00"
-      }
-    ],
+    logs: null,
     filtered: null,
     error: null,
     loading: true

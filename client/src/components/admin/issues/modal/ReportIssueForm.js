@@ -46,6 +46,7 @@ const ReportIssueForm = () => {
         date
       };
       addIssue(issue);
+      setAlert("Issue successfully reported", "success");
       clearAll();
     }
   };

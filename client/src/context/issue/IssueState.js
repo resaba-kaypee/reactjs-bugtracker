@@ -3,6 +3,7 @@ import axios from "axios";
 import IssueContext from "./issueContext";
 import issueReducer from "./issueReducer";
 import {
+  GET_USERS_ISSUES,
   GET_ISSUES,
   ADD_ISSUE,
   UPDATE_ISSUE,
@@ -18,6 +19,7 @@ import {
 
 const IssueState = props => {
   const initialState = {
+    usersIssue: null,
     issues: null,
     current: null,
     filtered: null,
@@ -25,6 +27,16 @@ const IssueState = props => {
   };
 
   const [state, dispatch] = useReducer(issueReducer, initialState);
+
+  // Get user's issue
+  const getMyIssues = async () => {
+    try {
+      const res = await axios.get("/api/issues/reportbyme");
+      dispatch({ type: GET_USERS_ISSUES, payload: res.data });
+    } catch (err) {
+      dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
+    }
+  };
 
   // Get issue
   const getIssues = async () => {
@@ -121,10 +133,12 @@ const IssueState = props => {
   return (
     <IssueContext.Provider
       value={{
+        usersIssue: state.usersIssue,
         issues: state.issues,
         current: state.current,
         filtered: state.filtered,
         error: state.error,
+        getMyIssues,
         getIssues,
         addIssue,
         updateIssue,

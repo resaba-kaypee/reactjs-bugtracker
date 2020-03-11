@@ -129,10 +129,11 @@ router.delete("/deleteUser/:id", auth, async (req, res) => {
 // @access  Private
 // router.get("/issues", auth, async (req, res) => {
 //   try {
-//     const issues = await Issue.find({}).sort({
+//     const issues = await Issue.find({ user: req.user.id }).sort({
 //       date: -1
 //     });
 //     res.json(issues);
+
 //   } catch (error) {
 //     console.error("fr: get all issue", error.message);
 //     res.status(500).send("Server error");

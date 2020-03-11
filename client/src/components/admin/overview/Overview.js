@@ -12,7 +12,6 @@ const Overview = () => {
     >
       <ReportByMe />
       <Resolved />
-      <ReportByMe />
       <Updated />
       <Unresolved />
     </div>

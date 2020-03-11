@@ -1,8 +1,18 @@
-import React,{useState} from "react";
-
-const CardReportByMe = () => {
+import React, { useState, useContext, useEffect } from "react";
+import IssueContext from "../../../../context/issue/issueContext";
+import ReportByMeList from "./ReportByMeList";
+const ReportByMe = () => {
   const [isDropped, setIsDroppped] = useState(false);
   const handleClick = () => setIsDroppped(!isDropped);
+
+  const issueContext = useContext(IssueContext);
+  const { usersIssue, loading, getMyIssues } = issueContext;
+
+  useEffect(() => {
+    getMyIssues();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className="card" style={{ marginBottom: "10px" }}>
       <div className="card-header bg-primary text-light">
@@ -27,18 +37,20 @@ const CardReportByMe = () => {
                 <th scope="col">ID</th>
                 <th scope="col">Project Name</th>
                 <th scope="col">Summary</th>
-                <th scope="col">Assigned To</th>
+                <th scope="col">Priority</th>
                 <th scope="col">Date</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>001</td>
-                <td>Bugtacker App</td>
-                <td>Simple bug tracking app</td>
-                <td>Sam Smith</td>
-                <td>January 24th 2020, 4:37:20 am</td>
-              </tr>
+              {usersIssue !== null && !loading ? (
+                usersIssue.map(issue => (
+                  <ReportByMeList key={issue._id} issue={issue} />
+                ))
+              ) : (
+                <tr>
+                  <td>No issue reported by you</td>
+                </tr>
+              )}
             </tbody>
           </table>
         ) : (
@@ -49,4 +61,4 @@ const CardReportByMe = () => {
   );
 };
 
-export default CardReportByMe;
+export default ReportByMe;

@@ -1,6 +1,7 @@
 import {
   ADD_ISSUE,
   GET_ISSUES,
+  GET_USERS_ISSUES,
   UPDATE_ISSUE,
   ADD_COMMENT,
   DELETE_ISSUE,
@@ -14,6 +15,12 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
+    case GET_USERS_ISSUES:
+      return {
+        ...state,
+        usersIssue: action.payload,
+        loading: false
+      };
     case GET_ISSUES:
       return {
         ...state,

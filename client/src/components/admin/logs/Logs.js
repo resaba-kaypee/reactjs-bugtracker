@@ -9,7 +9,7 @@ const Logs = () => {
   const { logs, filtered, getLogs, loading } = logContext;
 
   useEffect(() => {
-    // getLogs();
+    getLogs();
     // eslint-disable-next-line
   }, []);
 

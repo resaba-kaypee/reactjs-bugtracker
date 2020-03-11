@@ -10,6 +10,22 @@ const Issue = require("../models/Issue");
 const Log = require("../models/Log");
 
 // @route   GET api/issues
+// @desc    Get user's issue
+// @access  Private
+router.get("/reportbyme", auth, async (req, res) => {
+  try {
+    const issues = await Issue.find({ user: req.user.id }).sort({
+      date: -1
+    });
+    res.json(issues);
+    
+  } catch (error) {
+    console.error("fr: get all issue", error.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route   GET api/issues
 // @desc    Get all users issue
 // @access  Private
 router.get("/", auth, async (req, res) => {
@@ -46,6 +62,8 @@ router.post(
     const { projectName, description, priority, status, tech, date } = req.body;
 
     try {
+      let user = await User.findById(req.user.id);
+
       const newIssue = new Issue({
         user: req.user.id,
         projectName,
