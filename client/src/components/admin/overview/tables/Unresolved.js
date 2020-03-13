@@ -1,6 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import IssueContext from "../../../../context/issue/issueContext";
+import UnresolvedList from "./UnresolvedList"
 
-const CardUnresolved = () => {
+const Unresolved = () => {
+  const issueContext = useContext(IssueContext);
+  const { issues, getIssues, loading } = issueContext;
+
+  useEffect(() => {
+    getIssues();
+    // eslint-disable-next-line
+  }, []);
+
   const [isDropped, setIsDroppped] = useState(false);
   const handleClick = () => setIsDroppped(!isDropped);
   return (
@@ -27,18 +37,20 @@ const CardUnresolved = () => {
                 <th scope="col">ID</th>
                 <th scope="col">Project Name</th>
                 <th scope="col">Summary</th>
-                <th scope="col">Assigned To</th>
+                <th scope="col">Priority</th>
                 <th scope="col">Date</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>001</td>
-                <td>Bugtacker App</td>
-                <td>Simple bug tracking app</td>
-                <td>Sam Smith</td>
-                <td>January 24th 2020, 4:37:20 am</td>
-              </tr>
+              {issues !== null && !loading ? (
+                issues.map(issue => (
+                  <UnresolvedList key={issue._id} issue={issue} />
+                ))
+              ) : (
+                <tr>
+                  <td>No issue reported yet</td>
+                </tr>
+              )}
             </tbody>
           </table>
         ) : (
@@ -49,4 +61,4 @@ const CardUnresolved = () => {
   );
 };
 
-export default CardUnresolved;
+export default Unresolved;

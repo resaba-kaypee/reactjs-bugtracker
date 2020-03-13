@@ -49,7 +49,7 @@ const ProjectIssues = () => {
                 <ProjectIssueItem key={issue._id} issue={issue} />
               ))
             ) : (
-              issues.map(issue => (
+              issues.map(issue => issue.status === "open" && (
                 <ProjectIssueItem key={issue._id} issue={issue} />
               ))
             )

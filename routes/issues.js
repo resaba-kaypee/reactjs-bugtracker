@@ -33,6 +33,11 @@ router.get("/", auth, async (req, res) => {
     const issues = await Issue.find({}).sort({
       date: -1
     });
+
+    if(!issues){
+      return res.status(404).json({ msg: "Issues not found" });
+    }
+
     res.json(issues);
   } catch (error) {
     console.error("fr: get all issue", error.message);
