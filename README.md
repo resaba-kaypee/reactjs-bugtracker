@@ -61,9 +61,9 @@ Track issues with Bug Tracker
 [x] change project.techs document model to have an _id
 [x] addTech and removeTech is making the same api call
 [x] fix users logout logs in server
-[ ] send message from server to client for every successful api call
-[ ] addTech to project can add blank user to list
-[ ] fix users logs in client and in server
+[x] fix users logs in client and in server
+[x] addTech to project can add blank user to list
+[ ] send message from server to client for every successful or failed api call
 [ ] delete all comments in all components
 [ ] all modals have padding-right makes it off center
 [ ] Remodel UI

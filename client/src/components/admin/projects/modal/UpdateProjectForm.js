@@ -59,13 +59,15 @@ const UpdateProjectForm = () => {
       setAlert("Project successfully updated!", "success");
     }
 
-    if (isTechUpdating && !error) {
+    if (isTechUpdating && !error && tech !== "") {
       const addedTech = {
         _id: current._id,
         tech
       };
       addUser(addedTech);
       setAlert("User successfully added!", "success");
+    } else {
+      setAlert("Please select from the list", "danger");
     }
   };
 

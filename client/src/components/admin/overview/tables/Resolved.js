@@ -14,8 +14,11 @@ const Resolved = () => {
   const [isDropped, setIsDroppped] = useState(false);
   const handleClick = () => setIsDroppped(!isDropped);
   return (
-    <div className="card" style={{ marginBottom: "10px" }}>
-      <div className="card-header bg-primary text-light">
+    <div className="card shadow bg-white rounded" style={{ marginBottom: "10px" }}>
+      <div className="card-body">
+
+      
+      <div className="card-header shadow bg-primary text-light rounded">
         <span className="h4">
           <i className="fas fa-list-alt"></i> Resolved Issues
         </span>
@@ -59,6 +62,7 @@ const Resolved = () => {
         ) : (
           ""
         )}
+      </div>
       </div>
     </div>
   );

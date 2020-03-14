@@ -382,45 +382,61 @@ router.put("/project/:id", auth, async (req, res) => {
 // @route   PUT api/admin/addTech/:id
 // @desc    Add tech to project
 // @access  Private
-router.put("/addTech/:id", auth, async (req, res) => {
-  const { tech } = req.body;
-
-  const techFields = {};
-  techFields._id = uuid.v4();
-  if (tech) techFields.name = tech;
-
-  try {
-    let project = await Project.findById(req.params.id);
-    let user = await User.findById(req.user.id);
-    if (!project) return res.status(404).json({ msg: "Project not found" });
-
-    const found = project.techs.find(user => user.name === tech);
-
-    if (!found) {
-      project = await Project.findByIdAndUpdate(
-        req.params.id,
-        { $addToSet: { techs: techFields } },
-        { new: true }
-      );
-
-      const newLog = new Log({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role,
-        action: `just added ${tech} to ${project.projectName}`
-      });
-
-      await newLog.save();
-    } else {
-      return res.status(400).json({ msg: "Tech already added in the list" });
+router.put(
+  "/addTech/:id",
+  [
+    auth,
+    [
+      check("tech", "Tech is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
+    
+    const { tech } = req.body;
 
-    res.json(project);
-  } catch (err) {
-    console.error("fr: admin update project:", err.message);
-    res.status(500).send("Server Error");
+    const techFields = {};
+    techFields._id = uuid.v4();
+    if (tech) techFields.name = tech;
+
+    try {
+      let project = await Project.findById(req.params.id);
+      let user = await User.findById(req.user.id);
+      if (!project) return res.status(404).json({ msg: "Project not found" });
+
+      const found = project.techs.find(user => user.name === tech);
+
+      if (!found) {
+        project = await Project.findByIdAndUpdate(
+          req.params.id,
+          { $addToSet: { techs: techFields } },
+          { new: true }
+        );
+
+        const newLog = new Log({
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role,
+          action: `just added ${tech} to ${project.projectName}`
+        });
+
+        await newLog.save();
+      } else {
+        return res.status(400).json({ msg: "Tech already added in the list" });
+      }
+
+      res.json(project);
+    } catch (err) {
+      console.error("fr: admin update project:", err.message);
+      res.status(500).send("Server Error");
+    }
   }
-});
+);
 
 // @route   PUT api/admin/removeTech/:id
 // @desc    Remove tech from project
@@ -479,9 +495,9 @@ router.delete("/project/:id", auth, async (req, res) => {
       role: user.role,
       action: `${user.firstName} ${user.lastName} just delete the project ${project.projectName}`
     });
-    
+
     newLog.save();
-    
+
     res.json({ msg: "Project removed" });
   } catch (err) {
     console.error("fr: admin delete project:", err.message);
