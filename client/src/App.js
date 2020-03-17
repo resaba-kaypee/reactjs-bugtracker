@@ -12,6 +12,7 @@ import setAuthToken from "./utils/setAuthToken";
 // css
 import "./assets/css/all.css";
 import "./App.css";
+import "./Navbar.css";
 // state
 import AuthAdminState from "./context/authAdmin/AuthAdminState";
 import ProjectState from "./context/project/ProjectState";

@@ -13,10 +13,6 @@ const Projects = () => {
     //eslint-disable-next-line
   }, []);
 
-  if (projects !== null && projects.length === 0 && !loading) {
-    return <h4>No projects...</h4>;
-  }
-
   return (
     <div
       className="card shadow bg-white rounded"

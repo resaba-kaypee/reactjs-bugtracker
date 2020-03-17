@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import LogItem from "./LogItem";
 import LogFilter from "./LogFilter";
-import Spinner from "../../../assets/img/spinner.gif"
+import Spinner from "../../../assets/img/spinner.gif";
 import LogContext from "../../../context/log/logContext";
 
 const Logs = () => {
