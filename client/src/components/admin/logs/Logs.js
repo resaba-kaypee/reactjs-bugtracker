@@ -20,19 +20,19 @@ const Logs = () => {
         marginTop: "20px"
       }}
     >
-      <div className="card-header bg-primary text-light shadow-sm">
+      <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
-          <i className="fas fa-puzzle-piece"></i> Viewing User Logs
+          <i className="fas fa-list-alt"></i> Viewing User Logs
         </span>
       </div>
-      <div className="card-body">
+      <div className="card-body" style={{ height: "100%"}}>
         <nav className="navbar shadow bg-white rounded">
           <LogFilter />
         </nav>
         <div
           className="card-body"
           style={{
-            maxHeight: "400px",
+            height: "100vh",
             overflowY: "scroll"
           }}
         >

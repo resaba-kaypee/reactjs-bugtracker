@@ -6,14 +6,34 @@ import ReportByMe from "./tables/ReportByMe";
 const Overview = () => {
   return (
     <div
+      className="card shadow bg-white rounded"
       style={{
         marginTop: "20px"
       }}
     >
-      <ReportByMe />
-      <Resolved />
-      <Unresolved />
+      <div className="card-header bg-info text-light shadow-sm">
+        <span className="h4">
+          <i className="fas fa-chalkboard"></i> Bugtracker Overview
+        </span>
+      </div>
+      <div className="card-body">
+        <div
+          style={{
+            height: "100%"
+          }}
+        >
+          <ReportByMe />
+          <Resolved />
+          <Unresolved />
+        </div>
+      </div>
     </div>
+    // <div
+    //   style={{
+    //     marginTop: "20px"
+    //   }}
+    // >
+    // </div>
   );
 };
 

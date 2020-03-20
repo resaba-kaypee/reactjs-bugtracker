@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import ProjectItem from "./ProjectItem";
 import ProjectFilter from "./ProjectFilter";
 import ProjectContext from "../../../context/project/projectContext";
-import Spinner from "../../../assets/img/spinner.gif";
+import Spinner from "../../layout/Spinner";
 
 const Projects = () => {
   const projectContext = useContext(ProjectContext);
@@ -20,13 +20,18 @@ const Projects = () => {
         marginTop: "20px"
       }}
     >
-      <div className="card-header bg-primary text-light shadow-sm">
+      <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
-          <i className="fas fa-puzzle-piece"></i> Viewing Projects
+          <i className="fas fa-puzzle-piece"></i> Manage Projects
         </span>
       </div>
-      <div className="card-body">
-        <div className="card-header shadow bg-white rounded">
+      <div
+        className="card-body"
+        style={{
+          height: "100%"
+        }}
+      >
+        <div className="card-header flex-space-between shadow bg-white rounded">
           <button
             className="btn btn-outline-secondary"
             type="button"
@@ -38,36 +43,27 @@ const Projects = () => {
 
           <ProjectFilter />
         </div>
-        <div className="card-body">
-          <table className="table table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Status</th>
-                <th scope="col">Description</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {projects !== null && !loading ? (
-                filtered !== null ? (
-                  filtered.map(project => (
-                    <ProjectItem key={project._id} project={project} />
-                  ))
-                ) : (
-                  projects.map(project => (
-                    <ProjectItem key={project._id} project={project} />
-                  ))
-                )
-              ) : (
-                <tr>
-                  <td colSpan="4" align="center">
-                    <img src={Spinner} alt="spinner" />
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+        <div
+          className="card-body"
+          style={{
+            height: "100vh",
+            overflowY: "scroll"
+          }}
+        >
+          {/* project item */}
+          {projects !== null && !loading ? (
+            filtered !== null ? (
+              filtered.map(project => (
+                <ProjectItem key={project._id} project={project} />
+              ))
+            ) : (
+              projects.map(project => (
+                <ProjectItem key={project._id} project={project} />
+              ))
+            )
+          ) : (
+            <Spinner />
+          )}
         </div>
       </div>
     </div>

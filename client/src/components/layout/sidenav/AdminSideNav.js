@@ -22,56 +22,61 @@ const UserSideNav = props => {
 
   return (
     <Fragment>
-      <Link
-        className="list-group-item list-group-item-action bg-light"
-        to="/admin/overview"
-      >
-        <i className="fas fa-chalkboard"></i> Overview
-      </Link>
+      <li className="nav-item-custom">
+        <span className="nav-link-custom">
+          <i className="fas fa-user"></i>
+          <span className="link-text">Sam Smith (admin)</span>
+        </span>
+      </li>
 
-      <Link
-        className="list-group-item list-group-item-action bg-light"
-        to="/admin/projects"
-      >
-        <i className="fas fa-puzzle-piece"></i> Manage Projects
-      </Link>
+      <li className="nav-item-custom">
+        <Link className="nav-link-custom" to="/admin/overview">
+          <i className="fas fa-chalkboard"></i>
+          <span className="link-text">Overview</span>
+        </Link>
+      </li>
 
-      <Link
-        className="list-group-item list-group-item-action bg-light"
-        to="/admin/issues"
-      >
-        <i className="fas fa-bug"></i> Manage Issues
-      </Link>
+      <li className="nav-item-custom">
+        <Link className="nav-link-custom" to="/admin/projects">
+          <i className="fas fa-puzzle-piece"></i>
+          <span className="link-text">Manage Projects</span>
+        </Link>
+      </li>
 
-      <Link
-        className="list-group-item list-group-item-action bg-light"
-        to="/admin/users"
-      >
-        <i className="fas fa-user-cog" /> Manage Users
-      </Link>
+      <li className="nav-item-custom">
+        <Link className="nav-link-custom" to="/admin/issues">
+          <i className="fas fa-bug"></i>
+          <span className="link-text">Manage Issues</span>
+        </Link>
+      </li>
 
-      <Link
-        className="list-group-item list-group-item-action bg-light"
-        to="/admin/logs"
-      >
-        <i className="far fa-list-alt"></i> View Users Logs
-      </Link>
+      <li className="nav-item-custom">
+        <Link className="nav-link-custom" to="/admin/users">
+          <i className="fas fa-user-cog" />
+          <span className="link-text">Manage Users</span>
+        </Link>
+      </li>
 
-      <a
-        onClick={onLogout}
-        href="#!"
-        className="list-group-item list-group-item-action bg-light"
-      >
-        <i className="fas fa-sign-out-alt"></i>{" "}
-        <span className="hide-sm"> Logout</span>
-      </a>
+      <li className="nav-item-custom">
+        <Link className="nav-link-custom" to="/admin/logs">
+          <i className="far fa-list-alt"></i>
+          <span className="link-text">View Users Log</span>
+        </Link>
+      </li>
 
-      <Link
-        className="list-group-item list-group-item-action bg-light"
-        to="/admin/about"
-      >
-        <i className="fas fa-info-circle"></i> About
-      </Link>
+      <li className="nav-item-custom">
+        <a onClick={onLogout} href="#!" className="nav-link-custom">
+          <i className="fas fa-sign-out-alt"></i>
+          <span className="link-text"> Logout</span>
+        </a>
+      </li>
+
+      <li className="nav-item-custom">
+        <Link className="nav-link-custom" to="/admin/about">
+          <i className="fas fa-info-circle"></i>
+          <span className="link-text">About</span>
+        </Link>
+      </li>
     </Fragment>
   );
 };

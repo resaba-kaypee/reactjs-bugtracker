@@ -18,13 +18,18 @@ const ProjectIssues = () => {
       className="card shadow bg-white rounded"
       style={{ marginBottom: "10px", marginTop: "20px" }}
     >
-      <div className="card-header bg-primary text-light shadow-sm">
+      <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
-          <i className="fas fa-bug"></i> Viewing Project Issues
+          <i className="fas fa-bug"></i> Manage Project Issues
         </span>
       </div>
-      <div className="card-body">
-        <div className="card-header shadow bg-white rounded">
+      <div
+        className="card-body"
+        style={{
+          height: "100%"
+        }}
+      >
+        <div className="card-header flex-space-between shadow bg-white rounded">
           <button
             className="btn btn-outline-secondary"
             type="button"
@@ -38,7 +43,7 @@ const ProjectIssues = () => {
         <div
           className="card-body"
           style={{
-            maxHeight: "600px",
+            height: "100vh",
             overflowY: "scroll"
           }}
         >
@@ -49,9 +54,12 @@ const ProjectIssues = () => {
                 <ProjectIssueItem key={issue._id} issue={issue} />
               ))
             ) : (
-              issues.map(issue => issue.status === "open" && (
-                <ProjectIssueItem key={issue._id} issue={issue} />
-              ))
+              issues.map(
+                issue =>
+                  issue.status === "open" && (
+                    <ProjectIssueItem key={issue._id} issue={issue} />
+                  )
+              )
             )
           ) : (
             <Spinner />

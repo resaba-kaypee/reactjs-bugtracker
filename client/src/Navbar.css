@@ -1,19 +1,4 @@
-:root {
-  --bg-link: #141418;
-  --transition-speed: 600ms;
-}
 
-body::-webkit-scrollbar {
-  width: 0.25rem;
-}
-
-body::-webkit-scrollbar-track {
-  background: #1e1e24;
-}
-
-body::-webkit-scrollbar-thumb {
-  background: #6649b8;
-}
 
 main {
   margin-left: 5rem;
@@ -51,11 +36,12 @@ main {
   height: 5rem;
   color: white;
   text-decoration: none;
-  filter: grayscale(100%) opacity(0.7);
   transition: var(--transition-speed);
 }
 
 .nav-link-custom:hover {
+  text-decoration: none;
+  color: aliceblue;
   filter: grayscale(0%) opacity(1);
   background: var(--bg-link);
 }
@@ -66,7 +52,7 @@ main {
 }
 
 .nav-link-custom i {
-  font-size: large;
+  font-size: x-large;
   width: 2rem;
   min-width: 2rem;
   margin: 0 1.5rem;
@@ -137,6 +123,11 @@ main {
     justify-content: center;
   }
 
+  .nav-link-custom i {
+    font-size: x-large;
+    margin: 0 0;
+  }
+
   main {
     margin: 0;
   }
@@ -151,7 +142,7 @@ main {
   }
 
   .navbar-main:hover {
-    width: 16rem;
+    width: 20rem;
   }
 
   .navbar-main:hover .link-text {
@@ -159,7 +150,7 @@ main {
   }
 
   .navbar-main:hover .logo svg {
-    margin-left: 11rem;
+    margin-left: 16rem;
   }
 
   .navbar-main:hover .logo-text {

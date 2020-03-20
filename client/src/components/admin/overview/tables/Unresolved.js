@@ -19,12 +19,12 @@ const Unresolved = () => {
       style={{ marginBottom: "10px" }}
     >
       <div className="card-body">
-        <div className="card-header shadow bg-primary text-light rounded">
+        <div className="card-header shadow bg-secondary text-light rounded">
           <span className="h4">
             <i className="fas fa-list-alt"></i> Unresolve Issues
           </span>
           <button
-            className="btn btn-primary float-right"
+            className="btn btn-secondary float-right"
             type="button"
             onClick={handleClick}
           >

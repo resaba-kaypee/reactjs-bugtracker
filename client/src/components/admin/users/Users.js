@@ -20,13 +20,13 @@ const Users = () => {
         marginTop: "20px"
       }}
     >
-      <div className="card-header bg-primary text-light shadow-sm">
+      <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
-          <i className="fas fa-puzzle-piece"></i> Viewing All Users
+          <i className="fas fa-users"></i> Manage Users
         </span>
       </div>
       <div className="card-body">
-        <div className="card-header shadow bg-white rounded">
+        <div className="card-header flex-space-between shadow bg-white rounded">
           <button
             className="btn btn-outline-secondary"
             type="button"
