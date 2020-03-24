@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import UserDashBoard from "./components/user/UserDashBoard";
 import Login from "./components/pages/Login";
-import PrivateAdminRoute from "./components/routing/PrivateAdminRoute";
 import PrivateRoute from "./components/routing/PrivateRoute";
 // utils
 import setAuthToken from "./utils/setAuthToken";

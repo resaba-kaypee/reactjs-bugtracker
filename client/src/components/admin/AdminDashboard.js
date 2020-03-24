@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 // component
+import Profile from "./profile/Profile";
 import Overview from "./overview/Overview";
 import ManageProjects from "./projects/Projects";
 import ManageProjectIssues from "./issues/ProjectIssues";
@@ -31,8 +32,8 @@ const AdminDashboard = () => {
       <nav className="navbar-main">
         <ul className="navbar-nav-custom bg-secondary text-light text-nowrap">
           <li className="logo bg-dark">
-            <a href="#" className="nav-link-custom">
-              <span className="link-text logo-text">WELCOME</span>
+            <a href="#!" className="nav-link-custom">
+              <span className="link-text logo-text">BUGTRACKER</span>
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -71,6 +72,7 @@ const AdminDashboard = () => {
           <ViewProjectModal />
           <RegisterUserModal />
           <Switch>
+            <Route path="/admin/profile" component={Profile} />
             <Route path="/admin/overview" component={Overview} />
             <Route path="/admin/projects" component={ManageProjects} />
             <Route path="/admin/issues" component={ManageProjectIssues} />
