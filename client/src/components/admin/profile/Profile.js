@@ -4,9 +4,7 @@ import AuthContext from "../../../context/auth/authContext";
 const Profile = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const [tech, setTech] = useState("");
   const [dateStatus, setDateStatus] = useState(new Date());
-  // eslint-disable-next-line
   const [date, setDate] = useState();
 
   useEffect(() => {
@@ -15,31 +13,9 @@ const Profile = () => {
         setDateStatus(new Date());
       }, 1000)
     );
-    return clearInterval(dateStatus);
-  }, [dateStatus]);
-
-  const [time, setTime] = useState({});
-  const { h, m, s } = time;
-  let hour = h % 12;
-  hour = hour ? hour : 12;
-  const minute = m < 10 ? "0" + m : m;
-  const second = s < 10 ? "0" + s : s;
-  const ampm = h >= 12 ? "PM" : "AM";
-
-  useEffect(() => {
-    setTime({
-      h: dateStatus.getHours(),
-      m: dateStatus.getMinutes(),
-      s: dateStatus.getSeconds()
-    });
-  }, [dateStatus]);
-
-  useEffect(() => {
-    if (user && user.firstName && user.lastName) {
-      const username = user.firstName + " " + user.lastName;
-      setTech(username);
-    }
-  }, [user]);
+    return () => clearInterval(date);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div
@@ -53,11 +29,11 @@ const Profile = () => {
         style={{ height: "100%" }}
       >
         <div>
-          <h2>Welcome {tech}</h2>
+          <h1>Good Morning</h1>
+          <h2>{user && user.firstName + " " + user.lastName}</h2>
           <div className="d-flex flex-column">
             <h3 className="d-flex justify-content-center">
-              <span>{hour}</span>:<span>{minute}</span>:<span>{second}</span>{" "}
-              <span>{ampm}</span>
+              {dateStatus.toLocaleTimeString()}
             </h3>
           </div>
         </div>

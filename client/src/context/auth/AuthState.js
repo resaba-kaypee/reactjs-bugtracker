@@ -115,30 +115,30 @@ const AuthState = props => {
     }
   };
 
-    // Login Admin
-    const loginAsAdmin = async formData => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      };
-
-      try {
-        const res = await axios.post("/api/authAdmin", formData, config);
-  
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: res.data
-        });
-
-        loadAdmin();
-      } catch (err) {
-        dispatch({
-          type: LOGIN_FAIL,
-          payload: err.response.data.msg
-        });
+  // Login Admin
+  const loginAsAdmin = async formData => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
       }
     };
+
+    try {
+      const res = await axios.post("/api/authAdmin", formData, config);
+
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data
+      });
+
+      loadAdmin();
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.msg
+      });
+    }
+  };
 
   // Logout
   const logoutUser = async () => {
@@ -152,7 +152,7 @@ const AuthState = props => {
       dispatch({
         type: AUTH_ERROR,
         payload: err.response.data.msg
-      })
+      });
     }
   };
 
@@ -167,7 +167,7 @@ const AuthState = props => {
       dispatch({
         type: AUTH_ERROR,
         payload: err.response.data.msg
-      })
+      });
     }
   };
 
