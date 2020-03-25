@@ -14,28 +14,17 @@ const Logs = () => {
   }, []);
 
   return (
-    <div
-      className="card shadow bg-white rounded"
-      style={{
-        marginTop: "20px"
-      }}
-    >
+    <div className="card shadow bg-white rounded" style={{ height: "96vh" }}>
       <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
           <i className="fas fa-list-alt"></i> Viewing User Logs
         </span>
       </div>
-      <div className="card-body" style={{ height: "100%"}}>
+      <div className="card-body" style={{ overflowY: "scroll" }}>
         <nav className="navbar shadow bg-white rounded">
           <LogFilter />
         </nav>
-        <div
-          className="card-body"
-          style={{
-            height: "100vh",
-            overflowY: "scroll"
-          }}
-        >
+        <div className="card-body">
           <table className="table table-bordered">
             <thead></thead>
             <tbody>

@@ -14,18 +14,13 @@ const Users = () => {
   }, []);
 
   return (
-    <div
-      className="card shadow bg-white rounded"
-      style={{
-        marginTop: "20px"
-      }}
-    >
+    <div className="card shadow bg-white rounded" style={{ height: "96vh" }}>
       <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
           <i className="fas fa-users"></i> Manage Users
         </span>
       </div>
-      <div className="card-body">
+      <div className="card-body" style={{ overflowY: "scroll" }}>
         <div className="card-header flex-space-between shadow bg-white rounded">
           <button
             className="btn btn-outline-secondary"
@@ -41,14 +36,6 @@ const Users = () => {
           <table className="table table-bordered">
             <thead>
               <tr>
-                {/* <th
-                  scope="col"
-                  style={{
-                    width: "20%"
-                  }}
-                >
-                  ID
-                </th> */}
                 <th
                   scope="col"
                   style={{
@@ -70,13 +57,9 @@ const Users = () => {
             <tbody>
               {users !== null && !loading ? (
                 filtered !== null ? (
-                  filtered.map(user => (
-                    <UsersItem key={user._id} user={user} />
-                  ))
+                  filtered.map(user => <UsersItem key={user._id} user={user} />)
                 ) : (
-                  users.map(user => (
-                    <UsersItem key={user._id} user={user} />
-                  ))
+                  users.map(user => <UsersItem key={user._id} user={user} />)
                 )
               ) : (
                 <tr>

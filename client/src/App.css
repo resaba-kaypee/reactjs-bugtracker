@@ -9,6 +9,12 @@
   --transition-speed: 600ms;
 }
 
+body{
+  background-image: url("/assets/img/bg-blur.jpeg");
+  background-size: cover;
+  overflow-y: hidden;
+}
+
 body::-webkit-scrollbar {
   width: 0.25rem;
 }

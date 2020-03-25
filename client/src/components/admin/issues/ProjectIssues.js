@@ -16,19 +16,14 @@ const ProjectIssues = () => {
   return (
     <div
       className="card shadow bg-white rounded"
-      style={{ marginBottom: "10px", marginTop: "20px" }}
+      style={{height: "96vh" }}
     >
       <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
           <i className="fas fa-bug"></i> Manage Project Issues
         </span>
       </div>
-      <div
-        className="card-body"
-        style={{
-          height: "100%"
-        }}
-      >
+      <div className="card-body" style={{overflowY: "scroll"}}>
         <div className="card-header flex-space-between shadow bg-white rounded">
           <button
             className="btn btn-outline-secondary"
@@ -40,13 +35,7 @@ const ProjectIssues = () => {
           </button>
           <IssueFilter />
         </div>
-        <div
-          className="card-body"
-          style={{
-            height: "100vh",
-            overflowY: "scroll"
-          }}
-        >
+        <div className="card-body">
           {/* issue item */}
           {issues !== null && !loading ? (
             filtered !== null ? (
