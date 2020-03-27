@@ -28,10 +28,10 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <nav className="navbar-main">
-        <ul className="navbar-nav-custom bg-secondary text-light text-nowrap">
-          <li className="logo bg-dark">
+        <ul className="navbar-nav-custom text-light text-nowrap">
+          <li className="logo">
             <a href="#!" className="nav-link-custom">
               <span className="link-text logo-text">BUGTRACKER</span>
               <svg

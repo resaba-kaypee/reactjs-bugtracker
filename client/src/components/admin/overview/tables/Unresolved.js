@@ -34,32 +34,34 @@ const Unresolved = () => {
           </button>
         </div>
         <div className="card-body">
-          {isDropped ? (
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Project Name</th>
-                  <th scope="col">Summary</th>
-                  <th scope="col">Priority</th>
-                  <th scope="col">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {issues !== null && !loading ? (
-                  issues.map(issue => (
-                    <UnresolvedList key={issue._id} issue={issue} />
-                  ))
-                ) : (
+          <div className="table-responsive">
+            {isDropped ? (
+              <table className="table">
+                <thead>
                   <tr>
-                    <td>No issue reported yet</td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Project Name</th>
+                    <th scope="col">Summary</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Date</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          ) : (
-            ""
-          )}
+                </thead>
+                <tbody>
+                  {issues !== null && !loading ? (
+                    issues.map(issue => (
+                      <UnresolvedList key={issue._id} issue={issue} />
+                    ))
+                  ) : (
+                    <tr>
+                      <td>No issue reported yet</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
     </div>

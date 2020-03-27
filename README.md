@@ -64,6 +64,7 @@ Track issues with Bug Tracker
 [x] fix users logs in client and in server
 [x] addTech to project can add blank user to list
 [x] added admin profile welcome page
+[ ] cant perform a state on unmounted ??? in profile.js
 [ ] send message from server to client for every successful or failed api call
 [ ] delete all comments in all components
 [ ] all modals have padding-right makes it off center

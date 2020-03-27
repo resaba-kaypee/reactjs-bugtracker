@@ -33,8 +33,9 @@ const Resolved = () => {
         </button>
       </div>
       <div className="card-body">
+        <div className="table-responsive">
         {isDropped ? (
-          <table className="table table-hover">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col">ID</th>
@@ -62,6 +63,7 @@ const Resolved = () => {
         ) : (
           ""
         )}
+        </div>
       </div>
       </div>
     </div>

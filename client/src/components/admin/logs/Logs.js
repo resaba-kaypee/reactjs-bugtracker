@@ -14,7 +14,7 @@ const Logs = () => {
   }, []);
 
   return (
-    <div className="card shadow bg-white rounded" style={{ height: "96vh" }}>
+    <div className="card card-custom shadow bg-white rounded" >
       <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
           <i className="fas fa-list-alt"></i> Viewing User Logs

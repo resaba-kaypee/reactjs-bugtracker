@@ -15,7 +15,7 @@ const ProjectIssues = () => {
 
   return (
     <div
-      className="card shadow bg-white rounded"
+      className="card card-custom shadow bg-white rounded"
       style={{height: "96vh" }}
     >
       <div className="card-header bg-info text-light shadow-sm">

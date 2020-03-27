@@ -5,37 +5,37 @@ const Profile = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const [dateStatus, setDateStatus] = useState(new Date());
-  const [date, setDate] = useState();
 
   useEffect(() => {
-    setDate(
-      setInterval(() => {
-        setDateStatus(new Date());
-      }, 1000)
-    );
-    return () => clearInterval(date);
-    // eslint-disable-next-line
+    const clock = setInterval(() => setDateStatus(new Date()), 1000);
+
+    return () => clearInterval(clock);
   }, []);
 
   return (
     <div
       className="d-flex flex-column"
       style={{
-        height: "100vh"
+        height: "100vh",
+        color: "aliceblue"
       }}
     >
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "100%" }}
-      >
-        <div>
-          <h1>Good Morning</h1>
-          <h2>{user && user.firstName + " " + user.lastName}</h2>
-          <div className="d-flex flex-column">
-            <h3 className="d-flex justify-content-center">
-              {dateStatus.toLocaleTimeString()}
-            </h3>
-          </div>
+      <div className="d-flex justify-content-center" style={{ height: "100%" }}>
+        <div className="d-flex flex-column justify-content-center align-items-center">
+          <time className="time">{dateStatus.toLocaleTimeString()}</time>
+          <h1
+            style={{
+              marginBottom: "2rem"
+            }}
+          >
+            {dateStatus.getHours() < 12
+              ? "Good Morning"
+              : dateStatus.getHours() < 18
+              ? "Good Afternoon"
+              : "Good Evening"}{" "}
+            <span>{user && user.firstName + " " + user.lastName}</span>
+          </h1>
+          <h3>What Is Your Focus For Today?</h3>
         </div>
       </div>
     </div>
