@@ -60,102 +60,110 @@ const Login = props => {
 
   return (
     <div className="container">
-      <div className="card my-5">
-        <div className="card-header bg-primary text-light text-center">
-          <span className="h4">
-            <i className="fas fa-bug"></i> Bugtracker
-          </span>
-        </div>
-        <Alerts />
-        <div className="card-body">
-          <form onSubmit={onSubmit} noValidate>
-            <table className="table table-curved">
-              <tbody>
-                <tr className="text-light bg-secondary">
-                  <td colSpan="2">
-                    <span className="h5">
-                      <i
-                        className={
-                          "fas " + (!checked ? "fa-user-shield" : "fa-user")
-                        }
-                      ></i>{" "}
-                      Log in as {checked ? "User" : "Administrator"}
-                    </span>
-                    <span className="material-switch float-right">
-                      <input
-                        id="role"
-                        name="role"
-                        type="checkbox"
-                        checked={!checked}
-                        onClick={() => setChecked(!checked)}
-                        onChange={() => {
-                          setRole(!checked ? "developer" : "admin");
-                          setIsAdmin(!isAdmin);
-                        }}
-                      />
-                      <label htmlFor="role" className="label-default"></label>
-                    </span>
-                  </td>
-                </tr>
+      <div
+        className="d-flex flex-column justify-content-center"
+        style={{
+          height: "100vh"
+        }}
+      >
+        <div className="card shadow bg-white rounded">
+          <div className="card-header bg-primary text-light text-center">
+            <span className="h4">
+              <i className="fas fa-bug"></i> Bugtracker
+            </span>
+          </div>
+          <Alerts />
 
-                <tr>
-                  <td>
-                    <label>Email</label>
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="email"
-                      name="email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                    />
-                  </td>
-                </tr>
+          <div className="card-body">
+            <form onSubmit={onSubmit} noValidate>
+              <table className="table table-curved">
+                <tbody>
+                  <tr className="text-light bg-secondary">
+                    <td colSpan="2">
+                      <span className="h5">
+                        <i
+                          className={
+                            "fas " + (!checked ? "fa-user-shield" : "fa-user")
+                          }
+                        ></i>{" "}
+                        Log in as {checked ? "User" : "Administrator"}
+                      </span>
+                      <span className="material-switch float-right">
+                        <input
+                          id="role"
+                          name="role"
+                          type="checkbox"
+                          checked={!checked}
+                          onClick={() => setChecked(!checked)}
+                          onChange={() => {
+                            setRole(!checked ? "developer" : "admin");
+                            setIsAdmin(!isAdmin);
+                          }}
+                        />
+                        <label htmlFor="role" className="label-default"></label>
+                      </span>
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td>
-                    <label>Password</label>
-                  </td>
-                  <td>
-                    <div className="input-group">
+                  <tr>
+                    <td>
+                      <label>Email</label>
+                    </td>
+                    <td>
                       <input
                         className="form-control"
-                        type={isShowing ? "text" : "password"}
-                        name="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                       />
-                      <div className="input-group-append">
-                        <button
-                          type="button"
-                          className="input-group-text"
-                          onClick={() => setIsShowing(!isShowing)}
-                        >
-                          <i
-                            className={
-                              "fas " + (isShowing ? "fa-eye-slash" : "fa-eye")
-                            }
-                          ></i>
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td colSpan="2">
-                    <button
-                      type="submit"
-                      className="btn btn-outline-primary float-right"
-                    >
-                      <i className="fas fa-sign-in-alt"></i> Sign in
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
+                  <tr>
+                    <td>
+                      <label>Password</label>
+                    </td>
+                    <td>
+                      <div className="input-group">
+                        <input
+                          className="form-control"
+                          type={isShowing ? "text" : "password"}
+                          name="password"
+                          value={password}
+                          onChange={e => setPassword(e.target.value)}
+                        />
+                        <div className="input-group-append">
+                          <button
+                            type="button"
+                            className="input-group-text"
+                            onClick={() => setIsShowing(!isShowing)}
+                          >
+                            <i
+                              className={
+                                "fas " + (isShowing ? "fa-eye-slash" : "fa-eye")
+                              }
+                            ></i>
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colSpan="2">
+                      <button
+                        type="submit"
+                        className="btn btn-outline-primary float-right"
+                      >
+                        <i className="fas fa-sign-in-alt"></i> Sign in
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
         </div>
       </div>
     </div>

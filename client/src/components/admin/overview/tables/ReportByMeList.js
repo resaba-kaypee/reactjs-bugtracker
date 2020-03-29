@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import Moment from "react-moment";
 
 const ReportByMeList = ({ issue }) => {
   const { _id, projectName, description, priority, date } = issue;
@@ -10,7 +11,9 @@ const ReportByMeList = ({ issue }) => {
         <td>{projectName}</td>
         <td>{description}</td>
         <td>{priority}</td>
-        <td>{date}</td>
+        <td>
+          <Moment format="MMMM Do YYYY, h:mm:ss a" date={date} />
+        </td>
       </tr>
     </Fragment>
   );

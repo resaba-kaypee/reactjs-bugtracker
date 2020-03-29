@@ -28,7 +28,7 @@ const RegisterUserForm = () => {
   useEffect(() => {
     // check if admin or user is already exist in db
     if (authAdminContext.error) {
-      console.log(authAdminContext.error)
+      console.log(authAdminContext.error);
       setAlert(authAdminContext.error, "danger");
       authAdminContext.clearErrors();
     }
@@ -60,9 +60,11 @@ const RegisterUserForm = () => {
       setErrors({});
     }
     // eslint-disable-next-line
-  }, [errors, authAdminContext.error,
+  }, [
+    errors,
+    authAdminContext.error
     //  authAdminContext.success
-    ]);
+  ]);
 
   function register() {
     authAdminContext.registerUser({
@@ -141,9 +143,6 @@ const RegisterUserForm = () => {
                 <tr>
                   <td>
                     <label>Email</label>
-                    <small className="form-text text-muted">
-                      We'll never share your email with anyone else.
-                    </small>
                   </td>
                   <td>
                     <input
@@ -154,15 +153,15 @@ const RegisterUserForm = () => {
                       value={email}
                       onChange={handleChange}
                     />
+                    <small className="form-text text-muted">
+                      We'll never share your email with anyone else.
+                    </small>
                   </td>
                 </tr>
 
                 <tr>
                   <td>
                     <label>Password</label>
-                    <small className="form-text text-muted">
-                      Must be 6-20 alphanumeric characters long.
-                    </small>
                   </td>
                   <td>
                     <div className="input-group">
@@ -187,6 +186,9 @@ const RegisterUserForm = () => {
                         </button>
                       </div>
                     </div>
+                    <small className="form-text text-muted">
+                      Must be 6-20 alphanumeric characters long.
+                    </small>
                   </td>
                 </tr>
 

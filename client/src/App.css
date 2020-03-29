@@ -11,6 +11,17 @@
 
 body {
   overflow-y: hidden;
+  background: #232526; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #414345,
+    #232526
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #414345,
+    #232526
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 body::-webkit-scrollbar {
@@ -192,21 +203,44 @@ h3 {
   left: 20px;
 }
 
+/* Modal */
+.modal-body{
+  padding: 0;
+}
+
 /* Tables */
 .table td {
   vertical-align: middle;
   white-space: nowrap;
+  padding: 0.5rem;
 }
 
 /* Cards */
+.card-custom {
+  overflow: hidden;
+}
+
 .card-body {
   width: 100%;
+}
+
+.card-body-list {
+  overflow-y: scroll;
+  height: 96%;
 }
 
 /* Small screens */
 @media only screen and (max-width: 600px) {
   .card-custom {
     height: 84vh;
+  }
+
+  .card-body {
+    padding: 0.75rem;
+  }
+
+  .card-body-list {
+    height: 84%;
   }
 
   .time {
@@ -219,6 +253,11 @@ h3 {
   .card-custom {
     height: 96vh;
   }
+  .card-body-list {
+    overflow-y: scroll;
+    height: 96%;
+  }
+
   .time {
     font-size: 8rem;
   }

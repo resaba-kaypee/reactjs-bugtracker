@@ -151,7 +151,7 @@ const ReportIssueForm = () => {
                       name="description"
                       value={description}
                       className="form-control"
-                      placeholder="Text area"
+                      placeholder="Issue description"
                       onChange={e => setDescription(e.target.value)}
                     ></textarea>
                   </td>

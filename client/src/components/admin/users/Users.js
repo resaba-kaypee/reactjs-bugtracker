@@ -20,8 +20,8 @@ const Users = () => {
           <i className="fas fa-users"></i> Manage Users
         </span>
       </div>
-      <div className="card-body" style={{ overflowY: "scroll" }}>
-        <div className="card-header flex-space-between shadow bg-white rounded">
+      <div className="card-body">
+        <nav className="navbar flex-space-between shadow bg-white rounded">
           <button
             className="btn btn-outline-secondary"
             type="button"
@@ -31,8 +31,8 @@ const Users = () => {
             <i className="fas fa-plus"></i> Add New User
           </button>
           <UserFilter />
-        </div>
-        <div className="card-body">
+        </nav>
+        <div className="card-body card-body-list">
           <table className="table table-bordered">
             <thead>
               <tr>

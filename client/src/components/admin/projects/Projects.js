@@ -14,14 +14,14 @@ const Projects = () => {
   }, []);
 
   return (
-    <div className="card card-custom shadow bg-white rounded" >
+    <div className="card card-custom shadow bg-white rounded">
       <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
           <i className="fas fa-puzzle-piece"></i> Manage Projects
         </span>
       </div>
-      <div className="card-body" style={{ overflowY: "scroll" }}>
-        <div className="card-header flex-space-between shadow bg-white rounded">
+      <div className="card-body">
+        <nav className="navbar flex-space-between shadow bg-white rounded">
           <button
             className="btn btn-outline-secondary"
             type="button"
@@ -32,8 +32,8 @@ const Projects = () => {
           </button>
 
           <ProjectFilter />
-        </div>
-        <div className="card-body">
+        </nav>
+        <div className="card-body card-body-list">
           {/* project item */}
           {projects !== null && !loading ? (
             filtered !== null ? (

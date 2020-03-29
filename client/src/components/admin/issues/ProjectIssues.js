@@ -16,15 +16,14 @@ const ProjectIssues = () => {
   return (
     <div
       className="card card-custom shadow bg-white rounded"
-      style={{height: "96vh" }}
     >
       <div className="card-header bg-info text-light shadow-sm">
         <span className="h4">
           <i className="fas fa-bug"></i> Manage Project Issues
         </span>
       </div>
-      <div className="card-body" style={{overflowY: "scroll"}}>
-        <div className="card-header flex-space-between shadow bg-white rounded">
+      <div className="card-body">
+        <nav className="navbar flex-space-between shadow bg-white rounded">
           <button
             className="btn btn-outline-secondary"
             type="button"
@@ -34,8 +33,8 @@ const ProjectIssues = () => {
             <i className="fas fa-plus"></i> Report Issue
           </button>
           <IssueFilter />
-        </div>
-        <div className="card-body">
+        </nav>
+        <div className="card-body card-body-list">
           {/* issue item */}
           {issues !== null && !loading ? (
             filtered !== null ? (

@@ -33,7 +33,7 @@ const IssueItem = ({ issue }) => {
   };
 
   return (
-    <div className="shadow border-info">
+    <div className="shadow border-info" style={{marginBottom: "32px"}}>
       <div
         className="card-header bg-secondary text-light"
         style={{

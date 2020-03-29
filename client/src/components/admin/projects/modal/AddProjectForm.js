@@ -102,7 +102,7 @@ const AddProjectForm = () => {
                       name="description"
                       value={description}
                       className="form-control"
-                      placeholder="Text area"
+                      placeholder="Project Description"
                       onChange={onChange}
                     ></textarea>
                   </td>
