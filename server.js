@@ -14,7 +14,6 @@ app.use(express.json({ extented: false }));
 app.use(express.static("./client/src"));
 
 // Define routes
-
 app.use("/api/admin", require("./routes/admin"));
 app.use("/api/authAdmin", require("./routes/authAdmin"));
 app.use("/api/auth", require("./routes/auth"));

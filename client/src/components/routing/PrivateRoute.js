@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       render={props =>
         // @make this better
         !authContext.isAuthenticated && !authContext.loading ? (
-          <Redirect to="/err404" component={NotFound} />
+          <Redirect to="/" />
         ) : (
           <Component {...props} />
         )
