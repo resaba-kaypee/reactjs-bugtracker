@@ -1,18 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
-import IssueContext from "../../../../context/issue/issueContext";
-import UnresolvedList from "./UnresolvedList";
+import IssueContext from "../../../context/issue/issueContext";
+import ReportByMeList from "./ReportByMeList";
+const ReportByMe = () => {
+  const [isDropped, setIsDroppped] = useState(false);
+  const handleClick = () => setIsDroppped(!isDropped);
 
-const Unresolved = () => {
   const issueContext = useContext(IssueContext);
-  const { issues, getIssues, loading } = issueContext;
+  const { usersIssue, loading, getMyIssues } = issueContext;
 
   useEffect(() => {
-    getIssues();
+    getMyIssues();
     // eslint-disable-next-line
   }, []);
 
-  const [isDropped, setIsDroppped] = useState(false);
-  const handleClick = () => setIsDroppped(!isDropped);
   return (
     <div
       className="card shadow bg-white rounded"
@@ -21,7 +21,7 @@ const Unresolved = () => {
       <div className="card-body">
         <div className="card-header shadow bg-secondary text-light rounded">
           <span className="h4">
-            <i className="fas fa-list-alt"></i> Unresolve Issues
+            <i className="fas fa-list-alt"></i> Report by me
           </span>
           <button
             className="btn btn-secondary float-right"
@@ -47,13 +47,13 @@ const Unresolved = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {issues !== null && !loading ? (
-                    issues.map(issue => (
-                      <UnresolvedList key={issue._id} issue={issue} />
+                  {usersIssue !== null && !loading ? (
+                    usersIssue.map(issue => (
+                      <ReportByMeList key={issue._id} issue={issue} />
                     ))
                   ) : (
                     <tr>
-                      <td>No issue reported yet</td>
+                      <td>No issue reported by you</td>
                     </tr>
                   )}
                 </tbody>
@@ -68,4 +68,4 @@ const Unresolved = () => {
   );
 };
 
-export default Unresolved;
+export default ReportByMe;

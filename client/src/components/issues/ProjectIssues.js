@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import ProjectIssueItem from "./ProjectIssueItem";
 import IssueFilter from "./IssueFilter";
-import IssueContext from "../../../context/issue/issueContext";
-import Spinner from "../../layout/Spinner";
+import IssueContext from "./../../context/issue/issueContext";
+import Spinner from "../layout/Spinner";
 
 const ProjectIssues = () => {
   const issueContext = useContext(IssueContext);

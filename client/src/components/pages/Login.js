@@ -15,7 +15,7 @@ const Login = props => {
       if (authContext.user.role === "admin") {
         props.history.push("/admin/profile");
       } else if (authContext.user.role === "developer") {
-        props.history.push("/user/home");
+        props.history.push("/user/profile");
       }
     }
 

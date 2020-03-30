@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useEffect } from "react";
-import IssueContext from "../../../context/issue/issueContext";
+import IssueContext from "../../context/issue/issueContext";
 
 const IssueFilter = () => {
   const issueContext = useContext(IssueContext);

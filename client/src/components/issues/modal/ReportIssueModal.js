@@ -1,6 +1,6 @@
 import React from "react";
 import ReportIssueForm from "./ReportIssueForm";
-import Alerts from "../../../layout/Alerts";
+import Alerts from "../../layout/Alerts";
 
 const ReportIssueModal = () => {
   return (

@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import Moment from "react-moment";
 // state | context
-import AlertContext from "../../../../context/alert/alertContext";
-import IssueContext from "../../../../context/issue/issueContext";
-import AuthContext from "../../../../context/auth/authContext";
-import ProjectContext from "../../../../context/project/projectContext";
+import AlertContext from "../../../context/alert/alertContext";
+import IssueContext from "../../../context/issue/issueContext";
+import AuthContext from "../../../context/auth/authContext";
+import ProjectContext from "../../../context/project/projectContext";
 
 const ReportIssueForm = () => {
   const alertContext = useContext(AlertContext);

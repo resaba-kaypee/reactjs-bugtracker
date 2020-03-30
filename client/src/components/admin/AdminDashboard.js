@@ -1,17 +1,18 @@
 import React, { useContext, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 // component
-import Profile from "./profile/Profile";
-import Overview from "./overview/Overview";
+import PrivateRoute from "../routing/PrivateRoute"
+import AdminSideNav from "../layout/sidenav/AdminSideNav";
+import Profile from "../pages/Profile";
+import Overview from "../overview/Overview";
 import ManageProjects from "./projects/Projects";
-import ManageProjectIssues from "./issues/ProjectIssues";
+import ManageProjectIssues from "../issues/ProjectIssues";
 import ManageUsers from "./users/Users";
 import ViewUsersLogs from "./logs/Logs";
-import AdminSideNav from "../layout/sidenav/AdminSideNav";
 import About from "../pages/About";
 // modals
-import ReportIssueModal from "./issues/modal/ReportIssueModal";
-import UpdateIssueModal from "./issues/modal/UpdateIssueModal";
+import ReportIssueModal from "../issues/modal/ReportIssueModal";
+import UpdateIssueModal from "../issues/modal/UpdateIssueModal";
 import AddProjectModal from "./projects/modal/AddProjectModal";
 import UpdateProjectModal from "./projects/modal/UpdateProjectModal";
 import ViewProjectModal from "./projects/modal/ViewProjectModal";
@@ -72,12 +73,12 @@ const AdminDashboard = () => {
           <ViewProjectModal />
           <RegisterUserModal />
           <Switch>
-            <Route path="/admin/profile" component={Profile} />
-            <Route path="/admin/overview" component={Overview} />
-            <Route path="/admin/projects" component={ManageProjects} />
-            <Route path="/admin/issues" component={ManageProjectIssues} />
-            <Route path="/admin/users" component={ManageUsers} />
-            <Route path="/admin/logs" component={ViewUsersLogs} />
+            <PrivateRoute path="/admin/profile" component={Profile} />
+            <PrivateRoute path="/admin/overview" component={Overview} />
+            <PrivateRoute path="/admin/projects" component={ManageProjects} />
+            <PrivateRoute path="/admin/issues" component={ManageProjectIssues} />
+            <PrivateRoute path="/admin/users" component={ManageUsers} />
+            <PrivateRoute path="/admin/logs" component={ViewUsersLogs} />
             <Route path="/admin/about" component={About} />
           </Switch>
         </div>
