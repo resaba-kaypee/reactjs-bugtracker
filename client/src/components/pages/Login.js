@@ -67,7 +67,10 @@ const Login = props => {
         }}
       >
         <div className="card shadow bg-white rounded">
-          <div className="card-header bg-primary text-light text-center">
+          <div
+            className="card-header bg-dark
+           text-light text-center"
+          >
             <span className="h4">
               <i className="fas fa-bug"></i> Bugtracker
             </span>

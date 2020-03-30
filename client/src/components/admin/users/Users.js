@@ -15,7 +15,7 @@ const Users = () => {
 
   return (
     <div className="card card-custom shadow bg-white rounded" >
-      <div className="card-header bg-info text-light shadow-sm">
+      <div className="card-header bg-dark text-light shadow-sm">
         <span className="h4">
           <i className="fas fa-users"></i> Manage Users
         </span>
