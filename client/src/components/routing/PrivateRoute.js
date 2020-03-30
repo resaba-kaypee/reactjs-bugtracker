@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import AuthContext from "../../context/auth/authContext";
+import NotFound from "../pages/404"
 import { Route, Redirect } from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -10,7 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       render={props =>
         // @make this better
         !authContext.isAuthenticated && !authContext.loading ? (
-          <Redirect to="/" />
+          <Redirect to="/err404" component={NotFound} />
         ) : (
           <Component {...props} />
         )

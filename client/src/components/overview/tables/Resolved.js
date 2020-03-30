@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import IssueContext from "../../../../context/issue/issueContext";
+import IssueContext from "../../../context/issue/issueContext";
 import ResolvedList from "./UnresolvedList";
 
 const Resolved = () => {

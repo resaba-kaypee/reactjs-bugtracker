@@ -4,7 +4,7 @@ import IssueContext from "../../../context/issue/issueContext";
 import AuthContext from "../../../context/auth/authContext";
 import ProjectContext from "../../../context/project/projectContext";
 
-const UserSideNav = props => {
+const AdminSideNav = props => {
   const authContext = useContext(AuthContext);
   const { logoutAdmin } = authContext;
 
@@ -25,7 +25,7 @@ const UserSideNav = props => {
       <li className="nav-item-custom">
         <NavLink activeClassName="nav-link-custom-active" className="nav-link-custom" to="/admin/profile">
           <i className="fas fa-user-shield"></i>
-          <span className="link-text">Sam Smith (admin)</span>
+          <span className="link-text">Admin</span>
         </NavLink>
       </li>
 
@@ -81,4 +81,4 @@ const UserSideNav = props => {
   );
 };
 
-export default UserSideNav;
+export default AdminSideNav;

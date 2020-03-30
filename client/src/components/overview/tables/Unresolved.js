@@ -1,18 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
-import IssueContext from "../../../../context/issue/issueContext";
-import ReportByMeList from "./ReportByMeList";
-const ReportByMe = () => {
-  const [isDropped, setIsDroppped] = useState(false);
-  const handleClick = () => setIsDroppped(!isDropped);
+import IssueContext from "../../../context/issue/issueContext";
+import UnresolvedList from "./UnresolvedList";
 
+const Unresolved = () => {
   const issueContext = useContext(IssueContext);
-  const { usersIssue, loading, getMyIssues } = issueContext;
+  const { issues, getIssues, loading } = issueContext;
 
   useEffect(() => {
-    getMyIssues();
+    getIssues();
     // eslint-disable-next-line
   }, []);
 
+  const [isDropped, setIsDroppped] = useState(false);
+  const handleClick = () => setIsDroppped(!isDropped);
   return (
     <div
       className="card shadow bg-white rounded"
@@ -21,7 +21,7 @@ const ReportByMe = () => {
       <div className="card-body">
         <div className="card-header shadow bg-secondary text-light rounded">
           <span className="h4">
-            <i className="fas fa-list-alt"></i> Report by me
+            <i className="fas fa-list-alt"></i> Unresolve Issues
           </span>
           <button
             className="btn btn-secondary float-right"
@@ -47,13 +47,13 @@ const ReportByMe = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {usersIssue !== null && !loading ? (
-                    usersIssue.map(issue => (
-                      <ReportByMeList key={issue._id} issue={issue} />
+                  {issues !== null && !loading ? (
+                    issues.map(issue => (
+                      <UnresolvedList key={issue._id} issue={issue} />
                     ))
                   ) : (
                     <tr>
-                      <td>No issue reported by you</td>
+                      <td>No issue reported yet</td>
                     </tr>
                   )}
                 </tbody>
@@ -68,4 +68,4 @@ const ReportByMe = () => {
   );
 };
 
-export default ReportByMe;
+export default Unresolved;

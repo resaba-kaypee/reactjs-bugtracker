@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import IssueContext from "../../../../context/issue/issueContext";
+import IssueContext from "../../../context/issue/issueContext";
 import UpdateIssueForm from "./UpdateIssueForm";
-import Alerts from "../../../layout/Alerts";
+import Alerts from "../../layout/Alerts";
 
 const UpdateIssueModal = () => {
   const issueContext = useContext(IssueContext);
