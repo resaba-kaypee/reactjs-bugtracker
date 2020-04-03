@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment } from "react";
+import React, { useContext, useEffect, useState, Fragment } from "react";
 import { Route, Switch } from "react-router-dom";
 // component
 import AdminSideNav from "../layout/sidenav/AdminSideNav";
@@ -33,10 +33,19 @@ const Dashboard = () => {
     // eslint-disable-next-line
   }, []);
 
+  const [colored, setColored] = useState(false);
+  const toggle = () => setColored(!colored);
+
   return (
     <div className="content">
       <nav className="navbar-main">
-        <ul className="navbar-nav-custom text-light text-nowrap">
+        <ul
+          className={`navbar-nav-custom text-light text-nowrap ${
+            colored ? "fadeIn" : "fadeOut"
+          }`}
+          onMouseEnter={toggle}
+          onMouseLeave={toggle}
+        >
           <li className="logo">
             <a href="#!" className="nav-link-custom">
               <span className="link-text logo-text">BUGTRACKER</span>
@@ -86,10 +95,22 @@ const Dashboard = () => {
               <Switch>
                 <Route path="/dashboard/home/:role" component={Home} />
                 <Route path="/dashboard/overview/:role" component={Overview} />
-                <Route path="/dashboard/manage-projects/:role"component={ManageProjects} />
-                <Route path="/dashboard/manage-issues/:role"component={ManageProjectIssues} />
-                <Route path="/dashboard/manage-users/:role"component={ManageUsers} />
-                <Route path="/dashboard/view-logs/:role"component={ViewUsersLogs} />
+                <Route
+                  path="/dashboard/manage-projects/:role"
+                  component={ManageProjects}
+                />
+                <Route
+                  path="/dashboard/manage-issues/:role"
+                  component={ManageProjectIssues}
+                />
+                <Route
+                  path="/dashboard/manage-users/:role"
+                  component={ManageUsers}
+                />
+                <Route
+                  path="/dashboard/view-logs/:role"
+                  component={ViewUsersLogs}
+                />
                 <Route path="/dashboard/about/:role" component={About} />
                 <Route component={NotFound} />
               </Switch>
@@ -97,7 +118,10 @@ const Dashboard = () => {
               <Switch>
                 <Route path="/dashboard/home/:role" component={Home} />
                 <Route path="/dashboard/overview/:role" component={Overview} />
-                <Route path="/dashboard/manage-issues/:role" component={ManageProjectIssues} />
+                <Route
+                  path="/dashboard/manage-issues/:role"
+                  component={ManageProjectIssues}
+                />
                 <Route path="/dashboard/about/:role" component={About} />
                 <Route component={NotFound} />
               </Switch>
