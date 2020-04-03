@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import AuthContext from "../../context/auth/authContext";
-import NotFound from "../pages/404"
 import { Route, Redirect } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateUserRoute = ({ component: Component, role, ...rest }) => {
   const authContext = useContext(AuthContext);
+  const { isAuthenticated, loading } = authContext;
+
   return (
     <Route
       {...rest}
       render={props =>
         // @make this better
-        !authContext.isAuthenticated && !authContext.loading ? (
-          <Redirect to="/err404" component={NotFound} />
+        !isAuthenticated && !loading ? (
+          <Redirect to="/" />
         ) : (
           <Component {...props} />
         )
@@ -20,4 +21,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+export default PrivateUserRoute;

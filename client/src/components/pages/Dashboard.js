@@ -1,30 +1,35 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, Fragment } from "react";
 import { Route, Switch } from "react-router-dom";
 // component
-import PrivateRoute from "../routing/PrivateRoute"
 import AdminSideNav from "../layout/sidenav/AdminSideNav";
-import Profile from "../pages/Profile";
+import UserSideNav from "../layout/sidenav/UserSideNav";
+import Home from "../pages/Home";
 import Overview from "../overview/Overview";
-import ManageProjects from "./projects/Projects";
+import ManageProjects from "../admin/projects/Projects";
 import ManageProjectIssues from "../issues/ProjectIssues";
-import ManageUsers from "./users/Users";
-import ViewUsersLogs from "./logs/Logs";
+import ManageUsers from "../admin/users/Users";
+import ViewUsersLogs from "../admin/logs/Logs";
 import About from "../pages/About";
+import NotFound from "../pages/NotFound";
+// import PrivateRoute from "../routing/PrivateRoute";
 // modals
 import ReportIssueModal from "../issues/modal/ReportIssueModal";
 import UpdateIssueModal from "../issues/modal/UpdateIssueModal";
-import AddProjectModal from "./projects/modal/AddProjectModal";
-import UpdateProjectModal from "./projects/modal/UpdateProjectModal";
-import ViewProjectModal from "./projects/modal/ViewProjectModal";
-import RegisterUserModal from "./users/modal/RegisterUserModal";
+import AddProjectModal from "../admin/projects/modal/AddProjectModal";
+import UpdateProjectModal from "../admin/projects/modal/UpdateProjectModal";
+import ViewProjectModal from "../admin/projects/modal/ViewProjectModal";
+import RegisterUserModal from "../admin/users/modal/RegisterUserModal";
 // state | context
 import AuthContext from "../../context/auth/authContext";
 
-const AdminDashboard = () => {
+const Dashboard = () => {
   const authContext = useContext(AuthContext);
+  const { loadAdmin, loadUser, user } = authContext;
 
   useEffect(() => {
-    authContext.loadAdmin();
+    loadAdmin();
+    loadUser();
+
     // eslint-disable-next-line
   }, []);
 
@@ -60,8 +65,11 @@ const AdminDashboard = () => {
               </svg>
             </a>
           </li>
-
-          <AdminSideNav />
+          {user && user.role === "admin" ? (
+            <AdminSideNav />
+          ) : user && user.role === "user" ? (
+            <UserSideNav />
+          ) : null}
         </ul>
       </nav>
       <main>
@@ -72,19 +80,33 @@ const AdminDashboard = () => {
           <UpdateProjectModal />
           <ViewProjectModal />
           <RegisterUserModal />
-          <Switch>
-            <PrivateRoute path="/admin/profile" component={Profile} />
-            <PrivateRoute path="/admin/overview" component={Overview} />
-            <PrivateRoute path="/admin/projects" component={ManageProjects} />
-            <PrivateRoute path="/admin/issues" component={ManageProjectIssues} />
-            <PrivateRoute path="/admin/users" component={ManageUsers} />
-            <PrivateRoute path="/admin/logs" component={ViewUsersLogs} />
-            <Route path="/admin/about" component={About} />
-          </Switch>
+
+          <Fragment>
+            {user && user.role === "admin" ? (
+              <Switch>
+                <Route path="/dashboard/home/:role" component={Home} />
+                <Route path="/dashboard/overview/:role" component={Overview} />
+                <Route path="/dashboard/manage-projects/:role"component={ManageProjects} />
+                <Route path="/dashboard/manage-issues/:role"component={ManageProjectIssues} />
+                <Route path="/dashboard/manage-users/:role"component={ManageUsers} />
+                <Route path="/dashboard/view-logs/:role"component={ViewUsersLogs} />
+                <Route path="/dashboard/about/:role" component={About} />
+                <Route component={NotFound} />
+              </Switch>
+            ) : user && user.role === "user" ? (
+              <Switch>
+                <Route path="/dashboard/home/:role" component={Home} />
+                <Route path="/dashboard/overview/:role" component={Overview} />
+                <Route path="/dashboard/manage-issues/:role" component={ManageProjectIssues} />
+                <Route path="/dashboard/about/:role" component={About} />
+                <Route component={NotFound} />
+              </Switch>
+            ) : null}
+          </Fragment>
         </div>
       </main>
     </div>
   );
 };
 
-export default AdminDashboard;
+export default Dashboard;

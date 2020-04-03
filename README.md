@@ -68,4 +68,6 @@ Track issues with Bug Tracker
 [x] all modals have padding-right makes it off center
 [x] Remodel UI
 [ ] send message from server to client for every successful or failed api call
+[ ] when redirecting unauthorized access its flashes the content before redirecting
+[ ] from admin dashboard- can access user/projects
 [ ] delete all comments in all components

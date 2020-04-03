@@ -1,6 +1,6 @@
 import React from "react";
 
-const PagenotFound = () => {
+const NotFound = () => {
   return (
     <div
       className="d-flex flex-column"
@@ -18,4 +18,4 @@ const PagenotFound = () => {
   );
 };
 
-export default PagenotFound;
+export default NotFound;

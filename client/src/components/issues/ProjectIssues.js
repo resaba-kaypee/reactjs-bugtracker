@@ -1,17 +1,30 @@
 import React, { useContext, useEffect } from "react";
+import { useParams, Redirect } from "react-router-dom";
+// component
 import ProjectIssueItem from "./ProjectIssueItem";
 import IssueFilter from "./IssueFilter";
-import IssueContext from "./../../context/issue/issueContext";
 import Spinner from "../layout/Spinner";
+// state | context
+import IssueContext from "./../../context/issue/issueContext";
+import AuthContext from "../../context/auth/authContext";
 
 const ProjectIssues = () => {
   const issueContext = useContext(IssueContext);
   const { issues, filtered, getIssues, loading } = issueContext;
 
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+
   useEffect(() => {
     getIssues();
     // eslint-disable-next-line
   }, []);
+
+  const { role } = useParams();
+
+  if (user && user.role !== role) {
+    return <Redirect to={`/dashboard/home/${user.role}`} />;
+  }
 
   return (
     <div
