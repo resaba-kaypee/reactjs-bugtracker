@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Moment from "react-moment";
 import ViewProjectIssueList from "./ViewProjectIssueList";
 import ProjectContext from "../../../../context/project/projectContext";
-import IssueContext from "../../../../context/issue/issueContext"
+import IssueContext from "../../../../context/issue/issueContext";
 
 const ViewProject = () => {
   const projectContext = useContext(ProjectContext);
@@ -33,7 +33,7 @@ const ViewProject = () => {
   return (
     <div>
       <div className="border">
-        <div className="card-header bg-primary text-light">
+        <div className="card-header bg-dark text-light">
           <span className="h4">
             <i className="fas fa-puzzle-piece"></i> Viewing Project
           </span>
@@ -80,7 +80,7 @@ const ViewProject = () => {
                 <td>
                   <label style={fontWeight}>Assigned Tech to Project</label>
                 </td>
-                <td>
+                <td style={{ overflowY: "scroll" }}>
                   <ul className="list-group">
                     {current !== null && current.techs.length > 0 ? (
                       current.techs.map(tech => (
@@ -101,13 +101,9 @@ const ViewProject = () => {
                 </td>
               </tr>
               <tr>
-                <td colSpan="2">
+                <td colSpan="2" style={{ overflowY: "scroll" }}>
                   <ul
                     className="list-group"
-                    style={{
-                      maxHeight: "200px",
-                      overflow: "scroll"
-                    }}
                   >
                     {issues !== null && issues.length > 0 ? (
                       issues.map(issue =>

@@ -45,7 +45,16 @@ const UpdateProjectForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
+    if (!isTechUpdating) {
+      updateHandler();
+      console.log("project updated", isTechUpdating)
+    } else {
+      addUserHandler();
+      console.log("user added", isTechUpdating)
+    }
+  };
 
+  const updateHandler = () => {
     if (projectName === "" || description === "") {
       setAlert("Please fill in the required fields", "danger");
     } else if (!isTechUpdating) {
@@ -58,7 +67,9 @@ const UpdateProjectForm = () => {
       updateProject(updated);
       setAlert("Project successfully updated!", "success");
     }
+  };
 
+  const addUserHandler = () => {
     if (isTechUpdating && !error && tech !== "") {
       const addedTech = {
         _id: current._id,
@@ -66,7 +77,7 @@ const UpdateProjectForm = () => {
       };
       addUser(addedTech);
       setAlert("User successfully added!", "success");
-    } else {
+    } else if(tech === "") {
       setAlert("Please select from the list", "danger");
     }
   };
@@ -74,7 +85,7 @@ const UpdateProjectForm = () => {
   return (
     <div>
       <div className="border">
-        <div className="card-header bg-primary text-light">
+        <div className="card-header bg-dark text-light">
           <span className="h4">
             <i className="fas fa-edit"></i> Update Project
           </span>
@@ -156,7 +167,7 @@ const UpdateProjectForm = () => {
                   <td>
                     <label>Assigned Tech to Project</label>
                   </td>
-                  <td>
+                  <td style={{overflowY: "scroll"}}>
                     <ul className="list-group">
                       {/* use project assigned users */}
                       {projects !== null &&

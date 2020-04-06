@@ -22,10 +22,10 @@ const UpdateIssueModal = () => {
         >
           <div className="modal-content">
             <div className="modal-body modal-lg">
-              <Alerts />
               <UpdateIssueForm />
             </div>
             <div className="modal-footer">
+              <Alerts />
               <button
                 type="button"
                 className="btn btn-secondary"

@@ -60,7 +60,7 @@ const ReportIssueForm = () => {
   return (
     <div>
       <div className="border">
-        <div className="card-header bg-primary text-light">
+        <div className="card-header bg-dark text-light">
           <span className="h4">
             <i className="fas fa-plus"></i> Issue Summary
           </span>

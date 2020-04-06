@@ -67,7 +67,9 @@ Track issues with Bug Tracker
 [x] cant perform a state on unmounted ??? in profile.js
 [x] all modals have padding-right makes it off center
 [x] Remodel UI
+[x] when redirecting unauthorized access its flashes the content before redirecting
+[x] from admin dashboard- can access user/projects
 [ ] send message from server to client for every successful or failed api call
-[ ] when redirecting unauthorized access its flashes the content before redirecting
-[ ] from admin dashboard- can access user/projects
 [ ] delete all comments in all components
+[ ] in updateproject form when updateproject button is click updatetech is also triggered
+[ ] should focus to required input fields when there is validation error

@@ -78,7 +78,7 @@ const RegisterUserForm = () => {
   return (
     <div>
       <div className="border">
-        <div className="card-header bg-primary text-light">
+        <div className="card-header bg-dark text-light">
           <span className="h4">
             <i className="fas fa-user-plus"></i> Register New User
           </span>
@@ -211,7 +211,7 @@ const RegisterUserForm = () => {
                   <td colSpan="2">
                     <button
                       type="submit"
-                      className="btn btn-outline-secondary float-right"
+                      className="btn btn-outline-primary float-right"
                     >
                       <i className="fas fa-user-plus"></i> Register
                     </button>
