@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useParams, Redirect } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
 
-const Profile = () => {
+const Home = () => {
+  const { role } = useParams();
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const [dateStatus, setDateStatus] = useState(new Date());
 
   useEffect(() => {
     const clock = setInterval(() => setDateStatus(new Date()), 1000);
-
     return () => clearInterval(clock);
   }, []);
+
+  if (user && user.role !== role) {
+    return <Redirect to={`/dashboard/home/${user.role}`} />;
+  }
 
   return (
     <div
@@ -42,4 +47,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Home;

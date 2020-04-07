@@ -19,10 +19,10 @@ const ReportIssueModal = () => {
         >
           <div className="modal-content">
             <div className="modal-body modal-lg">
-              <Alerts />
               <ReportIssueForm />
             </div>
             <div className="modal-footer">
+              <Alerts />
               <button
                 type="button"
                 className="btn btn-secondary"

@@ -13,9 +13,9 @@ const Login = props => {
     // authenticate user
     if (authContext.isAuthenticated && authContext.user !== null) {
       if (authContext.user.role === "admin") {
-        props.history.push("/admin/profile");
-      } else if (authContext.user.role === "developer") {
-        props.history.push("/user/profile");
+        props.history.push("/dashboard/home/admin");
+      } else if (authContext.user.role === "user") {
+        props.history.push("/dashboard/home/user");
       }
     }
 
@@ -33,7 +33,7 @@ const Login = props => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("developer");
+  const [role, setRole] = useState("user");
   const [checked, setChecked] = useState(true);
   const [isShowing, setIsShowing] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -53,7 +53,7 @@ const Login = props => {
 
     if (isAdmin && role === "admin") {
       authContext.loginAsAdmin(values);
-    } else if (!isAdmin && role === "developer") {
+    } else if (!isAdmin && role === "user") {
       authContext.loginAsUser(values);
     }
   };

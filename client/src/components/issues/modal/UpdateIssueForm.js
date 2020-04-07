@@ -68,7 +68,7 @@ const UpdateIssueForm = () => {
   return (
     <div>
       <div className="border">
-        <div className="card-header bg-primary text-light">
+        <div className="card-header bg-dark text-light">
           <span className="h4">
             <i className="fas fa-bug"></i> {projectName} Update Issue
           </span>

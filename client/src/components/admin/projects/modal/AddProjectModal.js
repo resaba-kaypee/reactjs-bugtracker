@@ -19,10 +19,10 @@ const AddProjectModal = () => {
         >
           <div className="modal-content">
             <div className="modal-body">
-              <Alerts />
               <AddProjectForm />
             </div>
             <div className="modal-footer">
+              <Alerts />
               <button
                 type="button"
                 className="btn btn-secondary"

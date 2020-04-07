@@ -215,6 +215,15 @@ h3 {
   padding: 0.5rem;
 }
 
+/* List */
+.list-group {
+  height: 134px;
+}
+
+.list-group-item {
+  padding: 0.25rem 0.25rem;
+}
+
 /* Cards */
 .card-custom {
   overflow: hidden;
@@ -245,6 +254,10 @@ h3 {
 
   .time {
     font-size: 6rem;
+  }
+
+  .list-group {
+    height: 60px;
   }
 }
 

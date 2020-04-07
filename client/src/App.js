@@ -1,11 +1,9 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // component
-// import Navbar from "./components/layout/Navbar";
-import AdminDashboard from "./components/admin/AdminDashboard";
-import UserDashBoard from "./components/user/UserDashBoard";
 import Login from "./components/pages/Login";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import NotFound from "./components/pages/NotFound";
 // utils
 import setAuthToken from "./utils/setAuthToken";
 // css
@@ -19,6 +17,8 @@ import AlertState from "./context/alert/AlertState";
 import AuthState from "./context/auth/AuthState";
 import LogState from "./context/log/LogState";
 import IssueState from "./context/issue/IssueState";
+import Dashboard from "./components/pages/Dashboard";
+
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -37,10 +37,10 @@ const App = () => {
                       <Switch>
                         <Route exact path="/" component={Login} />
                         <PrivateRoute
-                          path="/admin"
-                          component={AdminDashboard}
+                          path="/dashboard"
+                          component={Dashboard}
                         />
-                        <PrivateRoute path="/user" component={UserDashBoard} />
+                        <Route component={NotFound} />
                       </Switch>
                     </Fragment>
                   </Router>

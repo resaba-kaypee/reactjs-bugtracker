@@ -1,17 +1,28 @@
 import React, { useEffect, useContext } from "react";
+import { Redirect } from "react-router-dom";
+// component
 import ProjectItem from "./ProjectItem";
 import ProjectFilter from "./ProjectFilter";
-import ProjectContext from "../../../context/project/projectContext";
 import Spinner from "../../layout/Spinner";
+// state | context
+import ProjectContext from "../../../context/project/projectContext";
+import AuthContext from "../../../context/auth/authContext";
 
 const Projects = () => {
   const projectContext = useContext(ProjectContext);
   const { projects, getProjects, loading, filtered } = projectContext;
 
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+
   useEffect(() => {
     getProjects();
     //eslint-disable-next-line
   }, []);
+
+  if (user && user.role !== "admin") {
+    return <Redirect to={`/dashboard/home/${user.role}`} />;
+  }
 
   return (
     <div className="card card-custom shadow bg-white rounded">

@@ -1,17 +1,29 @@
 import React, { useContext, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+// components
 import LogItem from "./LogItem";
 import LogFilter from "./LogFilter";
 import Spinner from "../../../assets/img/spinner.gif";
+// state | context
+import AuthContext from "../../../context/auth/authContext";
 import LogContext from "../../../context/log/logContext";
 
 const Logs = () => {
   const logContext = useContext(LogContext);
   const { logs, filtered, getLogs, loading } = logContext;
 
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+
   useEffect(() => {
     getLogs();
     // eslint-disable-next-line
   }, []);
+
+ 
+  if (user && user.role !== "admin") {
+    return <Redirect to={`/dashboard/home/${user.role}`} />;
+  }
 
   return (
     <div className="card card-custom shadow bg-white rounded">

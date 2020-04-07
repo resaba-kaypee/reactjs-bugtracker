@@ -1,17 +1,28 @@
 import React, { useEffect, useContext } from "react";
-import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
+import { Redirect } from "react-router-dom";
+// component
 import Spinner from "../../../assets/img/spinner.gif";
 import UserFilter from "./UserFilter";
 import UsersItem from "./UsersItem";
+// state | context
+import AuthAdminContext from "../../../context/authAdmin/authAdminContext";
+import AuthContext from "../../../context/auth/authContext";
 
 const Users = () => {
   const authAdminContext = useContext(AuthAdminContext);
   const { getAllUsers, users, loading, filtered } = authAdminContext;
 
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+
   useEffect(() => {
     getAllUsers();
     // eslint-disable-next-line
   }, []);
+
+  if (user && user.role !== "admin") {
+    return <Redirect to={`/dashboard/home/${user.role}`} />;
+  }
 
   return (
     <div className="card card-custom shadow bg-white rounded" >
