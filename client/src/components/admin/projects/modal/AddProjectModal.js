@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import AddProjectForm from "./AddProjectForm";
+import ProjectContext from "../../../../context/project/projectContext";
 import Alerts from "../../../layout/Alerts";
 
 const AddProjectModal = () => {
+  const projectContext = useContext(ProjectContext);
+  const { clearProjectError } = projectContext;
   return (
     <div>
       <div
@@ -27,6 +30,7 @@ const AddProjectModal = () => {
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
+                onClick={()=> clearProjectError()}
               >
                 Close
               </button>

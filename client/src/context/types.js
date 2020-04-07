@@ -47,5 +47,3 @@ export const CLEAR_PROJECTS = "CLEAR_PROJECTS";
 export const CLEAR_FILTERED_PROJECTS = "CLEAR_FILTER_PROJECTS";
 export const REMOVE_USER = "REMOVE_USER";
 export const ADD_USER = "ADD_USER";
-
-

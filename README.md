@@ -73,3 +73,4 @@ Track issues with Bug Tracker
 [ ] delete all comments in all components
 [ ] in updateproject form when updateproject button is click updatetech is also triggered
 [ ] should focus to required input fields when there is validation error
+[ ] authAdminstate has users object before logging in

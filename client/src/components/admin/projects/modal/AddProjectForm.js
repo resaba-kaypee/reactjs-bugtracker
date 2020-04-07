@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ProjectContext from "../../../../context/project/projectContext";
 import AlertContext from "../../../../context/alert/alertContext";
 
@@ -6,35 +6,47 @@ const AddProjectForm = () => {
   const projectContext = useContext(ProjectContext);
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-  const { addProject } = projectContext;
+  const { addProject, error, success } = projectContext;
+
+  useEffect(() => {
+    if (error && error === "Project already exists") {
+      setAlert(error, "danger");
+    }
+    // eslint-disable-next-line
+  }, [error]);
+
+  useEffect(() => {
+    if (success && success === "Project successfully created!") {
+      setAlert(success, "success");
+    }
+    // eslint-disable-next-line
+  }, [success]);
 
   const [project, setProject] = useState({
     projectName: "",
     status: "",
-    description: ""
+    description: "",
   });
 
   const { projectName, status, description } = project;
 
-  const onChange = e => {
+  const onChange = (e) => {
     setProject({
       ...project,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (projectName === "" || description === "") {
       setAlert("Please fill in required fields", "danger");
     } else {
-      // console.log(project)
       addProject(project);
-      setAlert("Creating project successful!", "success");
       setProject({
         projectName: "",
         status: "",
-        description: ""
+        description: "",
       });
     }
   };
@@ -96,7 +108,7 @@ const AddProjectForm = () => {
                   <td>
                     <textarea
                       style={{
-                        resize: "none"
+                        resize: "none",
                       }}
                       type="text"
                       name="description"

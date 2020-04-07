@@ -16,8 +16,8 @@ app.use(express.static("./client/src"));
 // Define routes
 app.use("/api/admin", require("./routes/admin"));
 app.use("/api/authAdmin", require("./routes/authAdmin"));
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/auth/logout", require("./routes/auth"));
+app.use("/api/user", require("./routes/user"));
+app.use("/api/authUser", require("./routes/authUser"));
 app.use("/api/issues", require("./routes/issues"));
 app.use("/api/logs", require("./routes/logs"));
 

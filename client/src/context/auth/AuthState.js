@@ -53,7 +53,7 @@ const AuthState = props => {
 
     try {
       // check if valid user is logging in
-      const res = await axios.get("/api/auth");
+      const res = await axios.get("/api/authUser");
 
       dispatch({
         type: USER_LOADED,
@@ -99,7 +99,7 @@ const AuthState = props => {
     };
 
     try {
-      const res = await axios.post("/api/auth", formData, config);
+      const res = await axios.post("/api/authUser", formData, config);
 
       dispatch({
         type: LOGIN_SUCCESS,
@@ -142,12 +142,11 @@ const AuthState = props => {
 
   // Logout
   const logoutUser = async () => {
+    dispatch({
+      type: LOGOUT
+    });
     try {
-      const res = await axios.get("/api/auth/logout");
-      dispatch({
-        type: LOGOUT,
-        payload: res.data
-      });
+      await axios.post("/api/user/logout");
     } catch (err) {
       dispatch({
         type: AUTH_ERROR,

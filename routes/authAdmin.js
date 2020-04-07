@@ -39,16 +39,20 @@ router.post(
 
     try {
       const { email, password, role } = await req.body;
+
       let user = await User.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ msg: "Invalid Email" });
+      }
 
       if (!user && user.role !== role) {
-        return res.status(400).json({ msg: "Invalid Credentials" });
+        return res.status(400).json({ msg: "Unauthorized: Invalid Credentials" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(400).json({ msg: "Invalid Credentials" });
+        return res.status(400).json({ msg: "Invalid Password" });
       }
 
       const payload = {
@@ -69,6 +73,7 @@ router.post(
         }
       );
 
+      // Log admin action
       const newLog = new Log({
         firstName: user.firstName,
         lastName: user.lastName,

@@ -19,7 +19,7 @@ const Login = props => {
       }
     }
 
-    if (authContext.error === "Invalid Credentials") {
+    if (authContext.error) {
       setAlert(authContext.error, "danger");
       authContext.clearErrors();
     }

@@ -5,7 +5,7 @@ import Alerts from "../../../layout/Alerts";
 
 const UpdateProjectModal = () => {
   const projectContext = useContext(ProjectContext);
-  const { clearCurrentProject } = projectContext;
+  const { clearCurrentProject, clearProjectError } = projectContext;
   return (
     <div>
       <div
@@ -30,7 +30,10 @@ const UpdateProjectModal = () => {
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
-                onClick={() => clearCurrentProject()}
+                onClick={() => {
+                  clearCurrentProject();
+                  clearProjectError();
+                }}
               >
                 Close
               </button>

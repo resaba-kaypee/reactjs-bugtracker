@@ -1,33 +1,28 @@
 /*
+These routes are admin privilage only where you can...
+
 register admin
 register user
 get all users
 delete user
-============== to be remove
-add new issue
-get all issues
-update issue
-delete issue
 ==============
 add new project
 get all project
 update project
 delete project
+==============
+logout admin
 */
 
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const config = require("config");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
-const authAdmin = require("../middleware/authAdmin");
+
 const auth = require("../middleware/auth");
 
-const Admin = require("../models/Admin");
 const User = require("../models/User");
-const Issue = require("../models/Issue");
 const Project = require("../models/Project");
 const Log = require("../models/Log");
 
@@ -38,17 +33,13 @@ router.post(
   "/registerUser",
   auth,
   [
-    check("firstName", "Please enter a first name")
-      .not()
-      .isEmpty(),
-    check("lastName", "Please enter a last name")
-      .not()
-      .isEmpty(),
+    check("firstName", "Please enter a first name").not().isEmpty(),
+    check("lastName", "Please enter a last name").not().isEmpty(),
     check("email", "Please include a valid email").isEmail(),
     check(
       "password",
       "Please enter a password with 6 or more characters"
-    ).isLength({ min: 6 })
+    ).isLength({ min: 6 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -70,7 +61,7 @@ router.post(
         lastName,
         email,
         password,
-        role
+        role,
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -92,12 +83,12 @@ router.post(
 router.get("/users", auth, async (req, res) => {
   try {
     const users = await User.find({}).sort({
-      date: -1
+      date: -1,
     });
     if (!users) return res.status(404).json({ msg: "Users not found" });
     res.json(users);
-  } catch (error) {
-    console.error("fr: get all users:", error.message);
+  } catch (err) {
+    console.error("fr: get all users:", err.message);
     res.status(500).send("Server error");
   }
 });
@@ -120,158 +111,6 @@ router.delete("/deleteUser/:id", auth, async (req, res) => {
 });
 
 /*********  **********  **********  **********
-                                    ISSUES
-*********  **********  **********  ***********/
-
-// **************************************to be removed
-// @route   GET api/admin/issues
-// @desc    Get all users issue
-// @access  Private
-// router.get("/issues", auth, async (req, res) => {
-//   try {
-//     const issues = await Issue.find({ user: req.user.id }).sort({
-//       date: -1
-//     });
-//     res.json(issues);
-
-//   } catch (error) {
-//     console.error("fr: get all issue", error.message);
-//     res.status(500).send("Server error");
-//   }
-// });
-
-// **************************************to be removed
-// @route   POST api/admin/issue
-// @desc    Add new issue
-// @access  Private
-router.post(
-  "/issue",
-  [
-    auth,
-    [
-      check("description", "Description is required")
-        .not()
-        .isEmpty()
-    ]
-  ],
-  async (req, res) => {
-    // res.send("admin added issue")
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { projectName, description, priority, status, tech, date } = req.body;
-
-    try {
-      const newIssue = new Issue({
-        user: req.user.id,
-        projectName,
-        description,
-        priority,
-        status,
-        tech,
-        date
-      });
-
-      const issue = await newIssue.save();
-
-      res.json(issue);
-    } catch (error) {
-      console.error("fr: admin add new issue:", error.message);
-      res.status(500).send("Server error");
-    }
-  }
-);
-
-// **************************************to be removed
-// @route   PUT api/admin/issues/:id
-// @desc    Update issue
-// @access  Public
-router.put("/update/:id", authAdmin, async (req, res) => {
-  const { description, priority, status, tech, date } = req.body;
-
-  // Build issue object
-  const issueFields = {};
-  if (description) issueFields.description = description;
-  if (status) issueFields.status = status;
-  if (priority) issueFields.priority = priority;
-  if (tech) issueFields.tech = tech;
-  if (date) issueFields.date = date;
-
-  try {
-    let issue = await Issue.findById(req.params.id);
-
-    if (!issue) return res.status(404).json({ msg: "Issue not found" });
-
-    issue = await Issue.findByIdAndUpdate(
-      req.params.id,
-      { $set: issueFields },
-      { new: true }
-    );
-
-    res.json(issue);
-  } catch (err) {
-    console.error("fr: admin update issue", err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-// **************************************to be removed
-// @route   PUT api/admin/comment/:id
-// @desc    Add comment to issue
-// @access  Public
-router.put("/comment/:id", auth, async (req, res) => {
-  const { message, tech } = req.body;
-
-  // Build issue object
-  const commentFields = {};
-  commentFields._id = uuid.v4();
-  if (message) commentFields.message = message;
-  if (tech) commentFields.tech = tech;
-
-  try {
-    let issue = await Issue.findById(req.params.id);
-
-    if (!issue) return res.status(404).json({ msg: "Issue not found" });
-
-    issue = await Issue.findByIdAndUpdate(
-      req.params.id,
-      { $push: { comments: commentFields } },
-      { new: true }
-    );
-
-    res.json(issue);
-  } catch (err) {
-    console.error("fr: admin update issue", err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-// **************************************to be removed
-// @route   DELETE api/issues/:id
-// @desc    Delete issue
-// @access  Public
-router.delete("/issues/:id", auth, async (req, res) => {
-  try {
-    let issue = await Issue.findById(req.params.id);
-
-    if (!issue) return res.status(404).json({ msg: "Issue not found" });
-
-    // Make sure user owns issue
-    // if (issue.user.toString() !== req.user.id) {
-    //   return res.status(401).json({ msg: 'Not authorized' });
-    // }
-
-    await Issue.findByIdAndRemove(req.params.id);
-    res.json({ msg: "Issue removed" });
-  } catch (err) {
-    console.error("fr: admin delete issue", err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-/*********  **********  **********  **********
                                     PROJECT
 *********  **********  **********  ***********/
 
@@ -283,13 +122,9 @@ router.post(
   [
     auth,
     [
-      check("description", "Description is required")
-        .not()
-        .isEmpty(),
-      check("projectName", "Name is required")
-        .not()
-        .isEmpty()
-    ]
+      check("description", "Description is required").not().isEmpty(),
+      check("projectName", "Name is required").not().isEmpty(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -302,26 +137,34 @@ router.post(
     try {
       const user = await User.findById(req.user.id);
 
-      const newProject = new Project({
-        user: req.user.id,
-        projectName,
-        description,
-        status
-      });
+      const project = await Project.findOne({ projectName });
 
-      await newProject.save();
+      if (!project) {
+        // If no project with same name create new project
+        const newProject = new Project({
+          user: req.user.id,
+          projectName,
+          description,
+          status,
+        });
+        await newProject.save();
 
-      const newLog = new Log({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role,
-        action: "just created new project " + projectName
-      });
+        // Log admin action
+        const newLog = new Log({
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role,
+          action: "just created new project " + projectName,
+        });
 
-      await newLog.save();
-      res.json(newProject);
-    } catch (error) {
-      console.error("fr: admin add new project:", error.message);
+        await newLog.save();
+        res.json({ newProject, msg: "Project successfully created!" });
+      } else {
+        // Send error message to client
+        return res.status(400).json({ msg: "Project already exists" });
+      }
+    } catch (err) {
+      console.error("fr: admin add new project:", err.message);
       res.status(500).send("Server error");
     }
   }
@@ -330,14 +173,14 @@ router.post(
 // @route   GET api/admin/projects
 // @desc    Get all projects
 // @access  Private
-router.get("/projects", authAdmin, async (req, res) => {
+router.get("/projects", auth, async (req, res) => {
   try {
     const projects = await Project.find({}).sort({
-      date: -1
+      date: -1,
     });
     res.json(projects);
-  } catch (error) {
-    console.error("fr: get all projects:", error.message);
+  } catch (err) {
+    console.error("fr: get all projects:", err.message);
     res.status(500).send("Server error");
   }
 });
@@ -357,22 +200,24 @@ router.put("/project/:id", auth, async (req, res) => {
     let user = await User.findById(req.user.id);
     if (!project) return res.status(404).json({ msg: "Project not found" });
     else {
+      // Update project
       project = await Project.findByIdAndUpdate(
         req.params.id,
         { $set: projectFields },
         { new: true }
       );
 
+      // Log admin action
       const newLog = new Log({
         firstName: user.firstName,
         lastName: user.lastName,
         role: user.role,
-        action: `${user.firstName} ${user.lastName} just updated ${projectName}`
+        action: `${user.firstName} ${user.lastName} just updated ${projectName}`,
       });
       await newLog.save();
     }
 
-    res.json(project);
+    res.json({ project, msg: "Project successfully updated!" });
   } catch (err) {
     console.error("fr: admin update project:", err.message);
     res.status(500).send("Server Error");
@@ -384,20 +229,13 @@ router.put("/project/:id", auth, async (req, res) => {
 // @access  Private
 router.put(
   "/addTech/:id",
-  [
-    auth,
-    [
-      check("tech", "Tech is required")
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check("tech", "Tech is required").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    
+
     const { tech } = req.body;
 
     const techFields = {};
@@ -409,28 +247,29 @@ router.put(
       let user = await User.findById(req.user.id);
       if (!project) return res.status(404).json({ msg: "Project not found" });
 
-      const found = project.techs.find(user => user.name === tech);
+      const found = project.techs.find((user) => user.name === tech);
 
       if (!found) {
+        // Assign new user to project
         project = await Project.findByIdAndUpdate(
           req.params.id,
           { $addToSet: { techs: techFields } },
           { new: true }
         );
 
+        // Log admin action
         const newLog = new Log({
           firstName: user.firstName,
           lastName: user.lastName,
           role: user.role,
-          action: `just added ${tech} to ${project.projectName}`
+          action: `just added ${tech} to ${project.projectName}`,
         });
-
         await newLog.save();
       } else {
         return res.status(400).json({ msg: "Tech already added in the list" });
       }
 
-      res.json(project);
+      res.json({ project, msg: "User successfully added!" });
     } catch (err) {
       console.error("fr: admin update project:", err.message);
       res.status(500).send("Server Error");
@@ -449,28 +288,30 @@ router.put("/removeTech/:id", auth, async (req, res) => {
     let project = await Project.findById(req.params.id);
     if (!project) return res.status(404).json({ msg: "Project not found" });
 
-    const found = project.techs.find(tech => tech._id === techID);
+    const found = project.techs.find((tech) => tech._id === techID);
 
-    if (!found) {
-      return res.status(404).json({ msg: "Tech not found in project" });
-    } else {
+    if (found) {
+      // Remove user from project
       project = await Project.findByIdAndUpdate(
         req.params.id,
         { $pull: { techs: { _id: techID } } },
         { new: true }
       );
+
+      // Log admin action
+      const newLog = new Log({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        action: `${user.firstName} ${user.lastName} just removed ${found.name} from ${project.projectName}`,
+      });
+  
+      await newLog.save();
+    } else {
+      return res.status(404).json({ msg: "Tech not found in project" });
     }
 
-    const newLog = new Log({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      role: user.role,
-      action: `${user.firstName} ${user.lastName} just removed ${found.name} from ${project.projectName}`
-    });
-
-    newLog.save();
-
-    res.json(project);
+    res.json({ project, msg: "User successfully removed!" });
   } catch (err) {
     console.error("fr: admin remove tech from project:", err.message);
     res.status(500).send("Server Error");
@@ -486,14 +327,15 @@ router.delete("/project/:id", auth, async (req, res) => {
     let project = await Project.findById(req.params.id);
 
     if (!project) return res.status(404).json({ msg: "Project not found" });
-
+    // Delete a project
     await Project.findByIdAndRemove(req.params.id);
 
+    // Log admin action
     const newLog = new Log({
       firstName: user.firstName,
       lastName: user.lastName,
       role: user.role,
-      action: `${user.firstName} ${user.lastName} just delete the project ${project.projectName}`
+      action: `${user.firstName} ${user.lastName} just delete the project ${project.projectName}`,
     });
 
     newLog.save();
@@ -511,16 +353,18 @@ router.delete("/project/:id", auth, async (req, res) => {
 router.post("/logout", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+
+    // Log admin action when logging out
     const newLog = new Log({
       firstName: user.firstName,
       lastName: user.lastName,
       role: user.role,
-      action: "logged out"
+      action: "logged out",
     });
 
     await newLog.save();
   } catch (err) {
-    console.error("fr: logout", error.message);
+    console.error("fr: logout", err.message);
   }
 });
 

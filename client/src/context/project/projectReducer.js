@@ -7,6 +7,7 @@ import {
   FILTER_PROJECTS,
   CLEAR_FILTERED_PROJECTS,
   CLEAR_PROJECTS,
+  CLEAR_ERRORS,
   SET_CURRENT_PROJECT,
   CLEAR_CURRENT_PROJECT,
   REMOVE_USER,
@@ -24,7 +25,8 @@ export default (state, action) => {
     case ADD_PROJECT:
       return {
         ...state,
-        projects: [action.payload, ...state.projects],
+        projects: [action.payload.newProject, ...state.projects],
+        success: action.payload.msg,
         loading: false
       };
     case ADD_USER:
@@ -33,8 +35,9 @@ export default (state, action) => {
       return {
         ...state,
         projects: state.projects.map(project =>
-          project._id === action.payload._id ? action.payload : project
+          project._id === action.payload._id ? action.payload.project : project
         ),
+        success: action.payload.msg,
         loading: false
       };
     case DELETE_PROJECT:
@@ -50,6 +53,12 @@ export default (state, action) => {
         ...state,
         error: action.payload
       };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+        success: null
+      }
     case FILTER_PROJECTS:
       return {
         ...state,

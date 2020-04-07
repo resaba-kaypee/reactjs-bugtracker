@@ -44,24 +44,21 @@ router.post(
       let user = await User.findOne({ email });
 
       if (!user) {
-        return res.status(400).json({ msg: "Invalid Credentials" });
+        return res.status(400).json({ msg: "Invalid Email" });
       }
 
       if (user.role !== role) {
-        return res.status(400).json({ msg: "Invalid Credentials" });
+        return res.status(400).json({ msg: "Unauthorized: Invalid Credentials" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ msg: "Invalid Credentials" });
+        return res.status(400).json({ msg: "Invalid Password" });
       }
 
       const payload = {
         user: {
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          role: user.role
+          id: user.id
         }
       };
 
@@ -77,36 +74,20 @@ router.post(
         }
       );
 
-      // const newLog = new Log({
-      //   fistName: payload.user.firstName,
-      //   lastName: payload.user.lastName,
-      //   role: payload.user.role,
-      //   action: "logged in",
-      // })
-      // await newLog.save();
+      // Log user action
+      const newLog = new Log({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        action: "logged in"
+      });
+      
+      await newLog.save();
     } catch (error) {
       console.error("fr auth user:", error.message);
       res.status(500).send("Server error");
     }
   }
 );
-
-// @route   POST api/auth
-// @desc    Logout user
-// @access  Public
-router.post("/logout", auth, async (req, res) => {
-  try {
-    // const newLog = new Log({
-    //   firstName: req.user.firstName,
-    //   lastName: req.user.lastName,
-    //   action: "logged out"
-    // });
-
-    // await newLog.save();
-    console.log(req.user);
-  } catch (err) {
-    console.error("fr: logout", error.message);
-  }
-});
 
 module.exports = router;

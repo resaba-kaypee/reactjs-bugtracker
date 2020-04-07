@@ -17,7 +17,9 @@ const UpdateProjectForm = () => {
     getProjects,
     updateProject,
     addUser,
-    error
+    success,
+    error,
+    clearProjectError,
   } = projectContext;
 
   const { getAllUsers, users } = authAdminContext;
@@ -39,18 +41,37 @@ const UpdateProjectForm = () => {
 
     if (error && error === "Tech already added in the list") {
       setAlert(error, "danger");
+      const clear = setTimeout(() => clearProjectError(), 1000);
+      return () => clearTimeout(clear);
     }
-    // eslint-disable-next-line
-  }, [current, error]);
 
-  const onSubmit = e => {
+    if (
+      !isTechUpdating &&
+      success &&
+      success === "Project successfully updated!"
+    ) {
+      setAlert(success, "success");
+    } else if (
+      isTechUpdating &&
+      success &&
+      success === "User successfully added!"
+    ) {
+      setAlert(success, "success");
+    }
+
+    // eslint-disable-next-line
+  }, [current, error, success]);
+
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (!isTechUpdating) {
-      updateHandler();
-      console.log("project updated", isTechUpdating)
-    } else {
-      addUserHandler();
-      console.log("user added", isTechUpdating)
+    if (!error) {
+      if (!isTechUpdating) {
+        updateHandler();
+        console.log("project updated", isTechUpdating);
+      } else {
+        addUserHandler();
+        console.log("user added", isTechUpdating);
+      }
     }
   };
 
@@ -62,22 +83,20 @@ const UpdateProjectForm = () => {
         _id: current._id,
         projectName,
         status,
-        description
+        description,
       };
       updateProject(updated);
-      setAlert("Project successfully updated!", "success");
     }
   };
 
   const addUserHandler = () => {
-    if (isTechUpdating && !error && tech !== "") {
+    if (isTechUpdating && tech !== "") {
       const addedTech = {
         _id: current._id,
-        tech
+        tech,
       };
       addUser(addedTech);
-      setAlert("User successfully added!", "success");
-    } else if(tech === "") {
+    } else if (tech === "") {
       setAlert("Please select from the list", "danger");
     }
   };
@@ -104,7 +123,7 @@ const UpdateProjectForm = () => {
                       className="form-control"
                       placeholder="Bugtracker"
                       value={projectName}
-                      onChange={e => setProjectName(e.target.value)}
+                      onChange={(e) => setProjectName(e.target.value)}
                     />
                   </td>
                 </tr>
@@ -118,8 +137,8 @@ const UpdateProjectForm = () => {
                       className="form-control"
                       name="status"
                       value={status}
-                      onChange={e => setStatus(e.target.value)}
-                      onBlur={e => setStatus(e.target.value)}
+                      onChange={(e) => setStatus(e.target.value)}
+                      onBlur={(e) => setStatus(e.target.value)}
                       required
                     >
                       <option value="">--Select---</option>
@@ -138,13 +157,13 @@ const UpdateProjectForm = () => {
                   <td>
                     <textarea
                       style={{
-                        resize: "none"
+                        resize: "none",
                       }}
                       type="text"
                       className="form-control"
                       placeholder="Text area"
                       value={description}
-                      onChange={e => setDescripton(e.target.value)}
+                      onChange={(e) => setDescripton(e.target.value)}
                     ></textarea>
                   </td>
                 </tr>
@@ -167,13 +186,13 @@ const UpdateProjectForm = () => {
                   <td>
                     <label>Assigned Tech to Project</label>
                   </td>
-                  <td style={{overflowY: "scroll"}}>
+                  <td style={{ overflowY: "scroll" }}>
                     <ul className="list-group">
                       {/* use project assigned users */}
                       {projects !== null &&
                         projects.length > 0 &&
                         projects.map(
-                          project =>
+                          (project) =>
                             project.projectName === projectName && (
                               <UpdateProjectFormTech
                                 key={project._id}
@@ -192,12 +211,12 @@ const UpdateProjectForm = () => {
                       className="form-control"
                       name="tech"
                       value={tech}
-                      onChange={e => setTech(e.target.value)}
-                      onBlur={e => setTech(e.target.value)}
+                      onChange={(e) => setTech(e.target.value)}
+                      onBlur={(e) => setTech(e.target.value)}
                     >
                       <option>--Select---</option>
                       {users !== null && !loading ? (
-                        users.map(user => (
+                        users.map((user) => (
                           <option
                             key={user._id}
                             value={user.firstName + " " + user.lastName}

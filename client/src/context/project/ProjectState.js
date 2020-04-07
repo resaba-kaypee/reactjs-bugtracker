@@ -11,19 +11,21 @@ import {
   FILTER_PROJECTS,
   CLEAR_FILTERED_PROJECTS,
   CLEAR_PROJECTS,
+  CLEAR_ERRORS,
   SET_CURRENT_PROJECT,
   CLEAR_CURRENT_PROJECT,
   REMOVE_USER,
-  ADD_USER
+  ADD_USER,
 } from "../types";
 
-const ProjectState = props => {
+const ProjectState = (props) => {
   const initialState = {
     projects: null,
+    success: null,
     error: null,
     filtered: null,
     current: null,
-    loading: true
+    loading: true,
   };
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -34,31 +36,31 @@ const ProjectState = props => {
       const res = await axios.get("/api/admin/projects");
       dispatch({ type: GET_PROJECTS, payload: res.data });
     } catch (err) {
-      dispatch({ type: PROJECT_ERROR, payload: err });
+      dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
     }
   };
 
   // Add project
-  const addProject = async project => {
+  const addProject = async (project) => {
     const config = {
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     };
     try {
       const res = await axios.post("/api/admin/project", project, config);
-      dispatch({ type: ADD_PROJECT, payload: res.data });
+      dispatch({ type: ADD_PROJECT, payload: res.data});
     } catch (err) {
-      dispatch({ PROJECT_ERROR, payload: err.response.data.msg });
+      dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
     }
   };
 
   // Update project
-  const updateProject = async project => {
+  const updateProject = async (project) => {
     const config = {
       headers: {
-        "Content-type": "application/json"
-      }
+        "Content-type": "application/json",
+      },
     };
     try {
       const res = await axios.put(
@@ -66,53 +68,19 @@ const ProjectState = props => {
         project,
         config
       );
-      dispatch({ type: UPDATE_PROJECT, payload: res.data });
+      dispatch({ type: UPDATE_PROJECT, payload: res.data});
+      console.log("update project", res);
     } catch (err) {
       dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
     }
   };
 
-  // Delete project
-  const deleteProject = async _id => {
-    try {
-      await axios.delete(`/api/admin/project/${_id}`);
-      dispatch({ type: DELETE_PROJECT, payload: _id });
-    } catch (err) {
-      dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
-    }
-  };
-
-  // Filter projects
-  const filterProjects = text => {
-    dispatch({ type: FILTER_PROJECTS, payload: text });
-  };
-
-  // Clear filtered issues
-  const clearFilteredProjects = () => {
-    dispatch({ type: CLEAR_FILTERED_PROJECTS });
-  };
-
-  // Set current updating project
-  const setCurrentProject = project => {
-    dispatch({ type: SET_CURRENT_PROJECT, payload: project });
-  };
-
-  // Clear current updating project
-  const clearCurrentProject = () => {
-    dispatch({ type: CLEAR_CURRENT_PROJECT });
-  };
-
-  // Clear projects when logging out
-  const clearProjects = () => {
-    dispatch({ type: CLEAR_PROJECTS });
-  };
-
-  // Remove user from assigned projects
-  const addUser = async project => {
+  // Assigned user projects
+  const addUser = async (project) => {
     const config = {
       headers: {
-        "Content-type": "application/json"
-      }
+        "Content-type": "application/json",
+      },
     };
     try {
       const res = await axios.put(
@@ -120,18 +88,18 @@ const ProjectState = props => {
         project,
         config
       );
-      dispatch({ type: ADD_USER, payload: res.data });
+      dispatch({ type: ADD_USER, payload: res.data});
     } catch (err) {
       dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
     }
   };
 
   // Remove user from assigned projects
-  const removeUser = async project => {
+  const removeUser = async (project) => {
     const config = {
       headers: {
-        "Content-type": "application/json"
-      }
+        "Content-type": "application/json",
+      },
     };
     try {
       const res = await axios.put(
@@ -145,12 +113,52 @@ const ProjectState = props => {
     }
   };
 
+  // Delete project
+  const deleteProject = async (_id) => {
+    try {
+      await axios.delete(`/api/admin/project/${_id}`);
+      dispatch({ type: DELETE_PROJECT, payload: _id });
+    } catch (err) {
+      dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
+    }
+  };
+
+  // Filter projects
+  const filterProjects = (text) => {
+    dispatch({ type: FILTER_PROJECTS, payload: text });
+  };
+
+  // Clear filtered issues
+  const clearFilteredProjects = () => {
+    dispatch({ type: CLEAR_FILTERED_PROJECTS });
+  };
+
+  // Set current updating project
+  const setCurrentProject = (project) => {
+    dispatch({ type: SET_CURRENT_PROJECT, payload: project });
+  };
+
+  // Clear current updating project
+  const clearCurrentProject = () => {
+    dispatch({ type: CLEAR_CURRENT_PROJECT });
+  };
+
+  // Clear projects when logging out
+  const clearProjects = () => {
+    dispatch({ type: CLEAR_PROJECTS });
+  };
+
+  // Clear error
+  const clearProjectError = () => {
+    dispatch({ type: CLEAR_ERRORS });
+  };
+
   return (
     <ProjectContext.Provider
       value={{
         projects: state.projects,
         filtered: state.filtered,
-        users: state.users,
+        success: state.success,
         error: state.error,
         loading: state.loading,
         current: state.current,
@@ -161,10 +169,11 @@ const ProjectState = props => {
         filterProjects,
         clearFilteredProjects,
         clearProjects,
+        clearProjectError,
         setCurrentProject,
         clearCurrentProject,
         removeUser,
-        addUser
+        addUser,
       }}
     >
       {props.children}
