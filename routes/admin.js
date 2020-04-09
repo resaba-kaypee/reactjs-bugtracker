@@ -1,3 +1,6 @@
+// @TODOS
+// need to remove cookie when logging out
+
 /*
 These routes are admin privilage only where you can...
 
@@ -338,7 +341,7 @@ router.delete("/project/:id", auth, async (req, res) => {
       action: `${user.firstName} ${user.lastName} just delete the project ${project.projectName}`,
     });
 
-    newLog.save();
+    await newLog.save();
 
     res.json({ msg: "Project removed" });
   } catch (err) {

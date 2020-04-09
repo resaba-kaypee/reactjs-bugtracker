@@ -13,7 +13,7 @@ const ReportIssueForm = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const { setAlert } = alertContext;
-  const { addIssue } = issueContext;
+  const { addIssue, success } = issueContext;
   const { getProjects, projects, loading } = projectContext;
 
   useEffect(() => {
@@ -22,8 +22,13 @@ const ReportIssueForm = () => {
       const username = user.firstName +" "+user.lastName
       setTech(username);
     }
+
+    if(success && success === "Issue successfully reported!"){
+      setAlert(success, "success")
+    }
+
     // eslint-disable-next-line
-  }, [user]);
+  }, [user, success]);
 
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
@@ -34,7 +39,7 @@ const ReportIssueForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    if (!/^[a-zA-Z0-9][\w.\s]+$/i.test(description)) {
+    if (description === "") {
       setAlert("Please add valid description", "danger");
     } else {
       const issue = {
@@ -46,7 +51,6 @@ const ReportIssueForm = () => {
         date
       };
       addIssue(issue);
-      setAlert("Issue successfully reported", "success");
       clearAll();
     }
   };

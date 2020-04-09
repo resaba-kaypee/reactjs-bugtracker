@@ -14,6 +14,7 @@ import {
   FILTER_ISSUES,
   CLEAR_FILTER,
   CLEAR_ISSUES,
+  CLEAR_ERRORS,
   ISSUE_ERROR
 } from "../types";
 
@@ -23,6 +24,7 @@ const IssueState = props => {
     issues: null,
     current: null,
     filtered: null,
+    success: null,
     error: null
   };
 
@@ -38,7 +40,7 @@ const IssueState = props => {
     }
   };
 
-  // Get issue
+  // Get all users issue
   const getIssues = async () => {
     try {
       const res = await axios.get("/api/issues");
@@ -56,7 +58,7 @@ const IssueState = props => {
       }
     };
     try {
-      const res = await axios.post("/api/issues", issue, config);
+      const res = await axios.post("/api/issues/newIssue", issue, config);
       dispatch({ type: ADD_ISSUE, payload: res.data });
     } catch (err) {
       dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
@@ -130,6 +132,11 @@ const IssueState = props => {
     dispatch({ type: CLEAR_FILTER });
   };
 
+  // Clear errors success mesages
+  const clearIssueError = issue => {
+    dispatch({ type: CLEAR_ERRORS });
+  };
+
   return (
     <IssueContext.Provider
       value={{
@@ -137,6 +144,7 @@ const IssueState = props => {
         issues: state.issues,
         current: state.current,
         filtered: state.filtered,
+        success: state.success,
         error: state.error,
         getMyIssues,
         getIssues,
@@ -148,7 +156,8 @@ const IssueState = props => {
         setCurrent,
         clearCurrent,
         filterIssues,
-        clearFilter
+        clearFilter,
+        clearIssueError
       }}
     >
       {props.children}

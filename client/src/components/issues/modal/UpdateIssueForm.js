@@ -9,7 +9,15 @@ const UpdateIssueForm = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const { setAlert } = alertContext;
-  const { current, updateIssue, addComment } = issueContext;
+  const {
+    getIssues,
+    current,
+    updateIssue,
+    addComment,
+    success,
+    error,
+    clearIssueError,
+  } = issueContext;
 
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
@@ -20,6 +28,8 @@ const UpdateIssueForm = () => {
   const [isCommenting, setIsCommenting] = useState(false);
 
   useEffect(() => {
+    getIssues();
+
     if (current !== null) {
       setProjectName(current.projectName);
       setDescription(current.description);
@@ -28,15 +38,34 @@ const UpdateIssueForm = () => {
     }
 
     if (user && user.firstName && user.lastName) {
-      const username = user.firstName +" "+user.lastName
+      const username = user.firstName + " " + user.lastName;
       setTech(username);
     }
-  }, [user, current]);
 
-  const onSubmit = e => {
+    if (success && success === "Issue successfully updated!") {
+      setAlert(success, "success");
+    } else if (success && success === "Comment successfully added!") {
+      setAlert(success, "success");
+    }
+
+    const clear = setTimeout(() => clearIssueError(), 1000);
+    return () => clearTimeout(clear);
+    // eslint-disable-next-line
+  }, [user, current, success]);
+
+  const onSubmit = (e) => {
     e.preventDefault();
+    if (!error) {
+      if (!isCommenting) {
+        updateHandler();
+      } else {
+        commentHandler();
+      }
+    }
+  };
 
-    if (!/^[a-zA-Z0-9][\w.\s]+$/i.test(description)) {
+  const updateHandler = () => {
+    if (description === "") {
       setAlert("Please enter valid description", "danger");
     } else if (!isCommenting) {
       const updated = {
@@ -45,24 +74,23 @@ const UpdateIssueForm = () => {
         priority,
         status,
         tech,
-        date: new Date()
+        date: new Date(),
       };
       updateIssue(updated);
-      setAlert("Isssue successfully updated!", "success");
     }
+  };
 
-    if (!/^[a-zA-Z0-9][\w.\s]+$/i.test(message) && isCommenting) {
+  const commentHandler = () => {
+    if (message === "") {
       setAlert("Please enter valid comment", "danger");
     } else if (isCommenting) {
       const comment = {
         id: current._id,
         tech,
-        message
+        message,
       };
       addComment(comment);
-      setAlert("Comment successfully added!", "success");
     }
-
   };
 
   return (
@@ -86,8 +114,8 @@ const UpdateIssueForm = () => {
                       className="form-control"
                       name="status"
                       value={status}
-                      onChange={e => setStatus(e.target.value)}
-                      onBlur={e => setStatus(e.target.value)}
+                      onChange={(e) => setStatus(e.target.value)}
+                      onBlur={(e) => setStatus(e.target.value)}
                       required
                     >
                       <option value="">--Select---</option>
@@ -106,8 +134,8 @@ const UpdateIssueForm = () => {
                       className="form-control"
                       name="priority"
                       value={priority}
-                      onChange={e => setPriority(e.target.value)}
-                      onBlur={e => setPriority(e.target.value)}
+                      onChange={(e) => setPriority(e.target.value)}
+                      onBlur={(e) => setPriority(e.target.value)}
                       required
                     >
                       <option value="">--Select---</option>
@@ -125,14 +153,14 @@ const UpdateIssueForm = () => {
                   <td>
                     <textarea
                       style={{
-                        resize: "none"
+                        resize: "none",
                       }}
                       type="text"
                       name="description"
                       value={description}
                       className="form-control"
                       placeholder="Description..."
-                      onChange={e => setDescription(e.target.value)}
+                      onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </td>
                 </tr>
@@ -167,14 +195,14 @@ const UpdateIssueForm = () => {
                   <td>
                     <textarea
                       style={{
-                        resize: "none"
+                        resize: "none",
                       }}
                       type="text"
                       name="message"
                       value={message}
                       className="form-control"
                       placeholder="Add comment..."
-                      onChange={e => setMessage(e.target.value)}
+                      onChange={(e) => setMessage(e.target.value)}
                     ></textarea>
                   </td>
                   <td>

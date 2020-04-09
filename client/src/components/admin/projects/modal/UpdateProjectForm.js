@@ -19,7 +19,7 @@ const UpdateProjectForm = () => {
     addUser,
     success,
     error,
-    clearProjectError,
+    clearProjectError
   } = projectContext;
 
   const { getAllUsers, users } = authAdminContext;
@@ -33,6 +33,7 @@ const UpdateProjectForm = () => {
   useEffect(() => {
     getAllUsers();
     getProjects();
+
     if (current !== null) {
       setProjectName(current.projectName);
       setStatus(current.status);
@@ -41,23 +42,16 @@ const UpdateProjectForm = () => {
 
     if (error && error === "Tech already added in the list") {
       setAlert(error, "danger");
-      const clear = setTimeout(() => clearProjectError(), 1000);
-      return () => clearTimeout(clear);
     }
 
-    if (
-      !isTechUpdating &&
-      success &&
-      success === "Project successfully updated!"
-    ) {
+    if (success && success === "Project successfully updated!") {
       setAlert(success, "success");
-    } else if (
-      isTechUpdating &&
-      success &&
-      success === "User successfully added!"
-    ) {
+    } else if (success && success === "User successfully added!") {
       setAlert(success, "success");
     }
+
+    const clear = setTimeout(() => clearProjectError(), 1000);
+    return () => clearTimeout(clear);
 
     // eslint-disable-next-line
   }, [current, error, success]);
@@ -67,10 +61,8 @@ const UpdateProjectForm = () => {
     if (!error) {
       if (!isTechUpdating) {
         updateHandler();
-        console.log("project updated", isTechUpdating);
       } else {
         addUserHandler();
-        console.log("user added", isTechUpdating);
       }
     }
   };

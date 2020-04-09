@@ -8,6 +8,7 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 const Issue = require("../models/Issue");
 const Log = require("../models/Log");
+const Project = require("../models/Project");
 
 // @route   GET api/issues
 // @desc    Get user's issue
@@ -15,10 +16,9 @@ const Log = require("../models/Log");
 router.get("/reportbyme", auth, async (req, res) => {
   try {
     const issues = await Issue.find({ user: req.user.id }).sort({
-      date: -1
+      date: -1,
     });
     res.json(issues);
-    
   } catch (error) {
     console.error("fr: get all issue", error.message);
     res.status(500).send("Server error");
@@ -31,10 +31,10 @@ router.get("/reportbyme", auth, async (req, res) => {
 router.get("/", auth, async (req, res) => {
   try {
     const issues = await Issue.find({}).sort({
-      date: -1
+      date: -1,
     });
 
-    if(!issues){
+    if (!issues) {
       return res.status(404).json({ msg: "Issues not found" });
     }
 
@@ -49,15 +49,8 @@ router.get("/", auth, async (req, res) => {
 // @desc    Add new issue
 // @access  Private
 router.post(
-  "/",
-  [
-    auth,
-    [
-      check("description", "Description is required")
-        .not()
-        .isEmpty()
-    ]
-  ],
+  "/newIssue",
+  [auth, [check("description", "Description is required").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -67,30 +60,40 @@ router.post(
     const { projectName, description, priority, status, tech, date } = req.body;
 
     try {
+      const project = Project.findOne({ projectName });
       let user = await User.findById(req.user.id);
 
-      const newIssue = new Issue({
-        user: req.user.id,
-        projectName,
-        description,
-        priority,
-        status,
-        tech,
-        date
-      });
+      if (project) {
+        const newIssue = new Issue({
+          user: req.user.id,
+          projectName,
+          description,
+          priority,
+          status,
+          tech,
+          date,
+        });
+        await newIssue.save();
 
-      await newIssue.save();
+        // Log users action
+        const newLog = new Log({
+          firstName: req.user.firstName,
+          lastName: req.user.lastName,
+          role: user.role,
+          action: `${req.user.firstName} ${req.user.lastName} just added new issue to ${projectName}`,
+        });
 
-      const newLog = new Log({
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        role: user.role,
-        action: `${req.user.firstName} ${req.user.lastName} just added new issue to ${projectName}`
-      });
-
-      await newLog.save();
-
-      res.json(newIssue);
+        await newLog.save();
+        res.json({ newIssue, msg: "Issue successfully reported!" });
+      } else {
+        // Send error message to client
+        return res
+          .status(400)
+          .json({
+            msg:
+              "The project that you want to report an issue does not exists!",
+          });
+      }
     } catch (error) {
       console.error("fr: add new issue", error.message);
       res.status(500).send("Server error");
@@ -133,12 +136,12 @@ router.put("/:id", auth, async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       role: user.role,
-      action: `${user.firstName} ${user.lastName} updated issue with the id of ${issue._id}`
+      action: `${user.firstName} ${user.lastName} updated issue with the id of ${issue._id}`,
     });
 
     await newLog.save();
 
-    res.json(issue);
+    res.json({ issue, msg: "Issue successfully updated!" });
   } catch (err) {
     console.error("fr: update issue", err.message);
     res.status(500).send("Server Error");
@@ -173,12 +176,12 @@ router.put("/comment/:id", auth, async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       role: user.role,
-      action: `${user.firstName} ${user.lastName} commented to issue with the id of ${issue._id}`
+      action: `${user.firstName} ${user.lastName} commented to issue with the id of ${issue._id}`,
     });
 
     await newLog.save();
 
-    res.json(issue);
+    res.json({ issue, msg: "Comment successfully added!" });
   } catch (err) {
     console.error("fr: admin update issue", err.message);
     res.status(500).send("Server Error");
@@ -206,7 +209,7 @@ router.delete("/:id", auth, async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       role: user.role,
-      action: `${user.firstName} ${user.lastName} deleted issue with the id of ${issue._id}`
+      action: `${user.firstName} ${user.lastName} deleted issue with the id of ${issue._id}`,
     });
 
     await newLog.save();

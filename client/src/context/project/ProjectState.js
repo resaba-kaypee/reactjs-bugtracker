@@ -69,7 +69,6 @@ const ProjectState = (props) => {
         config
       );
       dispatch({ type: UPDATE_PROJECT, payload: res.data});
-      console.log("update project", res);
     } catch (err) {
       dispatch({ type: PROJECT_ERROR, payload: err.response.data.msg });
     }
