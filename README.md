@@ -69,8 +69,8 @@ Track issues with Bug Tracker
 [x] Remodel UI
 [x] when redirecting unauthorized access its flashes the content before redirecting
 [x] from admin dashboard- can access user/projects
+[x] in updateproject form when updateproject button is click updatetech is also triggered
 [ ] send message from server to client for every successful or failed api call
 [ ] delete all comments in all components
-[ ] in updateproject form when updateproject button is click updatetech is also triggered
 [ ] should focus to required input fields when there is validation error
 [ ] authAdminstate has users object before logging in

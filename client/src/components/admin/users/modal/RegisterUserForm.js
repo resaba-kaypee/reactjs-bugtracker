@@ -9,6 +9,7 @@ const RegisterUserForm = () => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authAdminContext = useContext(AuthAdminContext);
+  const { registerUser, error, success, clearErrors } = authAdminContext;
 
   const { handleChange, handleSubmit, values, errors, setErrors } = useForm(
     register,
@@ -18,7 +19,7 @@ const RegisterUserForm = () => {
       email: "",
       password: "",
       password2: "",
-      role: ""
+      role: "",
     },
     validate
   );
@@ -27,17 +28,20 @@ const RegisterUserForm = () => {
 
   useEffect(() => {
     // check if admin or user is already exist in db
-    if (authAdminContext.error) {
-      console.log(authAdminContext.error);
-      setAlert(authAdminContext.error, "danger");
-      authAdminContext.clearErrors();
+    if (error && error === "User already exists") {
+      setAlert(error, "danger");
     }
 
-    // if (authAdminContext.success) {
-    //   setAlert(authAdminContext.success, "success");
-    //   authAdminContext.clearSuccess();
-    // }
+    if (success && success === "User successfully registered!") {
+      setAlert(success, "success");
+    }
 
+    const clear = setTimeout(() => clearErrors(), 1000);
+    return () => clearTimeout(clear);
+    // eslint-disable-next-line
+  }, [error, success]);
+
+  useEffect(() => {
     // check if there is an error in validating forms
     if (errors && errors.firstName) {
       setAlert(errors.firstName, "danger");
@@ -60,19 +64,15 @@ const RegisterUserForm = () => {
       setErrors({});
     }
     // eslint-disable-next-line
-  }, [
-    errors,
-    authAdminContext.error
-    //  authAdminContext.success
-  ]);
+  }, [errors]);
 
   function register() {
-    authAdminContext.registerUser({
+    registerUser({
       firstName,
       lastName,
       email,
       password,
-      role
+      role,
     });
   }
   return (

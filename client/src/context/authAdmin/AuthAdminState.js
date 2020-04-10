@@ -38,6 +38,7 @@ const AuthAdminState = props => {
     users: null,
     // issues: null,
     loading: true,
+    success: null,
     error: null,
     // success: null,
     filtered: null
@@ -45,56 +46,6 @@ const AuthAdminState = props => {
   };
 
   const [state, dispatch] = useReducer(authAdminReducer, initialState);
-
-  // Load Admin (not needed)
-  // const loadAdmin = async () => {
-  //   // load token into global headers
-  //   if (localStorage.token) {
-  //     setAuthToken(localStorage.token);
-  //   }
-
-  //   try {
-  //     // check if valid admin is logging in
-  //     const res = await axios.get("/api/authAdmin");
-
-  //     dispatch({
-  //       type: ADMIN_LOADED,
-  //       payload: res.data
-  //     });
-  //   } catch (err) {
-  //     // invalid credentials
-  //     dispatch({ type: AUTH_ERROR });
-  //   }
-  // };
-
-  // Register Admin (not needed)
-  // const registerAdmin = async formData => {
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   };
-
-  //   try {
-  //     const res = await axios.post(
-  //       "/api/admin/registerAdmin",
-  //       formData,
-  //       config
-  //     );
-
-  //     dispatch({
-  //       type: REGISTER_SUCCESS,
-  //       payload: res.data.msg
-  //     });
-
-  //     // loadAdmin();
-  //   } catch (err) {
-  //     dispatch({
-  //       type: REGISTER_FAIL,
-  //       payload: err.data.msg
-  //     });
-  //   }
-  // };
 
   // Register User
   const registerUser = async formData => {
@@ -111,9 +62,8 @@ const AuthAdminState = props => {
         type: REGISTER_USER,
         payload: res.data
       });
- 
+      console.log(res)
     } catch (err) {
-      console.log(err.response.data.msg);
       dispatch({
         type: REGISTER_FAIL,
         payload: err.response.data.msg
@@ -270,6 +220,7 @@ const AuthAdminState = props => {
         loading: state.loading,
         users: state.users,
         // admin: state.admin,
+        success: state.success,
         error: state.error,
         // issues: state.issues,
         // success: state.success,

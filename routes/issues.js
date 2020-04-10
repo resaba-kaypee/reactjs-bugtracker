@@ -77,22 +77,19 @@ router.post(
 
         // Log users action
         const newLog = new Log({
-          firstName: req.user.firstName,
-          lastName: req.user.lastName,
+          firstName: user.firstName,
+          lastName: user.lastName,
           role: user.role,
-          action: `${req.user.firstName} ${req.user.lastName} just added new issue to ${projectName}`,
+          action: `${user.firstName} ${user.lastName} just added new issue to ${projectName}`,
         });
 
         await newLog.save();
         res.json({ newIssue, msg: "Issue successfully reported!" });
       } else {
         // Send error message to client
-        return res
-          .status(400)
-          .json({
-            msg:
-              "The project that you want to report an issue does not exists!",
-          });
+        return res.status(400).json({
+          msg: "The project that you want to report an issue does not exists!",
+        });
       }
     } catch (error) {
       console.error("fr: add new issue", error.message);

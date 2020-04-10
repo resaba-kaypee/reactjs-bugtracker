@@ -53,13 +53,14 @@ router.post(
     const { firstName, lastName, email, password, role } = req.body;
 
     try {
-      let user = await User.findOne({ email });
+      let newUser = await User.findOne({ email });
+      let user = await User.findById(req.user.id);
 
-      if (user) {
+      if (newUser) {
         return res.status(400).json({ msg: "User already exists" });
       }
 
-      user = new User({
+      newUser = new User({
         firstName,
         lastName,
         email,
@@ -68,13 +69,23 @@ router.post(
       });
 
       const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+      newUser.password = await bcrypt.hash(password, salt);
 
-      await user.save();
+      await newUser.save();
 
-      res.json(user);
+      // Log admin action
+      const newLog = new Log({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        action: `just registered new user ${firstName} ${lastName}`,
+      });
+
+      await newLog.save();
+
+      res.json({ newUser, msg: "User successfully registered!" });
     } catch (err) {
-      console.error("fr register user:", err.message);
+      console.error("fr register newUser:", err.message);
       res.status(500).send("Server error");
     }
   }
@@ -101,10 +112,20 @@ router.get("/users", auth, async (req, res) => {
 // @access  Private
 router.delete("/deleteUser/:id", auth, async (req, res) => {
   try {
+    const u = await User.findById(req.user.id);
     let user = await User.findById(req.params.id);
 
     if (!user) return res.status(404).json({ msg: "User not found" });
 
+    // Log admin action
+    const newLog = new Log({
+      firstName: u.firstName,
+      lastName: u.lastName,
+      role: u.role,
+      action: `just deleted user ${user.firstName} ${user.lastName}`,
+    });
+
+    await newLog.save();
     await User.findByIdAndRemove(req.params.id);
     res.json({ msg: "User deleted" });
   } catch (err) {
@@ -308,7 +329,7 @@ router.put("/removeTech/:id", auth, async (req, res) => {
         role: user.role,
         action: `${user.firstName} ${user.lastName} just removed ${found.name} from ${project.projectName}`,
       });
-  
+
       await newLog.save();
     } else {
       return res.status(404).json({ msg: "Tech not found in project" });

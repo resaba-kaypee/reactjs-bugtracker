@@ -36,7 +36,8 @@ export default (state, action) => {
     case REGISTER_USER:
       return {
         ...state,
-        users: [action.payload, ...state.users],
+        users: [action.payload.newUser, ...state.users],
+        success: action.payload.msg,
         loading: false
       };
     case FILTER_USERS:
@@ -71,6 +72,7 @@ export default (state, action) => {
     case CLEAR_ERRORS:
       return {
         ...state,
+        success: null,
         error: null
       };
     // case LOGOUT:
