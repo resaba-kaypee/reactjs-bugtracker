@@ -70,7 +70,8 @@ Track issues with Bug Tracker
 [x] when redirecting unauthorized access its flashes the content before redirecting
 [x] from admin dashboard- can access user/projects
 [x] in updateproject form when updateproject button is click updatetech is also triggered
-[ ] send message from server to client for every successful or failed api call
+[x] send message from server to client for every successful or failed api call
+[x] implement cookie to store token instead of localstorage
 [ ] delete all comments in all components
 [ ] should focus to required input fields when there is validation error
 [ ] authAdminstate has users object before logging in

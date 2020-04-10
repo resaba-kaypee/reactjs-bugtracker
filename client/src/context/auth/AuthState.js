@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
-import setAuthToken from "../../utils/setAuthToken";
+
 import {
   USER_LOADED,
   AUTH_ERROR,
@@ -14,7 +14,6 @@ import {
 
 const AuthState = props => {
   const initialState = {
-    token: localStorage.getItem("token"),
     isAuthenticated: null,
     user: null,
     loading: true,
@@ -25,10 +24,6 @@ const AuthState = props => {
 
   // Load Admin
   const loadAdmin = async () => {
-    // load token into global headers
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
 
     try {
       // check if valid admin is logging in
@@ -46,10 +41,6 @@ const AuthState = props => {
 
   // Load User
   const loadUser = async () => {
-    // load token into global headers
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
 
     try {
       // check if valid user is logging in
@@ -64,31 +55,6 @@ const AuthState = props => {
       dispatch({ type: AUTH_ERROR });
     }
   };
-
-  // Register User (not needed)
-  // const register = async formData => {
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   };
-
-  //   try {
-  //     const res = await axios.post("/api/admin/users", formData, config);
-
-  //     dispatch({
-  //       type: REGISTER_SUCCESS,
-  //       payload: res.data
-  //     });
-
-  //     // loadUser();
-  //   } catch (err) {
-  //     dispatch({
-  //       type: REGISTER_FAIL,
-  //       payload: err.response.data.msg
-  //     });
-  //   }
-  // };
 
   // Login User
   const loginAsUser = async formData => {
@@ -146,7 +112,7 @@ const AuthState = props => {
       type: LOGOUT
     });
     try {
-      await axios.post("/api/user/logout");
+      await axios.get("/api/user/logout");
     } catch (err) {
       dispatch({
         type: AUTH_ERROR,
@@ -161,7 +127,7 @@ const AuthState = props => {
       type: LOGOUT
     });
     try {
-      await axios.post("/api/admin/logout");
+      await axios.get("/api/admin/logout");
     } catch (err) {
       dispatch({
         type: AUTH_ERROR,
@@ -176,7 +142,6 @@ const AuthState = props => {
   return (
     <AuthContext.Provider
       value={{
-        token: state.token,
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
         user: state.user,

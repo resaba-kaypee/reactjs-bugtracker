@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const path = require("path");
+const cookieParser = require("cookie-parser")
 
 const app = express();
 
@@ -9,6 +10,9 @@ connectDB();
 
 // Init middleware
 app.use(express.json({ extented: false }));
+
+// Use cookie parser
+app.use(cookieParser())
 
 // Static files
 app.use(express.static("./client/src"));

@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import PropTypes from "prop-types";
 import UpdateProjectFormTechList from "./UpdateProjectFormTechList";
 
 const UpdateProjectFormTech = ({ techs, projectID }) => {
@@ -14,5 +15,9 @@ const UpdateProjectFormTech = ({ techs, projectID }) => {
     </Fragment>
   );
 };
+
+UpdateProjectFormTech.propTypes = {
+  techs: PropTypes.object.isRequired,
+}
 
 export default UpdateProjectFormTech;

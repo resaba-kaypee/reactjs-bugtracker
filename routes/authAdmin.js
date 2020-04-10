@@ -61,6 +61,20 @@ router.post(
         }
       };
 
+      // using local storage
+      // jwt.sign(
+      //   payload,
+      //   config.get("jwtSecret"),
+      //   {
+      //     expiresIn: 360000
+      //   },
+      //   (err, token) => {
+      //     if (err) throw err;
+      //     res.json({ token });
+      //   }
+      // );
+
+      // using cookie
       jwt.sign(
         payload,
         config.get("jwtSecret"),
@@ -69,7 +83,7 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.cookie("token", token, { httpOnly: true }).sendStatus(200);
         }
       );
 

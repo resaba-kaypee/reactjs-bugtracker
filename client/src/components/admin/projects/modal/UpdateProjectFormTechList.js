@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from "react";
+import PropTypes from "prop-types";
 import ProjectContext from "../../../../context/project/projectContext";
 
 const UpdateProjectFormTechList = ({ user, projectID }) => {
@@ -30,5 +31,9 @@ const UpdateProjectFormTechList = ({ user, projectID }) => {
     </Fragment>
   );
 };
+
+UpdateProjectFormTechList.propTypes = {
+  user: PropTypes.object.isRequired,
+}
 
 export default UpdateProjectFormTechList;

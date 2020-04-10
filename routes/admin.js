@@ -374,9 +374,17 @@ router.delete("/project/:id", auth, async (req, res) => {
 // @route   POST api/admin/logout
 // @desc    Logout admin
 // @access  Private
-router.post("/logout", auth, async (req, res) => {
+router.get("/logout", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    cookie = req.cookies;
+    for (var prop in cookie) {
+      if (!cookie.hasOwnProperty(prop)) {
+        continue;
+      }
+      res.cookie(prop, "", { expires: new Date(0) });
+    }
+    res.send("logged out");
 
     // Log admin action when logging out
     const newLog = new Log({
