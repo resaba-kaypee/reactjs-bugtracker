@@ -19,17 +19,7 @@ main {
   flex-direction: column;
   align-items: center;
   height: 100%;
-}
-
-/* navbar-nav-custom animation */
-.fadeIn {
   background-color: rgb(68, 74, 80);
-  transition: background-color 800ms ease-in;
-}
-
-.fadeOut {
-  background-color: transparent;
-  transition: background-color 900ms ease-out;
 }
 
 .nav-item-custom {

@@ -24,6 +24,7 @@ router.get("/logout", auth, async (req, res) => {
     const newLog = new Log({
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
       action: "logged out"
     });
 

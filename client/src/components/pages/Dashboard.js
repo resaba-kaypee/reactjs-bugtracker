@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, Fragment } from "react";
+import React, { useContext, useEffect, Fragment } from "react";
 import { Route, Switch } from "react-router-dom";
 // component
 import AdminSideNav from "../layout/sidenav/AdminSideNav";
@@ -33,18 +33,11 @@ const Dashboard = () => {
     // eslint-disable-next-line
   }, []);
 
-  const [colored, setColored] = useState(false);
-  const toggle = () => setColored(!colored);
-
   return (
     <div className="content">
       <nav className="navbar-main">
         <ul
-          className={`navbar-nav-custom text-light text-nowrap ${
-            colored ? "fadeIn" : "fadeOut"
-          }`}
-          onMouseEnter={toggle}
-          onMouseLeave={toggle}
+          className="navbar-nav-custom text-light text-nowrap"
         >
           <li className="logo">
             <a href="#!" className="nav-link-custom">

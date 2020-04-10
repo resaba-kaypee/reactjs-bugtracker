@@ -17,7 +17,7 @@ const UpdateProjectFormTech = ({ techs, projectID }) => {
 };
 
 UpdateProjectFormTech.propTypes = {
-  techs: PropTypes.object.isRequired,
+  techs: PropTypes.array.isRequired,
 }
 
 export default UpdateProjectFormTech;
