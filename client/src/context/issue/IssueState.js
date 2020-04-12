@@ -92,7 +92,6 @@ const IssueState = props => {
       const res = await axios.put(`/api/issues/comment/${comment.id}`, comment, config);
       dispatch({ type: ADD_COMMENT, payload: res.data });
     } catch (err) {
-      console.log(err.response.data.msg);
       dispatch({ type: ISSUE_ERROR, payload: err.response.data.msg });
     }
   };

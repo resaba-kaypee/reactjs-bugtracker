@@ -39,7 +39,6 @@ const AuthAdminState = (props) => {
         type: REGISTER_USER,
         payload: res.data,
       });
-      console.log(res);
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
@@ -54,7 +53,6 @@ const AuthAdminState = (props) => {
       const res = await axios.get("/api/admin/users");
       dispatch({ type: GET_ALL_USERS, payload: res.data });
     } catch (err) {
-      console.log(err.response.data.msg);
       dispatch({ type: USERS_ERROR, payload: err.response.data.msg });
     }
   };
@@ -65,7 +63,6 @@ const AuthAdminState = (props) => {
       await axios.delete(`/api/admin/deleteUser/${id}`);
       dispatch({ type: DELETE_USER, payload: id });
     } catch (err) {
-      console.log(err.response.data.msg);
       dispatch({ type: USERS_ERROR, payload: err.response.data.msg });
     }
   };
