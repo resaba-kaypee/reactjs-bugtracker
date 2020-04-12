@@ -8,8 +8,13 @@ const ReportByMe = () => {
   const issueContext = useContext(IssueContext);
   const { usersIssue, loading, getMyIssues } = issueContext;
 
+  const [issues, setIssues] = useState([]);
+
   useEffect(() => {
     getMyIssues();
+    if(usersIssue !== null && !loading){
+      setIssues(usersIssue)
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -47,8 +52,8 @@ const ReportByMe = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {usersIssue !== null && !loading ? (
-                    usersIssue.map(issue => (
+                  {Object.keys(issues).length > 0 ? (
+                    issues.map((issue) => (
                       <ReportByMeList key={issue._id} issue={issue} />
                     ))
                   ) : (

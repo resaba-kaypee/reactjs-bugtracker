@@ -5,9 +5,13 @@ import UnresolvedList from "./UnresolvedList";
 const Unresolved = () => {
   const issueContext = useContext(IssueContext);
   const { issues, getIssues, loading } = issueContext;
+  const [unResolved, setUnResolved] = useState([])
 
   useEffect(() => {
     getIssues();
+    if(issues !== null && !loading){
+      setUnResolved(issues)
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -47,8 +51,8 @@ const Unresolved = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {issues !== null && !loading ? (
-                    issues.map(issue => (
+                  {Object.keys(unResolved).length > 0 ? (
+                    unResolved.map(issue => (
                       <UnresolvedList key={issue._id} issue={issue} />
                     ))
                   ) : (

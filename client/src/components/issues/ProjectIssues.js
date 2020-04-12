@@ -54,13 +54,15 @@ const ProjectIssues = () => {
               filtered.map(issue => (
                 <ProjectIssueItem key={issue._id} issue={issue} />
               ))
-            ) : (
+            ) : Object.keys(issues).length > 0 ? (
               issues.map(
                 issue =>
                   issue.status === "open" && (
                     <ProjectIssueItem key={issue._id} issue={issue} />
                   )
               )
+            ) : (
+              <h3>No issues found, Let's search one!</h3>
             )
           ) : (
             <Spinner />

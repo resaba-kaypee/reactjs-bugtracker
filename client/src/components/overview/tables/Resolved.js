@@ -5,9 +5,13 @@ import ResolvedList from "./UnresolvedList";
 const Resolved = () => {
   const issueContext = useContext(IssueContext);
   const { issues, getIssues, loading } = issueContext;
+  const [resolved, setResolved] = useState([])
 
   useEffect(() => {
     getIssues();
+    if(issues !== null && !loading){
+      setResolved(issues)
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -46,8 +50,8 @@ const Resolved = () => {
               </tr>
             </thead>
             <tbody>
-              {issues !== null && !loading ? (
-                issues.map(
+              {Object.keys(resolved).length > 0 ? (
+                resolved.map(
                   issue =>
                     issue.status === "closed" && (
                       <ResolvedList key={issue._id} issue={issue} />
@@ -55,7 +59,7 @@ const Resolved = () => {
                 )
               ) : (
                 <tr>
-                  <td>No closed issue yet</td>
+                  <td>No resolved issue yet</td>
                 </tr>
               )}
             </tbody>

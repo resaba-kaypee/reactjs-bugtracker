@@ -16,7 +16,7 @@ const ProjectItem = ({ project }) => {
   };
 
   const fontWeight = {
-    fontWeight: 600
+    fontWeight: 600,
   };
 
   return (
@@ -24,7 +24,7 @@ const ProjectItem = ({ project }) => {
       <div
         className="card-header bg-secondary text-light"
         style={{
-          padding: "0.25rem 1.25rem"
+          padding: "0.25rem 1.25rem",
         }}
       >
         <span className="h5">
@@ -51,7 +51,7 @@ const ProjectItem = ({ project }) => {
               <td>
                 <textarea
                   style={{
-                    resize: "none"
+                    resize: "none",
                   }}
                   type="text"
                   value={description}
@@ -104,7 +104,7 @@ const ProjectItem = ({ project }) => {
 };
 
 ProjectItem.propTypes = {
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
 };
 
 export default ProjectItem;

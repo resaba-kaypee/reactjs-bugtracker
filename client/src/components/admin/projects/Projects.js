@@ -51,10 +51,12 @@ const Projects = () => {
               filtered.map(project => (
                 <ProjectItem key={project._id} project={project} />
               ))
-            ) : (
+            ) : Object.keys(projects).length > 0 ? (
               projects.map(project => (
                 <ProjectItem key={project._id} project={project} />
               ))
+            ) : (
+              <h3>No projects found, Let's create one!</h3>
             )
           ) : (
             <Spinner />
