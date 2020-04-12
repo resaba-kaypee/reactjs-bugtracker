@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./components/pages/Login";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import NotFound from "./components/pages/NotFound";
-// utils
-import setAuthToken from "./utils/setAuthToken";
 // css
 import "./assets/css/all.css";
 import "./App.css";
@@ -18,10 +16,6 @@ import AuthState from "./context/auth/AuthState";
 import LogState from "./context/log/LogState";
 import IssueState from "./context/issue/IssueState";
 import Dashboard from "./components/pages/Dashboard";
-
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
 
 const App = () => {
   return (

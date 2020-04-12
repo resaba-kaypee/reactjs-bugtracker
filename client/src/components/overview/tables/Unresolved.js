@@ -25,7 +25,7 @@ const Unresolved = () => {
       <div className="card-body">
         <div className="card-header shadow bg-secondary text-light rounded">
           <span className="h4">
-            <i className="fas fa-list-alt"></i> Unresolve Issues
+            <i className="fas fa-list-alt"></i> Unresolved Issues
           </span>
           <button
             className="btn btn-secondary float-right"
